@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "parcel build ./src/index.html",
-    "start": "node server.js",
+    "start": "(npm run build) & node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
@@ -34,7 +34,8 @@
   },
   "staticFiles": {
     "staticPath": [
-      "./src/assets/data"
+      "./src/assets/data",
+      "./src/assets"
     ]
   }
 }
