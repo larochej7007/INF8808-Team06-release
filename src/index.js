@@ -30,6 +30,7 @@ import { color } from 'd3-color'
   //const colorScale = d3.scaleDiverging(t => d3.interpolateRdBu(1 - t))
   const positiveColorScale = d3.scaleSequential(d3Chromatic.interpolateReds)
   const negativeColorScale = d3.scaleSequential(t => d3Chromatic.interpolateBlues(1- t))
+  console.log('yo')
 
   d3.csv('./data.csv', d3.autoType).then(function (data) {
     var neighborhoodNames = preproc.getNeighborhoodNames(data)
