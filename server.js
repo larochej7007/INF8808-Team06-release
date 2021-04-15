@@ -7,7 +7,7 @@ app.use(express.static(__dirname + "/dist"));
 app.use("/assets", express.static(__dirname + '/assets'));
 
 app.get("/", function(req, res) {
-    res.render("index.js");
+    res.render("index");
 })
 
 app.listen(port, function() {
