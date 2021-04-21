@@ -108,10 +108,6 @@ export function drawYAxis(yScale, xScale, width, margin) {
   d3.select(".y-axis-heatmap")
     .attr("transform", "translate(" + width + ", 0)")
     .call(d3.axisRight(yScale).tickFormat((y) => `${y}`));
-
-    console.log(width +  margin.left + xScale(1901))
-    console.log( (margin.top - 40))
-
     d3.select(".sortIconGroup")
     .attr('transform', "translate(" + (width +  margin.left + xScale(1901)) + ", " + (margin.top - 40) + ")")
 
