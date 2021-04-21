@@ -79,18 +79,32 @@ button:hover, button:active {
     visibility: hidden;
   }
 
-  .info {
-      pointer-events: none;
-      font-family: 'Roboto';
-  }
+.info {
+    pointer-events: none;
+    font-family: 'Roboto';
+}
 
-  .axis text {
-      font-family: 'Roboto';
-      cursor: default;
-      transform-box: fill-box;
-      transform-origin: center;
-  }
+.axis text {
+    font-family: 'Roboto';
+    cursor: default;
+    transform-box: fill-box;
+    transform-origin: center;
+}
 
-  .axis path {
-      opacity: 0;
-  }
+.axis path {
+    opacity: 0;
+}
+
+.grid line {
+    stroke-opacity: 0.6;
+    stroke-width: 1px;
+    shape-rendering: crispEdges
+}
+
+.grid path {
+    stroke-width: 0;
+}
+
+.button-text {
+    pointer-events: none;
+}

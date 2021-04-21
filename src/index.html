@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="assets/d3.slider.css" media="screen" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="Description" content="Code pour le TP3 de INF8808.">
-        <title>TP3 | INF8808</title>
+        <title>Projet Team 06 | INF8808</title>
 
         <link rel="stylesheet" href="assets/style.css">
         <link rel="stylesheet" href="assets/tooltip.css">
         <link rel="stylesheet" href="assets/typography.css">
+        <script src="scatterplot/scripts/d3.slider.js" charset="utf8"></script>
 
       </head>
 
       <body>
+        <header>
+          <h1>
+            Trees planted in Montreal neighborhoods
+          </h1>
+          <h2>
+            From 2010 to 2020
+          </h2>
+          <div class="row align-items-center">
+            <div class="col-sm-2"><p id="value-step"></p></div>
+            <div class="col-sm"><div id="slider-step"></div></div>
+          </div>
+        </header>
         <main>
           <div class="viz-container">
             <div class="graph" id="heatmap">
-              <svg class="heatmap-svg">
-                <g id='sortIconGroup'>
-                  <image id='sortIcon' href="/assets/up_arrow.svg" x='0' y='0' height='30' width='30'></image>
+              <svg  class="heatmap-svg">
+                <g class="sortIconGroup">
+                  <image class="sortIcon" href="/assets/up_arrow.svg" x="0" y="0" height="30" width="30"></image>
                   <text x='25' y='20'> Sorted by Avg. ΔT</text>
                 </g>
 
               </svg>
             </div>
+            <div class="graph" id="barchart">
+              <svg class="barchart-svg"></svg>
+            </div>
+            <div class="graph" id="scatterplot">
+              <svg class="scatterplot-svg"></svg>
+            </div>
+          </div>
           </div>
         </main>
         <script src="https://d3js.org/d3.v5.js"></script>

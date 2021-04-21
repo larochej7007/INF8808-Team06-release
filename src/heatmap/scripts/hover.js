@@ -97,13 +97,13 @@ export function rectUnselected(element) {
  * @param {number} year The year associated with the tick text to make bold
  */
 export function selectTicks(name, yScale, margin, width) {
-  d3.selectAll(".y.axis .tick")
+  d3.selectAll(".y-axis-heatmap .tick")
     .filter(function (d) {
       return d === name;
     })
     .attr("font-weight", "bold");
 
-    d3.select("#graph-g")
+    d3.select("#graph-g-heatmap")
       .append('rect')
       .attr('id', 'selectedLine')
       .attr('y', function() {
@@ -129,9 +129,9 @@ export function selectTicks(name, yScale, margin, width) {
  * Returns the font weight of all ticks to normal.
  */
 export function unselectTicks() {
-  d3.selectAll(".x.axis .tick").attr("font-weight", "normal");
+  d3.selectAll(".x-axis-heatmap .tick").attr("font-weight", "normal");
 
-  d3.selectAll(".y.axis .tick").attr("font-weight", "normal");
+  d3.selectAll(".y-axis-heatmap .tick").attr("font-weight", "normal");
 
   d3.select("#selectedLine").remove();
 

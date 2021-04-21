@@ -9,6 +9,8 @@ import { color } from "d3-color";
 export function initGradient(positiveColorScale, negativeColorScale) {
   const svg = d3.select(".heatmap-svg");
 
+  svg.attr('transform', 'translate(0,100)')
+
   const defs = svg.append("defs");
 
   const positiveGradient = defs

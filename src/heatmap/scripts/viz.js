@@ -34,7 +34,7 @@ export function setColorScaleDomain(positiveColorScale, negativeColorScale, data
  * @param {object[]} data The data to use for binding
  */
 export function appendRects(data) {
-  d3.select("#graph-g")
+  d3.select("#graph-g-heatmap")
     .selectAll(".year-count-g")
     .data(data)
     .join("g")
@@ -87,10 +87,10 @@ export function updateYScale(yScale, neighborhoodNames, height) {
  *  @param {*} xScale The scale to use to draw the axis
  */
 export function drawXAxis(xScale, height, yScale) {
-  d3.select(".x.axis")
+  d3.select(".x-axis-heatmap")
     .call(d3.axisBottom(xScale).ticks(12).tickFormat((y) => `${y}`));
 
-  d3.selectAll(".x.axis .tick")
+  d3.selectAll(".x-axis-heatmap .tick")
   .append('rect')
   .attr('y', -height - yScale.bandwidth() - 100)
   .attr('height', height + yScale.bandwidth() + 5 + 100)
@@ -105,11 +105,14 @@ export function drawXAxis(xScale, height, yScale) {
  * @param {number} width The width of the graphic
  */
 export function drawYAxis(yScale, xScale, width, margin) {
-  d3.select(".y.axis")
+  d3.select(".y-axis-heatmap")
     .attr("transform", "translate(" + width + ", 0)")
     .call(d3.axisRight(yScale).tickFormat((y) => `${y}`));
 
-    d3.select("#sortIconGroup")
+    console.log(width +  margin.left + xScale(1901))
+    console.log( (margin.top - 40))
+
+    d3.select(".sortIconGroup")
     .attr('transform', "translate(" + (width +  margin.left + xScale(1901)) + ", " + (margin.top - 40) + ")")
 
 }
@@ -118,7 +121,7 @@ export function drawYAxis(yScale, xScale, width, margin) {
  * Rotates the ticks on the X axis 45 degrees towards the left.
  */
 export function positionXTicks(height, yScale, xScale) {
-  d3.select(".x.axis")
+  d3.select(".x-axis-heatmap")
     .attr("transform", "translate( 0, " + (height + 100) + ")")
 }
 
@@ -131,7 +134,7 @@ export function positionXTicks(height, yScale, xScale) {
  * @param {*} colorScale The color scale used to set the rectangles' colors
  */
 export function updateRects(xScale, yScale, positiveColorScale, negativeColorScale, width) {
-  d3.select("#graph-g")
+  d3.select("#graph-g-heatmap")
     .selectAll(".year-count-rect")
     .attr("x", function (d, i) {
       return xScale(d.Year);

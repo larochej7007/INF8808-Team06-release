@@ -6,10 +6,10 @@
  * @returns {*} The d3 Selection for the created g element
  */
 export function generateG (margin) {
-  return d3.select('.graph')
+  return d3.select('#heatmap')
     .select('svg')
     .append('g')
-    .attr('id', 'graph-g')
+    .attr('id', 'graph-g-heatmap')
     .attr('transform',
       'translate(' + margin.left + ',' + margin.top + ')')
 }
@@ -33,8 +33,8 @@ export function setCanvasSize (width, height) {
  */
 export function appendAxes (g) {
   g.append('g')
-    .attr('class', 'x axis')
+    .attr('class', 'x-axis-heatmap')
 
   g.append('g')
-    .attr('class', 'y axis')
+    .attr('class', 'y-axis-heatmap')
 }
