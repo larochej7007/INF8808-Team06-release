@@ -89,7 +89,7 @@ export function GetHeatmap() {
       viz.updateRects(xScale, yScale, positiveColorScale, negativeColorScale, graphSize.width)
       d3.select('#heatmap')
         .select('svg')
-        .select('.y.axis')
+        .select(".y-axis-heatmap")
         .append('text')
         .attr('x', 9 )
         .attr('y', yScale.range()[0] + 4 * yScale.bandwidth() + 4)
