@@ -34,10 +34,10 @@ export function setCanvasSize (width, height) {
 export function appendAxes (g) {
 
   g.append('g')
-    .attr('class', 'y viz 5')
+    .attr('class', 'y-axis-unidirectionalplot')
   
     g.append('g')
-    .attr('class', 'x viz 5')
+    .attr('class', 'x-axis-unidirectionalplot')
 }
 /**
  * Appends the labels for the the y axis and the title of the graph.
@@ -46,8 +46,8 @@ export function appendAxes (g) {
  */
 export function appendGraphLabels (g) {
   g.append('text')
-    .text(' PIB USD')
-    .attr('class', 'y viz5 axis-text')
+    .text(' PIB USD$')
+    .attr('class', 'y-text-unidirectionalplot')
     .attr('transform', 'rotate(-90)')
     .attr('font-size', 12)
 
@@ -60,9 +60,24 @@ export function appendGraphLabels (g) {
  * @param {*} yScale The scale to use to draw the axis
  */
 export function drawYAxis (yScale) {
-  d3.select('.y.axis')
+  d3.select('.y-axis-unidirectplot')
     .call(d3.axisLeft(yScale).tickSizeOuter(0).tickArguments([5, '.0r']))
 }
+
+export function drawXAxis (xScale, height) {
+  d3.select('.x-axis-unidirectplot')
+    .attr('transform', 'translate( 0, ' + height + ')')
+    .call(d3.axisBottom(xScale).tickSizeOuter(0).tickArguments([5, '~s']))
+}
+
+export function GroupByYear (data) {
+  var dataGrouped = d3.nest()
+    .key(function (d) { return d.Annees })
+    .entries(data)
+
+  return (dataGrouped)
+}
+
 
 /**
  * Places the graph's title.
@@ -71,7 +86,8 @@ export function drawYAxis (yScale) {
  */
 export function placeTitle (g) {
   g.append('text')
-    .attr('class', 'title')
+    .attr('class', 'unidirectplot-title')
+    .attr('x', 0)
     .attr('y', -20)
     .attr('font-size', 14)
 }
@@ -125,12 +141,5 @@ export function drawButton (g, year, width) {
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
-export function mode (dataByYear, dataByCountry, year, mode, Index) {
-  if (mode == 0) {
-    var decalage = year - 1960
-    return (dataByYear[decalage].values)
-  }
-  if (mode == 1) {
-    return (dataByCountry[Index].values)
-  }
-}
+
+

@@ -5,7 +5,7 @@ import * as scales from './scripts/scales.js'
 import * as viz from './scripts/viz.js'
 import * as tooltip from './scripts/tooltip.js'
 
-import { sliderHorizontal } from 'd3-simple-slider';
+
 import d3Tip from 'd3-tip'
 
 /**
@@ -35,10 +35,12 @@ export function getUniPlot () {
 
   helper.appendAxes(g)
   helper.appendGraphLabels(g)
-  helper.placeTitle(g, graphSize.width)
+  //helper.placeTitle(g, graphSize.width)
 
+  //helper.drawButton(g, currentYear, graphSize.width)
   viz.positionLabels(g, graphSize.width, graphSize.height)
-
+  helper.placeTitle(g, graphSize.width)
+/*
   // Time slider
   var slider = sliderHorizontal()
     .min(1940)
@@ -47,6 +49,7 @@ export function getUniPlot () {
     .ticks(6)
     .default(1960)
   
+
   var s = d3.select('.unidirectplot-svg')
   .append('svg')
   .attr('class', 'slider')
@@ -55,7 +58,9 @@ export function getUniPlot () {
   .append('g')
   .attr('transform', 'translate( 100,30)')
   s.call(slider)
-
+  
+*/
+d3.csv('./DataFinal.csv').then((data) => {
   // Add the path using this helper function
   g.append('rect')
     .attr('x', 100)
@@ -72,8 +77,28 @@ export function getUniPlot () {
   .attr('height', 400)
   .attr('stroke', 'black')
   .attr('fill', '#FF0000');
+  
+  console.log(data)
+  var dataByYear = helper.GroupByYear(data)
+  console.log(dataByYear)
+  data =dataByYear[currentYear-1960].values
+  console.log(data)
+  const xScale = scales.setXScale(graphSize.width, data)
+  const yScale = scales.setYScale(graphSize.height, data)
 
-  helper.drawButton(g, currentYear, graphSize.width)
+
+  helper.drawYAxis(yScale)
+  helper.drawXAxis(xScale,graphSize.width)
+
+
+  build(data, xScale, yScale)
+
+  viz.setCircleHoverHandler(tip)
+
+})
+  
+
+  //helper.drawButton(g, currentYear, graphSize.width)
 
   /**
    *   This function handles the graph's sizing.
@@ -100,6 +125,7 @@ export function getUniPlot () {
    * @param {*} yScale The y scale for the graph
    */
   function build (data, xScale, yScale) {
-    viz.drawCircles(data,xScale,yScale)
+    viz.drawCircles(data,xScale,yScale, tip)
+    viz.setTitleText(currentYear)
   }
 }
