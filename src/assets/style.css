@@ -37,6 +37,7 @@ h2 {
 
 svg {
     background-color: #ffffff;
+    margin: auto;
 }
 
 button {
@@ -71,10 +72,13 @@ button:hover, button:active {
 .graph {
     width: 100%;
     height: 100%;
-    display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+}
+
+#heatmap {
+    height: 950px; 
 }
 
 .VizTitle {
