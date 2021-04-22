@@ -92,8 +92,8 @@ export function drawXAxis(xScale, height, yScale) {
 
   d3.selectAll(".x-axis-heatmap .tick")
   .append('rect')
-  .attr('y', -height - yScale.bandwidth() - 100)
-  .attr('height', height + yScale.bandwidth() + 5 + 100)
+  .attr('y', -height - yScale.bandwidth() - 90)
+  .attr('height', height + yScale.bandwidth() + 5 + 90)
   .attr('width', 1)
   .attr('fill', 'rgb(0, 0, 0)');
 }
@@ -118,7 +118,7 @@ export function drawYAxis(yScale, xScale, width, margin) {
  */
 export function positionXTicks(height, yScale, xScale) {
   d3.select(".x-axis-heatmap")
-    .attr("transform", "translate( 0, " + (height + 100) + ")")
+    .attr("transform", "translate( 0, " + (height + 75) + ")")
 }
 
 /**
