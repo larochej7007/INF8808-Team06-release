@@ -64,6 +64,7 @@ button:hover, button:active {
 
 .viz-container{
     height: 100%;
+    flex-direction: column;
     padding: 0 100px;
 }
 
@@ -73,6 +74,10 @@ button:hover, button:active {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.VizTitle {
+    display: flex;
 }
 
 .tick line{
