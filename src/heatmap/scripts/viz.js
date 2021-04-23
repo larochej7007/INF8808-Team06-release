@@ -82,6 +82,27 @@ export function updateYScale(yScale, neighborhoodNames, height) {
 }
 
 /**
+ * Updates the domain and range of the scale for the y axis
+ *
+ * @param {*} yRegionScale The scale for the y axis
+ * @param {string[]} regions The names of the regions
+ * @param {number} height The height of the diagram
+ */
+export function updateYRegionScale(yRegionScale, regions, height) {
+  yRegionScale.range([height, 0]);
+
+  var result = []
+  regions.forEach(region => {
+    region.Countries.forEach(country => {
+      result.push(country.Country)
+    })
+    result.push(region.Region)
+  })
+
+  yRegionScale.domain(result);
+}
+
+/**
  *  Draws the X axis at the top of the diagram.
  *
  *  @param {*} xScale The scale to use to draw the axis

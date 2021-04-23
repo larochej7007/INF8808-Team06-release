@@ -26,6 +26,7 @@ export function GetHeatmap() {
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleBand()
+  const yRegionScale = d3.scaleBand()
 
   //const colorScale = d3.scaleDiverging(t => d3.interpolateRdBu(1 - t))
   const positiveColorScale = d3.scaleSequential(d3Chromatic.interpolateReds)
@@ -47,7 +48,7 @@ export function GetHeatmap() {
 
     viz.setColorScaleDomain(positiveColorScale, negativeColorScale, data)
 
-    var assembled = preproc.assembleRegionData(countrySummary)
+    var assembledRegions = preproc.assembleRegionData(countrySummary)
 
 
     legend.initGradient(positiveColorScale, negativeColorScale)
@@ -90,19 +91,22 @@ export function GetHeatmap() {
     function build () {
       viz.updateXScale(xScale, data, graphSize.width, util.range)
       viz.updateYScale(yScale, countryNames, graphSize.height)
+      viz.updateYRegionScale(yRegionScale, assembledRegions, graphSize.height)
 
       viz.drawXAxis(xScale, graphSize.height, yScale)
-      viz.drawYAxis(yScale, xScale, (graphSize.width + xScale(1901)), margin)
+      //viz.drawYAxis(yScale, xScale, (graphSize.width + xScale(1901)), margin)
+      viz.drawYAxis(yRegionScale, xScale, (graphSize.width + xScale(1901)), margin)
 
-      viz.positionXTicks(graphSize.height, yScale, xScale)
+      //viz.positionXTicks(graphSize.height, yScale, xScale)
+      viz.positionXTicks(graphSize.height, yRegionScale, xScale)
 
-      viz.updateRects(xScale, yScale, positiveColorScale, negativeColorScale, graphSize.width)
+      viz.updateRects(xScale, yRegionScale, positiveColorScale, negativeColorScale, graphSize.width)
       d3.select('#heatmap')
         .select('svg')
         .select(".y-axis-heatmap")
         .append('text')
         .attr('x', 9 )
-        .attr('y', yScale.range()[0] + 4 * yScale.bandwidth() + 4)
+        .attr('y', yRegionScale.range()[0] + 4 * yRegionScale.bandwidth() + 4)
         .attr('fill', 'currentColor')
         .attr('font-size', 'larger')
         .text("Global-land")
