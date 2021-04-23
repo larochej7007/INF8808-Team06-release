@@ -26,7 +26,7 @@ export function setRectHandler(
     .on("mouseover", function (d) {
       rectSelected(d3.select(this), xScale, yScale);
       selectTicks(
-        d3.select(this).data()[0].country,
+        d3.select(this).data()[0].Country,
         yScale,
         margin,
         width
@@ -97,6 +97,7 @@ export function rectUnselected(element) {
  * @param {number} year The year associated with the tick text to make bold
  */
 export function selectTicks(name, yScale, margin, width) {
+  console.log(name)
   d3.selectAll(".y-axis-heatmap .tick")
     .filter(function (d) {
       return d === name;

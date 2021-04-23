@@ -90,6 +90,7 @@ export function summarizeYearlyCounts(data) {
  */
 export function orderByAVG(data, countries) {
   var countriesWithAVG = []
+  var resultingData = []
 
   countries.forEach((country) => {
     var AVG = 0.0
@@ -97,13 +98,18 @@ export function orderByAVG(data, countries) {
       return dataline.Country === country;
     });
 
+    var region = ""
     countryValues.forEach((line) => {
       AVG += line.annual_anomaly
+      region = line.Region
     })
 
     AVG = AVG / countryValues.length
 
-    countriesWithAVG.push({Country: country, AVG: AVG})
+    countriesWithAVG.push({Country: country, Region: region, AVG: AVG})
+    countryValues.forEach((line) => {
+      resultingData.push({Region:line.Region, Country: country, Year: line.Year, annual_anomaly: line.annual_anomaly, CountryAVG: AVG })
+    })
   })
 
   countriesWithAVG.sort((country1, country2) => {
@@ -117,8 +123,51 @@ export function orderByAVG(data, countries) {
 
     return -1;
   })
-  return countriesWithAVG.map(x => x.Country)
+
+
+  // Do the same for global land
+  var AVG = 0.0
+  var countryValues = data.filter(function (dataline) {
+    return dataline.Country === "Global-land";
+  });
+
+  var region = "Global-land"
+  countryValues.forEach((line) => {
+    AVG += line.annual_anomaly
+  })
+
+  AVG = AVG / countryValues.length
+
+  countryValues.forEach((line) => {
+    resultingData.push({Region:region, Country: line.Country, Year: line.Year, annual_anomaly: line.annual_anomaly, CountryAVG: AVG })
+  })
+
+  return [resultingData, countriesWithAVG, countriesWithAVG.map(x => x.Country)]
+  //return countriesWithAVG.map(x => x.Country)
 }
+
+/**
+ * For the heat map, fills empty values with zeros where a year is missing for a neighborhood because
+ * no trees were planted or the data was not entered that year.
+ *
+ * @param {object[]} data The datas set to process
+ * @param {string[]} neighborhoods The names of the neighborhoods
+ * @param {number} start The start year (inclusive)
+ * @param {number} end The end year (inclusive)
+ * @param {Function} range A utilitary function that could be useful to get the range of years
+ * @returns {object[]} The data set with a new object for missing year and neighborhood combinations,
+ * where the values for 'Counts' is 0
+ */
+ export function orderRegionByAVG(data, countries) {
+  var regionSummary = []
+  data.forEach((d) => {
+    
+
+
+  })
+  return 
+}
+
 
 /**
  * For the heat map, fills empty values with zeros where a year is missing for a neighborhood because
@@ -138,7 +187,7 @@ export function orderByAVG(data, countries) {
 
   neighborhoods.forEach(function (country) {
     var countryLines = data.filter(function (dataline) {
-      return dataline["Country"].charAt(0).toUpperCase() + dataline["Country"].slice(1)=== country;
+      return dataline["Country"].charAt(0).toUpperCase() + dataline["Country"].slice(1)=== country.Country;
     });
 
     var missingYears = new Set(yearRange.slice());
@@ -147,7 +196,7 @@ export function orderByAVG(data, countries) {
     });
 
     missingYears.forEach(function (year) {
-      result.push({ Country: country, Year: year, annual_anomaly: "n/a" });
+      result.push({Region:country.Region, Country: country.Country, Year: year, annual_anomaly: "n/a", CountryAVG: country.AVG  });
     });
   });
 

@@ -33,12 +33,23 @@ export function GetHeatmap() {
 
 
   d3.csv('./data.csv', d3.autoType).then(function (data) {
-    var neighborhoodNames = preproc.getNeighborhoodNames(data)
+    var countryNames = preproc.getNeighborhoodNames(data)
     data = preproc.filterYears(data, 1900, 2020)
-    neighborhoodNames = preproc.orderByAVG(data, neighborhoodNames)
-    data = preproc.fillMissingData(data, neighborhoodNames, 1900, 2020, util.range)
+    var result = preproc.orderByAVG(data, countryNames)
+    data = result[0]
+    var countrySummary = result[1]
+    var countryNames = result[2]
+
+    //console.log(data.slice())
+    //console.log(countryNames)
+    //data = 
+    data = preproc.fillMissingData(data, countrySummary, 1900, 2020, util.range)
 
     viz.setColorScaleDomain(positiveColorScale, negativeColorScale, data)
+
+    console.log(data.slice())
+    console.log(countryNames.slice())
+    console.log(countrySummary.slice())
 
     legend.initGradient(positiveColorScale, negativeColorScale)
     legend.initLegendBar()
@@ -79,7 +90,7 @@ export function GetHeatmap() {
      */
     function build () {
       viz.updateXScale(xScale, data, graphSize.width, util.range)
-      viz.updateYScale(yScale, neighborhoodNames, graphSize.height)
+      viz.updateYScale(yScale, countryNames, graphSize.height)
 
       viz.drawXAxis(xScale, graphSize.height, yScale)
       viz.drawYAxis(yScale, xScale, (graphSize.width + xScale(1901)), margin)
