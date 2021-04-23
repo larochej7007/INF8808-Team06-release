@@ -94,10 +94,9 @@ var ordinalScale = d3.scaleOrdinal()
         .y(function(d) { return  yScale(d["min"]) -margin})
       );
 
-      
       minmax.forEach(function(d) {
         svg.append('line')  
-        .style("stroke", "white")
+        .style("stroke", "#b863b2")
         .style("stroke-width", 2)
           .attr("stroke-dasharray", 2)
         .attr("x1",30 + xScale(d["Year"]) )
