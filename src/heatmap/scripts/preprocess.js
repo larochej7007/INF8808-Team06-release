@@ -146,6 +146,53 @@ export function orderByAVG(data, countries) {
   //return countriesWithAVG.map(x => x.Country)
 }
 
+
+export function assembleRegionData(countries){
+  var regionData = {}
+
+  countries.forEach((country) => {
+    var currentRegionData = undefined
+    if(regionData[country.Region] == undefined) {
+      currentRegionData = {Region: country.Region, Countries: [country]}
+    } else {
+      currentRegionData = regionData[country.Region]
+      currentRegionData.Countries.push(country)
+    }
+
+    regionData[country.Region] = currentRegionData;
+  })
+
+  var result = []
+  Object.values(regionData).forEach((region) => {
+    var regionAVG = d3.mean(region.Countries, (country) => country.AVG )
+
+    var countries= region.Countries.sort((country1, country2) => {
+      if(country1.AVG > country2.AVG) {
+        return 1
+      } else if(country1.AVG == country2.AVG) {
+  
+        return 0
+      }
+  
+      return -1;
+    })
+
+    result.push({ Region: region.Region, Countries: countries, AVG: regionAVG })
+  })
+
+  return result.sort((region1, region2) => {
+    if(region1.AVG > region2.AVG) {
+      return 1
+    } else if(region1.AVG == region2.AVG) {
+
+      return 0
+    }
+
+    return -1;
+  })
+
+}
+
 /**
  * For the heat map, fills empty values with zeros where a year is missing for a neighborhood because
  * no trees were planted or the data was not entered that year.

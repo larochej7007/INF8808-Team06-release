@@ -47,9 +47,8 @@ export function GetHeatmap() {
 
     viz.setColorScaleDomain(positiveColorScale, negativeColorScale, data)
 
-    console.log(data.slice())
-    console.log(countryNames.slice())
-    console.log(countrySummary.slice())
+    var assembled = preproc.assembleRegionData(countrySummary)
+
 
     legend.initGradient(positiveColorScale, negativeColorScale)
     legend.initLegendBar()
