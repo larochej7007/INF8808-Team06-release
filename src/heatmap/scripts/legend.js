@@ -81,16 +81,27 @@ export function initLegendAxis() {
  * @param {*} colorScale The color scale represented by the legend
  */
 export function draw(x, y, height, width, positiveFill, negativeFill, positiveColorScale, negativeColorScale) {
-  d3.select(".legend.axis")
+
+  if(d3.select(".positiveLegend").empty()) {
+    d3.select(".legend.axis")
     .append("rect")
+    .attr('class', 'positiveLegend')
+  }
+
+  if(d3.select(".negativeLegend").empty()) {
+    d3.select(".legend.axis")
+    .append("rect")
+    .attr('class', 'negativeLegend')
+  }
+
+  d3.select(".positiveLegend")
     .attr("fill", positiveFill)
     .attr("x", x + width/2)
     .attr("y", y)
     .attr("height", height)
     .attr("width", width/2);
 
-  d3.select(".legend.axis")
-    .append("rect")
+  d3.select(".negativeLegend")
     .attr("fill", negativeFill)
     .attr("x", x)
     .attr("y", y)
@@ -98,13 +109,15 @@ export function draw(x, y, height, width, positiveFill, negativeFill, positiveCo
     .attr("width", width/2);
 
     var scale = (positiveColorScale.domain())
-  var legendPositiveColorScale = d3
-    .scaleLinear()
+    var legendPositiveColorScale = d3.scaleLinear()
     .range([0, width/2])
     .domain([scale[0], scale[1]]);
 
+  d3.select(".positiveValuesLegend").remove()
+
   d3.select(".legend.axis")
     .append("g")
+    .attr('class', 'positiveValuesLegend')
     .attr("transform", "translate(" + (x + width/2) + ", " + y + ")")
     .call(
       d3
@@ -118,8 +131,10 @@ export function draw(x, y, height, width, positiveFill, negativeFill, positiveCo
     .range([width/2, 0])
     .domain([scale[1], scale[0]]);
 
+  d3.select(".negativeValuesLegend").remove()
   d3.select(".legend.axis")
     .append("g")
+    .attr('class', 'negativeValuesLegend')
     .attr("transform", "translate(" + x + ", " + y + ")")
     .call(
       d3
