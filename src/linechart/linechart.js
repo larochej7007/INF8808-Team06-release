@@ -28,22 +28,21 @@ export function GetLineChart () {
    svg.attr("height", height + 2 * margin);
 
   const xScale = d3.scaleLinear()
- 
   const yScale = d3.scaleLinear()
+
   var minmax =  new Array, dataset, data2;
   const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return tooltip.getContents(d) })
-  var Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-var ordinalScale = d3.scaleOrdinal()
-  .domain(Months)
-  .range(['black', 'white']);
 
   d3.select('.linechart-svg').call(tip)
+  d3.csv('./data.csv').then(function (data) {
+    
+    data = data.filter((d) => {
+      return d.Country == "Canada"
+    })
 
-  d3.csv('./datafile.csv').then(function (data) {
-   
     dataset = preproc.strictData(data);   //  ann>1900
     minmax = preproc.minMaxMonthlyAnn(dataset["Data"],dataset["Years"], minmax)
+    
     setSizing(); 
     viz.updateXScale(xScale, dataset, width)
     viz.updateYScale(yScale, dataset["Data"], height, margin)
