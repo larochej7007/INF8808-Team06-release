@@ -40,8 +40,10 @@ export function GetLineChart () {
       return d.Country == "Canada"
     })
 
-    dataset = preproc.strictData(data);   //  ann>1900
-    minmax = preproc.minMaxMonthlyAnn(dataset["Data"],dataset["Years"], minmax)
+    data = preproc.sumarizeYears(data, 1900, 2020)
+
+    //console.log(data.slice())
+    //data = preproc.minMaxMonthlyAnn(data)
     
     setSizing(); 
     viz.updateXScale(xScale, dataset, width)
