@@ -5,6 +5,7 @@ import * as viz from './scripts/viz.js'
 import * as helper from './scripts/helper.js'
 
 import d3Tip from 'd3-tip'
+import { style } from 'd3-selection'
 
 /**
  * @file This file is the entry-point for the the code for TP2 for the course INF8808.
@@ -27,14 +28,9 @@ export function GetLineChart (countryName) {
   d3.select("#linechart")
     .append('svg').attr('class', 'linechart-svg')
     .attr('style', 'font:12px sans-serif');
-    
+
    var svg = d3.select(".linechart-svg");
    var margin = 30;
-   //var padding= 30;
-   //var width = 1200;
-   //var height = 550;
-   //svg.attr("width", width);
-   //svg.attr("height", height);
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
@@ -58,6 +54,14 @@ export function GetLineChart (countryName) {
     viz.updateXScale(xScale, 1900, 2020, graphSize.width, margin)
     viz.updateYScale(yScale, data, graphSize.height, margin)
     
+    svg.append('text')
+      .text("Data for: " + countryName)
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("text-anchor", "start")
+      .attr("dominant-baseline", "hanging")
+      .attr("style", "font-family: Times New Roman; font-size: 24; stroke: #000000; fill: #000000;")
+
     // Add scales to axis
     var x_axis = d3.axisBottom(xScale)
                    .ticks(24)
