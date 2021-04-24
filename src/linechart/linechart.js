@@ -12,13 +12,22 @@ import d3Tip from 'd3-tip'
  * @version v1.0.0
  */
 
-export function GetLineChart () {
- 
+export function clearLineChart() {
+  d3.select("#linechart").html("");
+}
 
+export function GetLineChart (countryName) {
+ 
+  console.log(countryName)
   let bounds
   let svgSize
   let graphSize
+  
 
+  d3.select("#linechart")
+    .append('svg').attr('class', 'linechart-svg')
+    .attr('style', 'font:12px sans-serif');
+    
    var svg = d3.select(".linechart-svg");
    var margin = 30;
    //var padding= 30;
@@ -37,7 +46,7 @@ export function GetLineChart () {
   d3.csv('./data.csv').then(function (data) {
     
     data = data.filter((d) => {
-      return d.Country == "Canada"
+      return d.Country == countryName
     })
 
     data = preproc.sumarizeYears(data, 1900, 2020)

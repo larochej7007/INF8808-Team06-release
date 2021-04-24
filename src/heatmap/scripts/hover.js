@@ -1,3 +1,4 @@
+import * as linechart from './../../linechart/linechart.js'
 /**
  * Sets up an event handler for when the mouse enters and leaves the squares
  * in the heatmap. When the square is hovered, it enters the "selected" state.
@@ -36,6 +37,14 @@ export function setRectHandler(
       rectUnselected(d3.select(this));
       unselectTicks();
     });
+
+
+  d3.selectAll(".year-count-rect")
+    .on("click", d => {
+      console.log(d)
+      linechart.clearLineChart()
+      linechart.GetLineChart (d.country)
+    })
 }
 
 /**
