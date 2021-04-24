@@ -50,17 +50,21 @@ export function GetLineChart () {
     viz.updateYScale(yScale, data, graphSize.height, margin)
     
     // Add scales to axis
-    var x_axis = d3.axisBottom()
-                   .scale(xScale)
-                   .tickSize(4);
+    var x_axis = d3.axisBottom(xScale)
+                   .ticks(24)
+                   .tickFormat((y) => `${y}`);
 
     svg.append("g")
-      .attr("transform", "translate(" + margin + " ," + (graphSize.height + margin) + ")")
+      .attr("class", "x-axis-linechart")
+      .attr("transform", "translate(" + margin + " ," + (graphSize.height) + ")")
       .call(x_axis)
       
     var y_axis = d3.axisLeft()
                   .scale(yScale)
-                  .tickSize(4);
+                  .tickSize(4)
+                  .ticks(24)
+                  .tickSize(-graphSize.width)
+                  .tickFormat((y) => `${y}`);
 
     svg.append("g")
        .attr("transform", "translate(" + margin + ", " + margin + ")")
@@ -93,7 +97,7 @@ export function GetLineChart () {
 
       data.forEach(function(d) {
         svg.append('line')  
-        .style("stroke", "#bbbbbb")
+        .style("stroke", "#b863b2")
         .style("stroke-width", 2)
         .attr("stroke-dasharray", 2)
         .attr("transform", "translate(" + margin + ", "+ margin + ")")

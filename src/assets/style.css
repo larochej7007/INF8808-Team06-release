@@ -86,7 +86,10 @@ button:hover, button:active {
 }
 
 .tick line{
-    visibility: hidden;
+    visibility: visible;
+    stroke-dasharray: 1 1;
+    stroke:'#CCCCCC';
+    stroke-opacity: 0.3;
   }
 
 .info {
