@@ -7,10 +7,8 @@ import { range, svg } from 'd3'
  * @param {object[]} data The data to be used
  * @param {number} width The width of the graph
  */
-export function updateXScale (scale, data, width) {
-  // TODO : Set the domain and range of the groups' x scale
- 
-  scale.domain([data["Min"], data["Max"]]).range([0, width])
+export function updateXScale (scale, start, end, width, margin) {
+  scale.domain([start, end]).range([0, width - margin])
 }
 
 /**
@@ -23,18 +21,16 @@ export function updateXScale (scale, data, width) {
  */
 export function updateYScale (scale, data, height, margin) {
   // TODO : Set the domain and range of the graph's y scale
-  var min=1000, max=-1000; 
-  // Look for min ans max of the monthly_anomalies
-  data.forEach(function(d) {
-    if(min > d["monthly_anomaly"])
-      min =  d["monthly_anomaly"];
-    if(max < d["monthly_anomaly"])
-      max =  d["monthly_anomaly"];
-  });
+  // TODO : Set the domain and range of the groups' x scale
+  var min = d3.min(data, (d) => {
+    return d.Min
+  })
 
- 
-  
-  scale.domain([max+margin, min-margin]).range([0, height])
+  var max = d3.max(data, (d) => {
+    return d.Max
+  })
+
+  scale.domain([max, min]).range([0, height - margin])
   
 }
 

@@ -20,12 +20,12 @@ export function GetLineChart () {
   let graphSize
 
    var svg = d3.select(".linechart-svg");
-   var margin = 10;
-   var padding= 10;
-   var width = 1200;
-   var height = 550;
-   svg.attr("width", width + 2 * margin);
-   svg.attr("height", height + 2 * margin);
+   var margin = 30;
+   //var padding= 30;
+   //var width = 1200;
+   //var height = 550;
+   //svg.attr("width", width);
+   //svg.attr("height", height);
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
@@ -46,64 +46,61 @@ export function GetLineChart () {
     //data = preproc.minMaxMonthlyAnn(data)
     
     setSizing(); 
-    viz.updateXScale(xScale, dataset, width)
-    viz.updateYScale(yScale, dataset["Data"], height, margin)
+    viz.updateXScale(xScale, 1900, 2020, graphSize.width, margin)
+    viz.updateYScale(yScale, data, graphSize.height, margin)
     
     // Add scales to axis
     var x_axis = d3.axisBottom()
                    .scale(xScale)
-                    
-                    .tickSize(4)
-                    ;
+                   .tickSize(4);
+
     svg.append("g")
-      .attr("transform",  "translate( 30 ,"+ height + ")")
+      .attr("transform", "translate(" + margin + " ," + (graphSize.height + margin) + ")")
       .call(x_axis)
       
     var y_axis = d3.axisLeft()
                   .scale(yScale)
                   .tickSize(4);
-                  ;
-    svg.append("g")
-       .attr("transform", "translate(30, 0)")
-       .call(y_axis);
 
-   
+    svg.append("g")
+       .attr("transform", "translate(" + margin + ", " + margin + ")")
+       .call(y_axis);
         
     // Add the line
-    
     svg.append("path")
-      .datum(minmax)
+      .datum(data)
       .attr("class", ids)
+      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .style("fill", "none")
       .attr("stroke", "#d40b20")
       .attr("stroke-width", 1.5)
-    
-       .attr("d", d3.line()
-        .x(function(d) { return 30 + xScale(d["Year"]) })
-        .y(function(d) { return yScale(d["max"]) -margin })
+      .attr("d", d3.line()
+        .x(function(d) { return xScale(d.Year) })
+        .y(function(d) { return yScale(d.Max)})
       );
 
     svg.append("path")
-      .datum(minmax)
-       .attr("class", ids)
+      .datum(data)
+      .attr("class", ids)
+      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("fill", "none")
       .attr("stroke", "#0c31d2")
       .attr("stroke-width", 1.5)
-     
       .attr("d", d3.line()
-        .x(function(d) { return 30 + xScale(d["Year"]) })
-        .y(function(d) { return  yScale(d["min"]) -margin})
+        .x(function(d) { return xScale(d.Year) })
+        .y(function(d) { return  yScale(d.Min)})
       );
 
-      minmax.forEach(function(d) {
+      data.forEach(function(d) {
         svg.append('line')  
-        .style("stroke", "#b863b2")
+        .style("stroke", "#bbbbbb")
         .style("stroke-width", 2)
-          .attr("stroke-dasharray", 2)
-        .attr("x1",30 + xScale(d["Year"]) )
-        .attr("y1", yScale(d["min"]) -margin)
-        .attr("x2", 30 + xScale(d["Year"]) )
-        .attr("y2",  yScale(d["max"]) -margin )
+        .attr("stroke-dasharray", 2)
+        .attr("transform", "translate(" + margin + ", "+ margin + ")")
+        .attr("x1",xScale(d.Year) )
+        .attr("y1", yScale(d.Min))
+        .attr("x2", xScale(d.Year))
+        .attr("y2",  yScale(d.Max))
       });
     /**
      *   This function handles the graph's sizing.
@@ -112,13 +109,13 @@ export function GetLineChart () {
       bounds = d3.select('svg').node().getBoundingClientRect()
 
       svgSize = {
-        width: width,
-        height: height
+        width: bounds.width,
+        height: bounds.height / 2
       }
 
       graphSize = {
-        width: svgSize.width - margin,
-        height: svgSize.height - margin
+        width: svgSize.width - 2*margin,
+        height: svgSize.height - 2*margin
       }
 
       helper.setCanvasSize(svgSize.width, svgSize.height)

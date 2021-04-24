@@ -63,7 +63,7 @@ export function defineColorScale (colors, players) {
  * @param {number} height The desired height
  */
 export function setCanvasSize (width, height) {
-  d3.select('#bar-chart').select('svg')
+  d3.select('#linechart').select('svg')
     .attr('width', width)
     .attr('height', height)
 }
