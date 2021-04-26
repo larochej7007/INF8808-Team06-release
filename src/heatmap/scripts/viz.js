@@ -88,14 +88,7 @@ export function updateYScale(yScale, neighborhoodNames, height) {
  */
 export function drawXAxis(xScale, height, yScale) {
   d3.select(".x-axis-heatmap")
-    .call(d3.axisBottom(xScale).ticks(12).tickFormat((y) => `${y}`));
-
-  d3.selectAll(".x-axis-heatmap .tick")
-  .append('rect')
-  .attr('y', -height - yScale.bandwidth() - 90)
-  .attr('height', height + yScale.bandwidth() + 5 + 90)
-  .attr('width', 1)
-  .attr('fill', 'rgb(0, 0, 0)');
+    .call(d3.axisBottom(xScale).ticks(12).tickSize(-(height + 4* yScale.bandwidth() + 5)).tickFormat((y) => `${y}`));
 }
 
 /**
@@ -118,7 +111,7 @@ export function drawYAxis(yScale, xScale, width, margin) {
  */
 export function positionXTicks(height, yScale, xScale) {
   d3.select(".x-axis-heatmap")
-    .attr("transform", "translate( 0, " + (height + 75) + ")")
+    .attr("transform", "translate( 0, " + (height + 3.5 * yScale.bandwidth()) + ")")
 }
 
 /**
@@ -157,7 +150,7 @@ export function updateRects(xScale, yScale, positiveColorScale, negativeColorSca
     })
     .attr("height", function (d, i) {
       if(d["Country"] == "Global-land") {
-        return 4 * yScale.bandwidth()
+        return yScale.bandwidth()
       }
       return yScale.bandwidth();
     })

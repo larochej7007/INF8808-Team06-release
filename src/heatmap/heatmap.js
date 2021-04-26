@@ -92,7 +92,7 @@ export function GetHeatmap() {
         .select(".y-axis-heatmap")
         .append('text')
         .attr('x', 9 )
-        .attr('y', yScale.range()[0] + 4 * yScale.bandwidth() + 4)
+        .attr('y', yScale.range()[0] + 2.5 * yScale.bandwidth() + 4 )
         .attr('fill', 'currentColor')
         .attr('font-size', 'larger')
         .text("Global-land")

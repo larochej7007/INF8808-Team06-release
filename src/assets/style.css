@@ -92,6 +92,13 @@ button:hover, button:active {
     stroke-opacity: 0.3;
   }
 
+.x-axis-heatmap .tick line{
+    visibility: visible;
+    stroke-dasharray: none;
+    stroke:'#000000';
+    stroke-opacity: 1;
+  }
+
 .info {
     pointer-events: none;
     font-family: 'Roboto';
