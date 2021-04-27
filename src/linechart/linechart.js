@@ -17,6 +17,8 @@ export function clearLineChart() {
   d3.select("#linechart").html("");
 }
 
+var selectedData = {}
+
 export function GetLineChart (countryName) {
  
   console.log(countryName)
@@ -132,6 +134,70 @@ export function GetLineChart (countryName) {
         .x(function(d) { return xScale(d.Year) })
         .y(function(d) { return  yScale(d.AVG)})
       );
+
+      // Add X axis --> it is a date format
+    var bisect = d3.bisector(function(d) { return d.Year; }).left;
+    var x = d3.scaleLinear()
+      .domain([1900,2020])
+      .range([ margin, graphSize.width + margin]);
+
+    // Create the circle that travels along the curve of chart
+    var focus = svg
+      .append('g')
+      .append('line')
+        .style("fill", "none")
+        .attr("stroke", "black")
+        .style("opacity", 0)
+
+    var focusText = svg
+      .append('g')
+      .append('text')
+      .style("opacity", 0)
+      .attr("text-anchor", "left")
+      .attr("alignment-baseline", "middle")
+
+    // Create a rect on top of the svg area: this rectangle recovers mouse position
+    svg
+      .append('rect')
+      .style("fill", "none")
+      .style("pointer-events", "all")
+      .attr('width', graphSize.width)
+      .attr('height', graphSize.height)
+      .attr('x', margin)
+      .attr('y', margin)
+      .on('mouseover', mouseover)
+      .on('mousemove', mousemove)
+      .on('mouseout', mouseout);
+
+
+    // What happens when the mouse move -> show the annotations at the right positions.
+    function mouseover() {
+      focus.style("opacity", 1)
+      focusText.style("opacity",1)
+    }
+
+    function mousemove() {
+      // recover coordinate we need
+      console.log(d3.mouse(this)[0])
+      var x0 = xScale.invert(d3.mouse(this)[0] - margin);
+      console.log(x0)
+      var i = bisect(data, x0, 1) - 1;
+      selectedData = data[i]
+      focus
+        .attr("x1", xScale(selectedData.Year) + margin)
+        .attr("y1", yScale.range()[0] + margin)
+        .attr("x2", xScale(selectedData.Year) + margin)
+        .attr("y2", yScale.range()[1]  + margin)
+        
+      focusText
+        .html("Year:" + selectedData.Year + "- Max:" + selectedData.Max + "  -  " + "Min:" + selectedData.Min + "  -  " + "AVG:" + selectedData.AVG)
+        .attr("x", xScale(selectedData.Year)+5)
+        .attr("y", 20)
+      }
+    function mouseout() {
+      focus.style("opacity", 0)
+      focusText.style("opacity", 0)
+    }
 
 
     /**
