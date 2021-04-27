@@ -97,9 +97,7 @@ export function GetHeatmap() {
         .attr('font-size', 'larger')
         .text("Global-land")
 
-
-      hover.setRectHandler(xScale, yScale, hover.rectSelected, hover.rectUnselected, hover.selectTicks, hover.unselectTicks, margin, graphSize.width + xScale(1901))
-
+      hover.setRectHandler(xScale, yScale, hover.selectTicks, hover.unselectTicks,  hover.hoverTicks, hover.unhoverTicks, margin, graphSize.width + xScale(1901))
       legend.draw(margin.left, margin.top/2, 15, (graphSize.width + xScale(1901)), 'url(#positiveGradient)','url(#negativeGradient)', positiveColorScale, negativeColorScale)
     }
 

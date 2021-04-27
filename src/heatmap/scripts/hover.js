@@ -13,20 +13,22 @@ import * as linechart from './../../linechart/linechart.js'
  * @param {Function} selectTicks The function to call to set the mode to "selected" on the ticks
  * @param {Function} unselectTicks The function to call to remove "selected" mode from the ticks
  */
+var hoveredTick = ''
+var selectedTick = ''
+
 export function setRectHandler(
   xScale,
   yScale,
-  rectSelected,
-  rectUnselected,
-  selectTicks,
-  unselectTicks,
+  selectTick,
+  unselectTick,
+  hoverTicks,
+  unhoverTicks,
   margin,
   width
 ) {
   d3.selectAll(".year-count-g")
     .on("mouseover", function (d) {
-      rectSelected(d3.select(this), xScale, yScale);
-      selectTicks(
+      hoverTicks(
         d3.select(this).data()[0].country,
         yScale,
         margin,
@@ -34,8 +36,7 @@ export function setRectHandler(
       );
     })
     .on("mouseout", function (d) {
-      rectUnselected(d3.select(this));
-      unselectTicks();
+      unhoverTicks();
     });
 
 
@@ -43,7 +44,13 @@ export function setRectHandler(
     .on("click", d => {
       console.log(d)
       linechart.clearLineChart()
+      unselectTick()
       linechart.GetLineChart (d.country)
+      selectTick(
+        d.country,
+        yScale,
+        margin,
+        width)
     })
 }
 
@@ -105,8 +112,39 @@ export function rectUnselected(element) {
  * @param {string} name The name of the neighborhood associated with the tick text to make bold
  * @param {number} year The year associated with the tick text to make bold
  */
+export function hoverTicks(name, yScale, margin, width) {
+  hoveredTick = name;
+  d3.selectAll(".y-axis-heatmap .tick text")
+    .filter(function (d) {
+      return d === name;
+    })
+    .attr("font-weight", "bold");
+
+    d3.select("#graph-g-heatmap")
+      .append('rect')
+      .attr('id', 'hoveredLine')
+      .attr('y', function() {
+        if(name == "Global-land") {
+          return yScale.range()[0] + 2 * yScale.bandwidth()
+        }
+        return yScale(name)
+      })
+      .attr('x', 0)
+      .attr('width', width)
+      .attr('height', function() {
+        if(name == "Global-land") {
+          return 4 * yScale.bandwidth()
+        }
+        return yScale.bandwidth()
+      })
+      .attr('stroke', 'black')
+      .attr('stroke-width', '3')
+      .attr('fill', 'none')
+}
+
 export function selectTicks(name, yScale, margin, width) {
-  d3.selectAll(".y-axis-heatmap .tick")
+  selectedTick = name; 
+  d3.selectAll(".y-axis-heatmap .tick text")
     .filter(function (d) {
       return d === name;
     })
@@ -137,12 +175,18 @@ export function selectTicks(name, yScale, margin, width) {
 /**
  * Returns the font weight of all ticks to normal.
  */
-export function unselectTicks() {
-  d3.selectAll(".x-axis-heatmap .tick").attr("font-weight", "normal");
+export function unhoverTicks() {
+  d3.selectAll(".x-axis-heatmap .tick text").filter(function(d) { return this.innerHTML != selectedTick; }).attr("font-weight", "normal");
+  d3.selectAll(".y-axis-heatmap .tick text").filter(function(d) { return this.innerHTML != selectedTick; }).attr("font-weight", "normal");
 
-  d3.selectAll(".y-axis-heatmap .tick").attr("font-weight", "normal");
+  d3.select("#hoveredLine").remove();
+
+
+}
+
+export function unselectTicks() {
+  d3.selectAll(".x-axis-heatmap .tick text").filter(function(d) { return this.innerHTML != hoveredTick; }).attr("font-weight", "normal");
+  d3.selectAll(".y-axis-heatmap .tick text").filter(function(d) { return this.innerHTML != hoveredTick; }).attr("font-weight", "normal");
 
   d3.select("#selectedLine").remove();
-
-
 }
