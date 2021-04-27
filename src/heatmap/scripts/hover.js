@@ -132,9 +132,6 @@ export function hoverTicks(name, yScale, margin, width) {
       .attr('x', 0)
       .attr('width', width)
       .attr('height', function() {
-        if(name == "Global-land") {
-          return 4 * yScale.bandwidth()
-        }
         return yScale.bandwidth()
       })
       .attr('stroke', 'black')
@@ -162,9 +159,6 @@ export function selectTicks(name, yScale, margin, width) {
       .attr('x', 0)
       .attr('width', width)
       .attr('height', function() {
-        if(name == "Global-land") {
-          return 4 * yScale.bandwidth()
-        }
         return yScale.bandwidth()
       })
       .attr('stroke', 'black')
