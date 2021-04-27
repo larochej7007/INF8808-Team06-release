@@ -95,7 +95,7 @@ export function UpdateGrid (width, yScale) {
             .tickSize(-width+150)
             .tickFormat("")
          )
-      .raise()
+      .lower()
 
   d3.select('.grid').selectAll('line')
       .style({ 'stroke': 'black', 'fill': 'none', 'stroke-width': '1px'});

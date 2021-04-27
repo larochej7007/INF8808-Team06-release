@@ -14,19 +14,17 @@ export function drawLegend (colorScale, g, width) {
 
   var padding = width + 15 // On rajoute 15 pour ne pas avoir d'overlapping avec les données de 2015 et la légende
   g.append('g')
-    .attr('class', 'legend')
+    .attr('id', 'legend-scatterplot')
     .attr('transform', 'translate(' + padding + ',' + -10 + ')') // Le -10 permet de relever un peu la légende
-
-  var array = ['oui', 'non']
 
   var legend = d3Legend.legendColor()
     .shape('circle')
-    .title('Mesures Prises ?')
-    .cells(2)
-    .labels(['Non', 'Oui'])
+    .title('Legend')
+    .cells(3)
+    .labels(['No mesure taken', 'Mesure taken', 'World'])
     .scale(colorScale)
 
 
-  g.select('.legend')
+  g.select('#legend-scatterplot')
     .call(legend)
 }
