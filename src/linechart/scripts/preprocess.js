@@ -50,6 +50,7 @@ export function sumarizeYears(data, start, end) {
       currentSummary.Year = currentResult.Year;
       currentSummary.Min = Math.min(currentResult.Min, parseFloat(yearLine.monthly_anomaly));
       currentSummary.Max = Math.max(currentResult.Max, parseFloat(yearLine.monthly_anomaly));
+
     } else {
       currentSummary.Year = yearLine.Year;
       currentSummary.Min = parseFloat(yearLine.monthly_anomaly);
@@ -57,6 +58,11 @@ export function sumarizeYears(data, start, end) {
     }
     sumarizedResult[yearLine.Year] = currentSummary
   })
+
+  Object.values(sumarizedResult).forEach(val => {
+    val.AVG = d3.mean(result.filter(yearLine => { return yearLine.Year == val.Year}), d => { return d.monthly_anomaly})
+  })
+
   return Object.values(sumarizedResult)
 }
 /**

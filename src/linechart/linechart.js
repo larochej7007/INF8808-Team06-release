@@ -84,6 +84,18 @@ export function GetLineChart (countryName) {
        .call(y_axis);
         
     // Add the line
+    data.forEach(function(d) {
+      svg.append('line')  
+      .style("stroke", "#b863b2")
+      .style("stroke-width", 2)
+      .attr("stroke-dasharray", 2)
+      .attr("transform", "translate(" + margin + ", "+ margin + ")")
+      .attr("x1",xScale(d.Year) )
+      .attr("y1", yScale(d.Min))
+      .attr("x2", xScale(d.Year))
+      .attr("y2",  yScale(d.Max))
+    });
+
     svg.append("path")
       .datum(data)
       .attr("class", ids)
@@ -108,17 +120,20 @@ export function GetLineChart (countryName) {
         .y(function(d) { return  yScale(d.Min)})
       );
 
-      data.forEach(function(d) {
-        svg.append('line')  
-        .style("stroke", "#b863b2")
-        .style("stroke-width", 2)
-        .attr("stroke-dasharray", 2)
-        .attr("transform", "translate(" + margin + ", "+ margin + ")")
-        .attr("x1",xScale(d.Year) )
-        .attr("y1", yScale(d.Min))
-        .attr("x2", xScale(d.Year))
-        .attr("y2",  yScale(d.Max))
-      });
+    svg.append("path")
+      .datum(data)
+      .attr("class", ids)
+      .attr("transform", "translate(" + margin + ", "+ margin + ")")
+      .attr("fill", "none")
+      .attr("stroke", "#000000")
+      .attr("opacity", "0.5")
+      .attr("stroke-width", 1)
+      .attr("d", d3.line()
+        .x(function(d) { return xScale(d.Year) })
+        .y(function(d) { return  yScale(d.AVG)})
+      );
+
+
     /**
      *   This function handles the graph's sizing.
      */
