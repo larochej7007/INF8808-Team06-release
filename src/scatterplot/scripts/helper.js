@@ -1,6 +1,4 @@
 
-import * as scales from './scales.js'
-
 /**
  * Generates the SVG element g which will contain the data visualisation.
  *
@@ -8,9 +6,6 @@ import * as scales from './scales.js'
  * @returns {*} The d3 Selection for the created g element
  */
 export function generateG (margin) {
-
-  d3.select('.scatterplot-svg').attr('transform', 'translate(0,200)')
-
   return d3.select('#scatterplot')
     .select('svg')
     .append('g')
@@ -43,7 +38,6 @@ export function appendAxes (g) {
   g.append('g')
     .attr('class', 'y-axis-scatterplot')
 }
-
 /**
  * Appends the labels for the the y axis and the title of the graph.
  *
@@ -63,19 +57,6 @@ export function appendGraphLabels (g) {
 }
 
 /**
- * Places the graph's title.
- *
- * @param {*} g The d3 Selection of the graph's g SVG element
- */
-export function placeTitle (g) {
-  g.append('text')
-    .attr('class', 'title-scatterplot')
-    .attr('x', 0)
-    .attr('y', -20)
-    .attr('font-size', 14)
-}
-
-/**
  * Draws the X axis at the bottom of the diagram.
  *
  * @param {*} xScale The scale to use to draw the axis
@@ -84,7 +65,7 @@ export function placeTitle (g) {
 export function drawXAxis (xScale, height) {
   d3.select('.x-axis-scatterplot')
     .attr('transform', 'translate( 0, ' + height + ')')
-    .call(d3.axisBottom(xScale).tickSizeOuter(0).tickArguments([5, '~s']))
+    .call(d3.axisBottom(xScale).tickSizeOuter(0).tickArguments([5, '.0r']))
 }
 
 /**
@@ -98,42 +79,35 @@ export function drawYAxis (yScale) {
 }
 
 /**
- * @param data
+ * Places the graph's title.
+ *
+ * @param {*} g The d3 Selection of the graph's g SVG element
  */
-export function GroupByYear (data) {
-  var dataGrouped = d3.nest()
-    .key(function (d) { return d.Annees })
-    .entries(data)
-
-  return (dataGrouped)
-}
-
-/**
- * @param data
- */
-export function GroupByCountry (data) {
-  var dataGrouped = d3.nest()
-    .key(function (d) { return d.Pays })
-    .entries(data)
-  return (dataGrouped)
+export function placeTitle (g) {
+  g.append('text')
+    .attr('id', 'title-scatterplot')
+    .attr('x', 0)
+    .attr('y', -20)
+    .attr('font-size', 14)
 }
 
 /**
  * Draws the button to toggle the display year.
  *
  * @param {*} g The d3 Selection of the graph's g SVG element
+ * @param {number} year The year to display
  * @param {number} width The width of the graph, used to place the button
  */
-export function drawButton1 (g, width) {
+export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button1')
-    .attr('transform', 'translate(' + (width+50) + ', 250)')
-    .attr('width', 130)
-    .attr('height', 25)
+    .attr('transform', 'translate(' + (width + 20) + ', 140)')
+    .attr('width', 150)
+    .attr('height', 30)
 
   button.append('rect')
-    .attr('width', 130)
+    .attr('width', 150)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
@@ -144,12 +118,12 @@ export function drawButton1 (g, width) {
     })
 
   button.append('text')
-    .attr('x', 65)
+    .attr('x', 75)
     .attr('y', 15)
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
-    .text('Charger le pays selectionné')
+    .text('See ' + year + ' dataset')
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
@@ -158,16 +132,16 @@ export function drawButton1 (g, width) {
  * @param g
  * @param width
  */
-export function drawButton2 (g, width) {
+ export function drawButton2 (g, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button2')
-    .attr('transform', 'translate(' + (width+50) + ', 300)')
-    .attr('width', 130)
-    .attr('height', 25)
+    .attr('transform', 'translate(' + (width + 20) + ', 180)')
+    .attr('width', 70)
+    .attr('height', 30)
 
   button.append('rect')
-    .attr('width', 130)
+    .attr('width', 70)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
@@ -178,7 +152,75 @@ export function drawButton2 (g, width) {
     })
 
   button.append('text')
-    .attr('x', 65)
+    .attr('x', 35)
+    .attr('y', 15)
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'middle')
+    .attr('class', 'button-text')
+    .text('Previous year')
+    .attr('font-size', '10px')
+    .attr('fill', '#362023')
+}
+
+/**
+ * @param g
+ * @param width
+ */
+ export function drawButton3 (g, width) {
+  const button = g.append('g')
+    .attr('class', 'button')
+    .attr('id', 'button3')
+    .attr('transform', 'translate(' + (width + 100) + ', 180)')
+    .attr('width', 70)
+    .attr('height', 30)
+
+  button.append('rect')
+    .attr('width', 70)
+    .attr('height', 30)
+    .attr('fill', '#f4f6f4')
+    .on('mouseenter', function () {
+      d3.select(this).attr('stroke', '#362023')
+    })
+    .on('mouseleave', function () {
+      d3.select(this).attr('stroke', '#f4f6f4')
+    })
+
+  button.append('text')
+    .attr('x', 35)
+    .attr('y', 15)
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'middle')
+    .attr('class', 'button-text')
+    .text('Next year')
+    .attr('font-size', '10px')
+    .attr('fill', '#362023')
+}
+
+/**
+ * @param g
+ * @param width
+ */
+ export function drawButton4 (g, width) {
+  const button = g.append('g')
+    .attr('class', 'button')
+    .attr('id', 'button4')
+    .attr('transform', 'translate(' + (20 + width) + ', 140)')
+    .attr('width', 150)
+    .attr('height', 30)
+
+  button.append('rect')
+    .attr('width', 150)
+    .attr('height', 30)
+    .attr('fill', '#f4f6f4')
+    .on('mouseenter', function () {
+      d3.select(this).attr('stroke', '#362023')
+    })
+    .on('mouseleave', function () {
+      d3.select(this).attr('stroke', '#f4f6f4')
+    })
+
+  button.append('text')
+    .attr('x', 75)
     .attr('y', 15)
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
@@ -192,16 +234,16 @@ export function drawButton2 (g, width) {
  * @param g
  * @param width
  */
- export function drawButton3 (g, width) {
+ export function drawButton5 (g, width) {
   const button = g.append('g')
     .attr('class', 'button')
-    .attr('id', 'button3')
-    .attr('transform', 'translate(' + (width+50) + ', 350)')
-    .attr('width', 130)
-    .attr('height', 25)
+    .attr('id', 'button5')
+    .attr('transform', 'translate(' + (20 + width) + ', 220)')
+    .attr('width', 150)
+    .attr('height', 30)
 
   button.append('rect')
-    .attr('width', 130)
+    .attr('width', 150)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
@@ -212,29 +254,118 @@ export function drawButton2 (g, width) {
     })
 
   button.append('text')
-    .attr('x', 65)
+    .attr('x', 75)
     .attr('y', 15)
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
-    .text('2010')
+    .text('Jump 10 years backward')
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
 
 /**
- * @param dataByYear
- * @param dataByCountry
- * @param year
- * @param mode
- * @param Index
+ * @param g
+ * @param width
  */
-export function mode (dataByYear, dataByCountry, year, mode, Index) {
-  if (mode == 0) {
-    var decalage = year - 1960
-    return (dataByYear[decalage].values)
-  }
-  if (mode == 1) {
-    return (dataByCountry[Index].values)
-  }
+ export function drawButton6 (g, width) {
+  const button = g.append('g')
+    .attr('class', 'button')
+    .attr('id', 'button6')
+    .attr('transform', 'translate(' + (20 + width) + ', 260)')
+    .attr('width', 150)
+    .attr('height', 30)
+
+  button.append('rect')
+    .attr('width', 150)
+    .attr('height', 30)
+    .attr('fill', '#f4f6f4')
+    .on('mouseenter', function () {
+      d3.select(this).attr('stroke', '#362023')
+    })
+    .on('mouseleave', function () {
+      d3.select(this).attr('stroke', '#f4f6f4')
+    })
+
+  button.append('text')
+    .attr('x', 75)
+    .attr('y', 15)
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'middle')
+    .attr('class', 'button-text')
+    .text('Jump 10 years forward')
+    .attr('font-size', '10px')
+    .attr('fill', '#362023')
+}
+
+/**
+ * @param g
+ * @param width
+ */
+ export function drawButton7 (g, width) {
+  const button = g.append('g')
+    .attr('class', 'button')
+    .attr('id', 'button7')
+    .attr('transform', 'translate(' + (20 + width) + ', 300)')
+    .attr('width', 150)
+    .attr('height', 30)
+
+  button.append('rect')
+    .attr('width', 150)
+    .attr('height', 30)
+    .attr('fill', '#f4f6f4')
+    .on('mouseenter', function () {
+      d3.select(this).attr('stroke', '#362023')
+    })
+    .on('mouseleave', function () {
+      d3.select(this).attr('stroke', '#f4f6f4')
+    })
+
+  button.append('text')
+    .attr('x', 75)
+    .attr('y', 15)
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'middle')
+    .attr('class', 'button-text')
+    .text('Animation')
+    .attr('font-size', '10px')
+    .attr('fill', '#362023')
+}
+
+export function HideButton1(g) {
+  g.select('#button1').remove()
+}
+
+export function HideButton2(g) {
+  g.select('#button2').remove()
+}
+
+export function HideButton3(g) {
+  g.select('#button3').remove()
+}
+
+export function HideButton4(g) {
+  g.select('#button4').remove()
+}
+
+export function HideButton5(g) {
+  g.select('#button5').remove()
+}
+export function HideButton6(g) {
+  g.select('#button6').remove()
+}
+export function HideButton7(g) {
+  g.select('#button7').remove()
+}
+
+export function appendGrid (g) {
+  g.append('g')
+    .attr('class', 'grid')
+    .attr('id', 'gridx')
+    .style("stroke-dasharray",("1,1"))
+
+  g.append('g')
+  .attr('class', 'grid')
+  .attr('id', 'gridy')
+  .style("stroke-dasharray",("1,1"))
 }

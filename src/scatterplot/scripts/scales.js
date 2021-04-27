@@ -8,11 +8,11 @@
  * @param {object} data The data to be displayed
  * @returns {*} The ordinal scale used to determine the color
  */
-export function setColorScale (data) {
+ export function setColorScale () {
   // TODO : Set scale
   const Scale = d3.scaleOrdinal()
-    .domain([0, 1])
-    .range(['red', 'green'])
+    .domain([0, 1, 2])
+    .range(['red', 'green', 'black'])
 
   return Scale
 }
@@ -22,15 +22,10 @@ export function setColorScale (data) {
  *
  * @param {number} width The width of the graph
  * @param {object} data The data to be used
- * @returns {*} The logarithmic scale in X
+ * @returns {*} The linear scale in X
  */
 export function setXScale (width, data) {
   // TODO : Set scale
-
-  // On récupère le CO2 de chacune des années et chacun des pays dans un seul tableau pour en trouver le minimum et le maximum
-  var PerCapita = []
-
-  //data.forEach(function (d) { PerCapita.push(d.PerCapita) })
   const max = d3.max(data , function (d) {
     return parseFloat(d.PerCapita)
   })
@@ -50,21 +45,21 @@ export function setXScale (width, data) {
  *
  * @param {number} height The height of the graph
  * @param {object} data The data to be used
- * @returns {*} The logarithmic scale in Y
+ * @returns {*} The linear scale in Y
  */
 export function setYScale (height, data) {
   // TODO : Set scale
 // On récupère le % des Emissions Totales de chacune des années et chacun des pays dans un seul tableau pour en trouver le minimum et le maximum
-  var percentTotalEmissions = []
-  const max = d3.max(data , function (d) {
-    return parseFloat(d.percentTotalEmissions)
-  })
+const max = d3.max(data , function (d) {
+  return parseFloat(d.percentTotalEmissions)
+})
 
-  const min = d3.min(data, function (d) {
-    return parseFloat(d.percentTotalEmissions)
-  })
-  const Scale = d3.scaleLog()
-    .domain([min, max])
-    .range([height, 0])
-  return Scale
+const min = d3.min(data, function (d) {
+  return parseFloat(d.percentTotalEmissions)
+})
+const Scale = d3.scaleLog()
+  .domain([min, max])
+  .range([height, 0])
+
+return Scale
 }

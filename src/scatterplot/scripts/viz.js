@@ -1,7 +1,3 @@
-import { csvParse } from 'd3-dsv'
-import * as helper from './helper.js'
-import * as scales from './scales.js'
-
 /**
  * Positions the x axis label and y axis label.
  *
@@ -11,13 +7,13 @@ import * as scales from './scales.js'
  */
 export function positionLabels (g, width, height) {
   // TODO : Position axis labels
-  d3.select('.y.axis-text')
-    .attr('y', height / 2)
+  g.select(".y.axis-text")
+    .attr('y', height/2)
     .attr('x', -50)
 
-  d3.select('.x.axis-text')
-    .attr('x', width / 2)
-    .attr('y', height + 50)
+  g.select(".x.axis-text")
+    .attr('x', width/2)
+    .attr('y', height+50)
 }
 
 /**
@@ -25,51 +21,30 @@ export function positionLabels (g, width, height) {
  *
  * @param {object} data The data to bind to
  * @param {*} rScale The scale for the circles' radius
- * @param dataByYear
- * @param dataByCountry
  * @param {*} colorScale The scale for the circles' color
- * @param xScale
- * @param yScale
- * @param mode
  */
-export function drawCircles (data, colorScale, xScale, yScale, opacity) {
+export function drawCircles (data, xScale, yScale) {
   // TODO : Draw the bubble chart's circles
   // Each circle's size depends on its population
   // and each circle's color depends on its continent.
   // The fill opacity of each circle is 70%
   // The outline of the circles is white
-
-  const OpacityScale = d3.scaleLinear().domain([1960,2016]).range([0.1,1])
+  var data = data['values']
 
   d3.select('#graph-g-scatterplot')
-    .selectAll('circle')
-    .data(data)
-    .enter()
-    .append('circle')
-    .attr('class', 'dot-scatterplot')
-    .transition()
-    .duration(500)
-    .attr('cx', function (d) { return xScale(d.PerCapita) })
-    .attr('cy', function (d) { return yScale(d.percentTotalEmissions) })
-    .attr('fill', function (d) { return colorScale(d.Mesures) })
-    .attr('r', '10px')
-    .attr('opacity', function (d) { 
-      if (opacity==0) {
-        return OpacityScale(d.Annees)
-      } else {return 0.7}
-    })
-    .attr('stroke', 'white')
-}
-
-/**
- * Update the title of the graph.
- *
- * @param {number} year The currently displayed year
- */
-export function setTitleText (year) {
-  // TODO : Set the title
-  d3.select('.title-scatterplot')
-    .text('Data for year : ' + year)
+  .selectAll('.dot')
+  .data(data)
+  .enter()
+  .append('circle')
+  .attr('class', 'dot')
+  .attr('cx', function (d) { return xScale(d.PerCapita) })
+  .attr('cy', function (d) { return yScale(d.percentTotalEmissions) })
+  .attr('fill', function (d) { if (d.Pays == 'World') { return 'black'} 
+                else if (parseInt(d["Date de mise en place"]) <= parseInt(d.Annees) && parseInt(d["Date de mise en place"])>0) { return 'green' } 
+                else {return 'red'}})
+  .attr('r', '10px')
+  .attr('opacity', 0.7)
+  .attr('stroke', 'white')
 }
 
 /**
@@ -80,66 +55,121 @@ export function setTitleText (year) {
 export function setCircleHoverHandler (tip) {
   // TODO : Set hover handler. The tooltip shows on
   // hover and the opacity goes up to 100% (from 70%)
-  d3.selectAll('.dot-scatterplot')
+  d3.selectAll('.dot')
 
-    .on('mouseover', function (d) { // Lorsque l'élément est survolé, on change l'opacité et on affiche le tooltip
+    .on('mouseover', function(d) { // Lorsque l'élément est survolé, on change l'opacité et on affiche le tooltip
       tip.show(d, this)
       d3.select(this).attr('opacity', 1)
-    })
-  // .on('mouseover', tip.show)
+      d3.select(this).attr('stroke', '#362023')})
 
-    .on('mouseout', function (d) { // Lorsque l'élément n'est plus survolé, l'opacité revient à la normale et le tooltip disparait
+    .on('mouseout', function(d) { // Lorsque l'élément n'est plus survolé, l'opacité revient à la normale et le tooltip disparait
       tip.hide(d, this)
       d3.select(this).attr('opacity', 0.7)
-    })
+      d3.select(this).attr('stroke', '#f4f6f4')})
 }
 
 /**
- * @param pays
+ * Updates the position of the circles based on their bound data. The position
+ * transitions gradually.
+ *
+ * @param {*} xScale The x scale used to position the circles
+ * @param {*} yScale The y scale used to position the circles
+ * @param {number} transitionDuration The duration of the transition
  */
-function getIndex (pays) {
-  d3.csv('https://raw.githubusercontent.com/LSNoor/INF8808Visualisation4/main/Conversion2.csv').then((data2) => {
-    // data2.forEach(function (d) {
-    var i = 0
-    while (data2[i].Pays != pays) {
-      i++
-    }
-    return (i)
-  })
+export function moveCircles (xScale, yScale, transitionDuration) {
+  // TODO : Set up the transition and place the circle centers
+  // in x and y according to their GDP and CO2 respectively
+  d3.selectAll('.dot')
+    .transition() // On réalise la transition pour tous les cercles de classe dot
+    .duration(transitionDuration)
+    .attr('cx', function (d) { return xScale(d.PerCapita)})
+    .attr('cy', function (d) { return yScale(d.percentTotalEmissions)})
+    .attr('fill', function (d) { if (d.Pays == 'World') { return 'black'} 
+                  else if (parseInt(d["Date de mise en place"]) <= parseInt(d.Annees) && parseInt(d["Date de mise en place"])>0) { return 'green' } 
+                  else {return 'red'}})
 }
-var selection = []
 
 /**
- * @param data
- * @param dataByYear
- * @param dataByCountry
- * @param year
- * @param colorScale
- * @param xScale
- * @param yScale
- * @param tip
- * @param Index
- * @param mode
- * @param ICountry
+ * Update the title of the graph.
+ *
+ * @param {number} year The currently displayed year
  */
-export function setCircleClickHandler (dataByYear, dataByCountry, year, colorScale, xScale, yScale, tip, mode, ICountry) {
-  d3.selectAll('.dot-scatterplot')
+export function setTitleText (year) {
+  // TODO : Set the title
+  d3.select('#title-scatterplot')
+    .text("Data for year : " + year)
+}
 
-    .on('click', function (data) {
-      mode.push(1)
 
-      d3.csv('https://raw.githubusercontent.com/LSNoor/INF8808Visualisation4/main/DataFinal%20(2).csv').then((doon) => {
-        var dataByCountry = helper.GroupByCountry(data)
-        var dataByYear = helper.GroupByYear(data)
-      })
-      var data2 = helper.mode(dataByYear, dataByCountry, 'Toutes', 1, data.Index)
-      d3.select('#graph-g-scatterplot')
-        .selectAll('.dot-scatterplot')
-        .remove()
+export function drawCirclesCountry (data, annee, xScale, yScale) {
+  // TODO : Draw the bubble chart's circles
+  // Each circle's size depends on its population
+  // and each circle's color depends on its continent.
+  // The fill opacity of each circle is 70%
+  // The outline of the circles is white
 
-      var opacity = 0
-      drawCircles(data2, colorScale, xScale, yScale, opacity)
-      setTitleText('Toutes')
-      setCircleHoverHandler(tip)
-    })
+  const OpacityScale = d3.scaleLinear().domain([1960,2016]).range([0.15,1])
+
+  d3.select('#graph-g-scatterplot')
+  .selectAll('.dot')
+  .data(data)
+  .enter()
+  .append('circle')
+  .attr('class', 'dot')
+  .attr('cx', function (d) { return xScale(d.PerCapita) })
+  .attr('cy', function (d) { return yScale(d.percentTotalEmissions) })
+  .attr('fill', function (d) { if (d.Pays == 'World') { return 'black'} 
+                else if (parseInt(d["Date de mise en place"]) <= parseInt(d.Annees) && parseInt(d["Date de mise en place"])>0) { return 'green' } 
+                else {return 'red'}})
+  .attr('r', '10px')
+  .attr('opacity', function (d) { if (parseInt(d.Annees) == annee) { return 0.7 } else { return 0 } })
+
+  d3.selectAll('.dot')
+  .transition()
+  .duration(1000)
+  .attr('opacity', function (d) { return OpacityScale(d.Annees) })
+  .attr('stroke', 'white')
+}
+
+export function setCircleHoverHandlerCountry (tip) {
+  // TODO : Set hover handler. The tooltip shows on
+  // hover and the opacity goes up to 100% (from 70%)
+  d3.selectAll('.dot')
+
+    .on('mouseover', function(d) { // Lorsque l'élément est survolé, on change l'opacité et on affiche le tooltip
+      tip.show(d, this)
+      d3.select(this).attr('stroke', '#362023')})
+
+    .on('mouseout', function(d) { // Lorsque l'élément n'est plus survolé, l'opacité revient à la normale et le tooltip disparait
+      tip.hide(d, this)
+      d3.select(this).attr('stroke', '#f4f6f4')})
+
+}
+
+export function UpdateXGrid (height, xScale) {
+  // TODO : Set domain of color scale
+  d3.select('#gridx')
+      .call(d3.axisTop(xScale).ticks(3)
+      .tickSize(-height)
+      .tickFormat("")
+        )
+      .lower()
+
+  d3.select('#gridx').selectAll('line')
+      .style({ 'stroke': 'black', 'fill': 'none', 'stroke-width': '1px'});
+
+}
+
+export function UpdateYGrid (width, yScale) {
+  // TODO : Set domain of color scale
+  d3.select('#gridy')
+  		.call(d3.axisLeft(yScale).ticks(4)
+            .tickSize(-width)
+            .tickFormat("")
+         )
+      .lower()
+
+  d3.select('#gridy').selectAll('line')
+      .style({ 'stroke': 'black', 'fill': 'none', 'stroke-width': '1px'});
+
 }
