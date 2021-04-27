@@ -51,6 +51,8 @@ export function GetLineChart (countryName) {
 
     //console.log(data.slice())
     //data = preproc.minMaxMonthlyAnn(data)
+
+    
     
     setSizing(); 
     viz.updateXScale(xScale, 1900, 2020, graphSize.width, margin)
