@@ -9,9 +9,9 @@
 export function positionLabels (g, width, height) {
   console.log(height)
   
-  g.select('.y-text-unidirectionalplot')
+  d3.select('.y.axis-text-unidirectionalplot')
     .attr('x', -50)
-    .attr('y', height / 2)
+    .attr('y', height /2)
 }
 
 /**
@@ -23,10 +23,10 @@ export function positionLabels (g, width, height) {
  */
 export function drawCircles (data ) {
   d3.select('#graph-g-unidirectionalplot')
-  .selectAll('circle-unidirectionalplot')
+  .selectAll('circle')
   .data(data)
   .enter()
-  .append('circle-unidirectionalplot')
+  .append('circle')
   .attr('class', 'dot-unidirectionalplot')
   .transition()
   .duration(500)
@@ -34,7 +34,6 @@ export function drawCircles (data ) {
   .attr('cy', function (d) { return yScale(d.PerCapita) })
   .attr('fill', '#000000' )
   .attr('r', '10px')
-  
   .attr('stroke', 'white')
 }
 

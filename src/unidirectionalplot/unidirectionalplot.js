@@ -16,7 +16,7 @@ import d3Tip from 'd3-tip'
 
 export function getUniPlot () {
   const margin = {
-    top: 75,
+    top: 100,
     right: 200,
     bottom: 100,
     left: 80
@@ -62,7 +62,7 @@ export function getUniPlot () {
 */
 d3.csv('./DataFinal.csv').then((data) => {
   // Add the path using this helper function
-  g.append('rect')
+  /*g.append('rect')
     .attr('x', 100)
     .attr('y', 50)
     .attr('width', 250)
@@ -76,7 +76,7 @@ d3.csv('./DataFinal.csv').then((data) => {
   .attr('width', 250)
   .attr('height', 400)
   .attr('stroke', 'black')
-  .attr('fill', '#FF0000');
+  .attr('fill', '#FF0000');*/
   
   console.log(data)
   var dataByYear = helper.GroupByYear(data)

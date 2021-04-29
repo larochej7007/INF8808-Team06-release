@@ -47,7 +47,7 @@ export function appendAxes (g) {
 export function appendGraphLabels (g) {
   g.append('text')
     .text(' PIB USD$')
-    .attr('class', 'y-text-unidirectionalplot')
+    .attr('class', 'y axis-text-unidirectionalplot')
     .attr('transform', 'rotate(-90)')
     .attr('font-size', 12)
 
