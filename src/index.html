@@ -10,42 +10,73 @@
         <link rel="stylesheet" href="assets/style.css">
         <link rel="stylesheet" href="assets/tooltip.css">
         <link rel="stylesheet" href="assets/typography.css">
-        <script src="scatterplot/scripts/d3.slider.js" charset="utf8"></script>
 
       </head>
 
       <body>
         <header>
-          <h1>
-            Heatmap
-          </h1>
           <div class="row align-items-center">
             <div class="col-sm-2"><p id="value-step"></p></div>
             <div class="col-sm"><div id="slider-step"></div></div>
           </div>
         </header>
         <main>
-          <div class="viz-container">
-            <div class="graph" id="heatmap">
-              <svg  class="heatmap-svg">
-                <g class="sortIconGroup">
-                  <image class="sortIcon" href="/assets/up_arrow.svg" x="0" y="0" height="30" width="30"></image>
-                  <text x='25' y='20'> Sorted by Avg. ΔT</text>
-                </g>
 
-              </svg>
+
+          
+          <div class="viz-container">
+            <div>
+              <div class="VizTitle">
+                <h2>
+                  Global temperature variations <br>
+                  Compared to jan 1951-dec 1980 average
+                </h2>
+              </div>
+
+              <div class="graph" id="heatmap">
+                <svg  class="heatmap-svg">
+                  <g class="sortIconGroup">
+                    <image class="sortIcon" href="/assets/up_arrow.svg" x="0" y="0" height="30" width="30"></image>
+                    <text x='25' y='20'> Sorted by Avg. ΔT</text>
+                  </g>
+
+                </svg>
+              </div>
+            </div>
+
+          <div>
+            <div class="VizTitle">
+              <h2>
+                Global temperature variations <br>
+                Compared to jan 1951-dec 1980 average <br>
+              </h2>
             </div>
 
             <div class="graph" id="linechart">
-               <svg class="linechart-svg"style=" background-color: #d3c8dc; font: 12px sans-serif; "></svg>
             </div>
+          </div>
+
 
             <div class="graph" id="barchart">
               <svg class="barchart-svg"></svg>
             </div>
 
+            <div class="VizTitle">
+              <h2>
+                Evolution of C02 emissions <br>
+                and measure taken
+              </h2>
+            </div>
+
             <div class="graph" id="scatterplot">
               <svg class="scatterplot-svg"></svg>
+            </div>
+
+            <div class="VizTitle">
+              <h2>
+                Evolution of PIB <br>
+                and measure taken
+              </h2>
             </div>
 
             <div class="graph" id="unidirectplot">

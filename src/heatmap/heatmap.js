@@ -22,7 +22,7 @@ export function GetHeatmap() {
   let svgSize
   let graphSize
 
-  const margin = { top: 100, right: 200, bottom: 100, left: 100 }
+  const margin = { top: 100, right: 200, bottom: 200, left: 100 }
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleBand()
@@ -63,7 +63,7 @@ export function GetHeatmap() {
 
       svgSize = {
         width: bounds.width,
-        height: 950
+        height: bounds.height
       }
 
       graphSize = {
@@ -89,17 +89,15 @@ export function GetHeatmap() {
       viz.updateRects(xScale, yScale, positiveColorScale, negativeColorScale, graphSize.width)
       d3.select('#heatmap')
         .select('svg')
-        .select('.y.axis')
+        .select(".y-axis-heatmap")
         .append('text')
         .attr('x', 9 )
-        .attr('y', yScale.range()[0] + 4 * yScale.bandwidth() + 4)
+        .attr('y', yScale.range()[0] + 2.5 * yScale.bandwidth() + 4 )
         .attr('fill', 'currentColor')
         .attr('font-size', 'larger')
         .text("Global-land")
 
-
-      hover.setRectHandler(xScale, yScale, hover.rectSelected, hover.rectUnselected, hover.selectTicks, hover.unselectTicks, margin, graphSize.width + xScale(1901))
-
+      hover.setRectHandler(xScale, yScale, hover.selectTicks, hover.unselectTicks,  hover.hoverTicks, hover.unhoverTicks, margin, graphSize.width + xScale(1901))
       legend.draw(margin.left, margin.top/2, 15, (graphSize.width + xScale(1901)), 'url(#positiveGradient)','url(#negativeGradient)', positiveColorScale, negativeColorScale)
     }
 

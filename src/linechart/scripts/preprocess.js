@@ -31,8 +31,40 @@ export function strictData (data) {
   return values;
 }
 
+export function range (start, stop) {
+  const res = []
+  for (var i = start; i <= stop; i++) {
+    res.push(i)
+  }
+  return res
+}
 
 
+export function sumarizeYears(data, start, end) {
+  var result = [];
+  data.forEach(function (currentDataLine) {
+    var currentYear = currentDataLine.Year;
+    var currentMonth = currentDataLine.Month;
+    if ((start <= currentYear && end >= currentYear)) {
+      currentDataLine.country = currentDataLine["Country"].charAt(0).toUpperCase() + currentDataLine["Country"].slice(1)
+      result.push(currentDataLine);
+    }
+  });
+
+  var sumarizedResult = {}
+  range(start, end).forEach(yearLine => {
+    var currentSummary = {}
+    
+    currentSummary.Year = yearLine
+    currentSummary.Max = d3.max((result.filter((d) => {return yearLine == parseInt(d.Year)})), (d) => parseFloat(d.monthly_anomaly))
+    currentSummary.Min = d3.min(result.filter((d) => {return  yearLine == parseInt(d.Year)}), (d) => parseFloat(d.monthly_anomaly))
+    currentSummary.AVG = parseFloat(result.filter((d) => {return (yearLine == parseInt(d.Year) && d.Month == 6)})[0].annual_anomaly)
+
+    sumarizedResult[yearLine] = currentSummary
+  })
+
+  return Object.values(sumarizedResult)
+}
 /**
  * construct MINMAX, the data easily representable in the graph 
  * specifying for each year the min and the max of temperature anomalies.
@@ -42,32 +74,10 @@ export function strictData (data) {
  * @returns  [ { "Year": null, "min":null , "max":null, "values":[] } ]
  */
 export function minMaxMonthlyAnn(data,  years, MINMAX) {
-var min, max, i=0,j,d, current, updated=0,y;
- var entry = { "Year":null, "min":null , "max":null };
-      min=19;
-      max=-10;
-      entry = { "Year": null, "min":null , "max":null, "values":[] };
-      data.forEach(function(d) {
-          
-         
-          if(  years[i] == d["Year"] ){
-            entry["values"].push(Number(d["monthly_anomaly"]));
-             entry["Year"]= years[i];
-          }else{
-           
-            entry["min"]=d3.min(entry["values"]);
-            entry["max"]=d3.max(entry["values"]);
-            entry["values"]=null;
-             i++;
-             MINMAX.push(entry);
-            
-             entry = { "Year": null, "min":null , "max":null, "values":[] };
-          }        
-        
-      });
+  
 
-   return MINMAX;
-  }
+
+}
 
 
   
