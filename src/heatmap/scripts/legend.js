@@ -123,6 +123,7 @@ export function draw(x, y, height, width, positiveFill, negativeFill, positiveCo
       d3
         .axisTop(legendPositiveColorScale)
         .ticks(6)
+        .tickFormat(x => `${x}°C`)
     );
 
   scale = (negativeColorScale.domain())
@@ -140,5 +141,6 @@ export function draw(x, y, height, width, positiveFill, negativeFill, positiveCo
       d3
         .axisTop(legendNegativeColorScale)
         .ticks(6)
+        .tickFormat(x => `${x}°C`)
     );
 }
