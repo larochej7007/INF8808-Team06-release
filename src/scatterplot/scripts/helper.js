@@ -179,7 +179,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button3')
-    .attr('transform', 'translate(' + (width + 100) + ', 280)')
+    .attr('transform', 'translate(' + translate2 + ', 280)')
     .attr('width', 70)
     .attr('height', 30)
 
