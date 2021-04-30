@@ -10,12 +10,13 @@ import * as preprocess from './scripts/preprocess.js'
 import d3Tip from 'd3-tip'
 
 /**
- * @file This file is the entry-point for the the code for TP4 for the course INF8808.
- * @author Olivia Gélinas
+ * @file This file is the entry-point for the the code for the Scatterplot visualisation 
+ * @author Team6
  * @version v1.0.0
  */
 
 export function GetScatterPlot() {
+  // Creation of the margins on the svg for the graph
   const margin = {
     top: 75,
     right: 200,
@@ -23,6 +24,7 @@ export function GetScatterPlot() {
     left: 80
   }
 
+// Initialization of the variables
   let currentYear = 1960
   let previousYear = 2016
   let interval
@@ -31,11 +33,16 @@ export function GetScatterPlot() {
 
   setSizing()
 
+  // Generation of the margin on the svg
   const g = helper.generateG(margin)
 
+  // Initialization of the tooltip
   const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return tooltip.getContents(d) })
+  
+  // Call of the tooltip
   g.call(tip)
 
+  // Generation of the axes, the labelsn, the grid, the buttons and the title on the graph
   helper.appendAxes(g)
   helper.appendGraphLabels(g)
   helper.appendGrid(g)
@@ -50,25 +57,32 @@ export function GetScatterPlot() {
   helper.drawButton6(g, graphSize.width)
   helper.drawButton7(g, graphSize.width)
 
+  // Importation of the data 
   d3.csv('./DataFinal.csv').then((data) => {
 
+    // These variables contain the data grouped by country and grouped by year respectively
     var DataByCountry = preprocess.GroupByCountry(data)
     var DataByYear = preprocess.GroupByYear(data)
 
+    // Calling of the scales
     const colorScale = scales.setColorScale()
     const xScale = scales.setXScale(graphSize.width, data)
     const yScale = scales.setYScale(graphSize.height, data)
 
+    // Updating of the axes and the grid based on the date through the use of the scales
     viz.UpdateXGrid(graphSize.height, xScale)
     viz.UpdateYGrid(graphSize.width, yScale)
 
     helper.drawXAxis(xScale, graphSize.height)
     helper.drawYAxis(yScale)
 
+    // Drawing of the legend
     legend.drawLegend(colorScale, g, graphSize.width)
 
+    // Drawing of the graph (proper)
     build(DataByYear, 0, currentYear, xScale, yScale)
 
+    // Functions that handle the use of the buttons
     setClickHandler1()
     setClickHandler2()
     setClickHandler3()
@@ -77,10 +91,11 @@ export function GetScatterPlot() {
     setClickHandler7()
     setClickHandler8()
 
+    // Function that handle the tooltip
     viz.setCircleHoverHandler(tip)
 
     /**
-     *   Sets up the click handler for the button.
+     *   Sets up the click handler for the button "See ... dataset".
      */
     function setClickHandler1 () {
       d3.select('#button1')
@@ -93,6 +108,9 @@ export function GetScatterPlot() {
         )
     }
 
+    /**
+     *   Sets up the click handler for the button "Year -1".
+     */
     function setClickHandler2 () {
       d3.select('#button2')
         .on('click', () => {
@@ -106,6 +124,9 @@ export function GetScatterPlot() {
         )
     }
 
+    /**
+     *   Sets up the click handler for the button "Year +1".
+     */
     function setClickHandler3 () {
       d3.select('#button3')
         .on('click', () => {
@@ -119,6 +140,9 @@ export function GetScatterPlot() {
         )
     }
 
+    /**
+     *   Sets up the click handler for the countries.
+     */
     function setClickHandler4 () {
       d3.selectAll('.dot')
         .on('click', (d) => {
@@ -156,6 +180,9 @@ export function GetScatterPlot() {
         })
   }
 
+    /**
+     *   Sets up the click handler for the "Reset"
+     */
     function setClickHandler5 () {
       d3.select('#button4')
         .on('click', () => {
@@ -187,6 +214,9 @@ export function GetScatterPlot() {
         )
     }
 
+    /**
+     *   Sets up the click handler for the button "Year -10".
+     */
     function setClickHandler6 () {
       d3.select('#button5')
         .on('click', () => {
@@ -202,6 +232,9 @@ export function GetScatterPlot() {
         )
     }
 
+    /**
+     *   Sets up the click handler for the button "Year +10".
+     */
     function setClickHandler7 () {
       d3.select('#button6')
         .on('click', () => {
@@ -216,6 +249,10 @@ export function GetScatterPlot() {
         }
         )
     }
+    
+     /**
+     *   Sets up the click handler for the button "Animation".
+     */   
     function setClickHandler8 () {
       d3.select('#button7')
         .on('click', () => {
@@ -254,8 +291,6 @@ export function GetScatterPlot() {
    * @param {object} data The data to be used
    * @param {number} transitionDuration The duration of the transition while placing the circles
    * @param {number} year The year to be displayed
-   * @param {*} rScale The scale for the circles' radius
-   * @param {*} colorScale The scale for the circles' color
    * @param {*} xScale The x scale for the graph
    * @param {*} yScale The y scale for the graph
    */
