@@ -45,7 +45,7 @@ export function MaxYear(data) {
  * @returns 
  */
  export function MinYear(data) {
-  const min = d3.max(data, function (d) {
+  const min = d3.min(data, function (d) {
     return parseFloat(d.Annees)
   })
   
