@@ -24,11 +24,30 @@
     return (dataGrouped)
   }
 
+/**
+ * Return the latest year to set the scales
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 export function MaxYear(data) {
   const max = d3.max(data, function (d) {
     return parseFloat(d.Annees)
   })
   
-  console.log(max)
   return(max)
+}
+
+/**
+ * Return the earliest year to set the scales
+ * 
+ * @param {*} data 
+ * @returns 
+ */
+ export function MinYear(data) {
+  const min = d3.max(data, function (d) {
+    return parseFloat(d.Annees)
+  })
+  
+  return(min)
 }

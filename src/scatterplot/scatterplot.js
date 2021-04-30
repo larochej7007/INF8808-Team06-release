@@ -67,6 +67,7 @@ export function GetScatterPlot() {
 
     //Initialization of SomeVariable
     const MaxYear = preprocess.MaxYear(data)
+    const MinYear = preprocess.MinYear(data)
 
     // Calling of the scales
     const colorScale = scales.setColorScale()
