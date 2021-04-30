@@ -23,11 +23,6 @@ export function positionLabels (g, width, height) {
  * @param {*} colorScale The scale for the circles' color
  */
 export function drawCircles (data, xScale, yScale) {
-  // TODO : Draw the bubble chart's circles
-  // Each circle's size depends on its population
-  // and each circle's color depends on its continent.
-  // The fill opacity of each circle is 70%
-  // The outline of the circles is white
   var data = data['values']
 
   d3.select('#graph-g-scatterplot')
@@ -52,16 +47,15 @@ export function drawCircles (data, xScale, yScale) {
  * @param {*} tip The tooltip
  */
 export function setCircleHoverHandler (tip) {
-  // TODO : Set hover handler. The tooltip shows on
-  // hover and the opacity goes up to 100% (from 70%)
+  // Hover and the opacity goes up to 100% (from 70%)
   d3.selectAll('.dot')
 
-    .on('mouseover', function(d) { // Lorsque l'élément est survolé, on change l'opacité et on affiche le tooltip
+    .on('mouseover', function(d) { 
       tip.show(d, this)
       d3.select(this).attr('opacity', 1)
       d3.select(this).attr('stroke', '#362023')})
 
-    .on('mouseout', function(d) { // Lorsque l'élément n'est plus survolé, l'opacité revient à la normale et le tooltip disparait
+    .on('mouseout', function(d) { 
       tip.hide(d, this)
       d3.select(this).attr('opacity', 0.7)
       d3.select(this).attr('stroke', '#f4f6f4')})
@@ -76,8 +70,7 @@ export function setCircleHoverHandler (tip) {
  * @param {number} transitionDuration The duration of the transition
  */
 export function moveCircles (xScale, yScale, transitionDuration) {
-  // TODO : Set up the transition and place the circle centers
-  // in x and y according to their GDP and CO2 respectively
+  
   d3.selectAll('.dot')
     .transition() // On réalise la transition pour tous les cercles de classe dot
     .duration(transitionDuration)
@@ -89,12 +82,11 @@ export function moveCircles (xScale, yScale, transitionDuration) {
 }
 
 /**
- * Update the title of the graph.
+ * Show the year showed on the graph
  *
  * @param {number} year The currently displayed year
  */
 export function setTitleText (year) {
-  // TODO : Set the title
   d3.select('#title-scatterplot')
     .text("Data for year : " + year)
 }
