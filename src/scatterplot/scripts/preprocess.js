@@ -23,3 +23,12 @@
       
     return (dataGrouped)
   }
+
+export function MaxYear(data) {
+  const max = d3.max(data, function (d) {
+    return parseFloat(d.Annees)
+  })
+  
+  console.log(max)
+  return(max)
+}

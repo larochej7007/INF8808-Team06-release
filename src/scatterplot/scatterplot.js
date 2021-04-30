@@ -65,6 +65,9 @@ export function GetScatterPlot() {
     var DataByCountry = preprocess.GroupByCountry(data)
     var DataByYear = preprocess.GroupByYear(data)
 
+    //Initialization of SomeVariable
+    const MaxYear = preprocess.MaxYear(data)
+
     // Calling of the scales
     const colorScale = scales.setColorScale()
     const xScale = scales.setXScale(graphSize.width, data)
