@@ -89,6 +89,7 @@ export function moveCircles (xScale, yScale, transitionDuration) {
 export function setTitleText (year) {
  
   var xtranslate = d3.select('#scatterplot').node().getBoundingClientRect() 
+  console.log(xtranslate)
 
   d3.select('#title-scatterplot')
     .text("Data for year : " + year)
