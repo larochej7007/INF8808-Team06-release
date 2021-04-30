@@ -22,7 +22,7 @@ export function GetHeatmap() {
   let svgSize
   let graphSize
 
-  const margin = { top: 100, right: 200, bottom: 200, left: 100 }
+  const margin = { top: 100, right: 200, bottom: 100, left: 100 }
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleBand()
