@@ -210,13 +210,9 @@ export function GetLineChart (countryName) {
 
     function mousemove() {
       // recover coordinate we need
-<<<<<<< HEAD
-      var x0 = xScale.invert(d3.mouse(this)[0] - margin);
-=======
       console.log(d3.mouse(this)[0])
       var x0 = xScale.invert(d3.mouse(this)[0]);
       console.log(x0)
->>>>>>> main
       var i = bisect(data, x0, 1) - 1;
       selectedData = data[i]
       focus
