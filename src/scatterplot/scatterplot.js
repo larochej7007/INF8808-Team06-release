@@ -51,7 +51,7 @@ export function GetScatterPlot() {
 
   viz.positionLabels(g, graphSize.width, graphSize.height)
 
-  helper.drawButton1(g, currentYear === 1960 ? 2016 : 1960, graphSize.width)
+  helper.drawButton1(g, currentYear === 1960 ? 2016 : 1960, graphSize.width) // The years have to be set up manually
   helper.drawButton2(g, graphSize.width)
   helper.drawButton3(g, graphSize.width)
   helper.drawButton5(g, graphSize.width)
@@ -266,7 +266,7 @@ export function GetScatterPlot() {
             if (currentYear == MaxYear + 1) { currentYear = MaxYear
                                       clearInterval(interval)}} , 200)
           d3.select('#button1').select('.button-text').text('See ' + MinYear + ' dataset')
-          previousYear = 1960
+          previousYear = MinYear
         }
         )
     }
