@@ -32,6 +32,7 @@ export function GetScatterPlot() {
   let svgSize, graphSize, bounds
 
   setSizing()
+  helper.translate(graphSize.width)
 
   // Generation of the margin on the svg
   const g = helper.generateG(margin)
