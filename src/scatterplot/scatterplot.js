@@ -42,6 +42,8 @@ export function GetScatterPlot() {
     MinYear = preprocess.MinYear(data)    
   })
 
+  console.log(MaxYear)
+
   // Generation of the margin on the svg
   const g = helper.generateG(margin)
 
