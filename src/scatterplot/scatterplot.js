@@ -34,9 +34,12 @@ export function GetScatterPlot() {
   setSizing()
   helper.translate(graphSize.width)
 
+  var MaxYear
+  var MinYear
+
   d3.csv('./DataFinal.csv').then((data) => {
-    const MaxYear = preprocess.MaxYear(data)
-    const MinYear = preprocess.MinYear(data)    
+    MaxYear = preprocess.MaxYear(data)
+    MinYear = preprocess.MinYear(data)    
   })
 
   // Generation of the margin on the svg
