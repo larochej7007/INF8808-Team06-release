@@ -81,13 +81,23 @@ export function GetLineChart (countryName) {
     var y_axis = d3.axisLeft()
                   .scale(yScale)
                   .tickSize(4)
-                  .ticks(24)
                   .tickSize(-graphSize.width)
-                  .tickFormat((y) => `${y}`);
+                  .tickFormat((y) => `${y}°C`);
 
     svg.append("g")
+       .attr("class", "y-axis-linechart")
        .attr("transform", "translate(" + margin + ", " + margin + ")")
        .call(y_axis);
+
+    svg.selectAll(".y-axis-linechart .tick line")
+    .style("visibility", "visible")
+      .style("stroke-dasharray", "1 1")
+      .style("stroke",'#CCCCCC')
+      .filter(d => {
+      return d == 0
+    }).style("visibility", "visible")
+      .style("stroke-dasharray", "none")
+      .style("stroke",'#000000');
         
     // Add the line
     data.forEach(function(d) {
