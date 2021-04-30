@@ -1,4 +1,15 @@
 /**
+ * Generate global variables usefull for the following functions
+ * 
+ * @param {*} MinYear 
+ * @param {*} MaxYear 
+ */
+ export function Range(MinYear, MaxYear) {
+  window.MinYear=MinYear
+  window.MaxYear=MaxYear
+}
+
+/**
  * Positions the x axis label and y axis label.
  *
  * @param {*} g The d3 Selection of the graph's g SVG element
@@ -106,7 +117,7 @@ export function setTitleText (year) {
  */
 export function drawCirclesCountry (data, annee, xScale, yScale) {
 
-  const OpacityScale = d3.scaleLinear().domain([1960,2016]).range([0.15,1])
+  const OpacityScale = d3.scaleLinear().domain([MinYear,MaxYear]).range([0.15,1])
 
   d3.select('#graph-g-scatterplot')
   .selectAll('.dot')
