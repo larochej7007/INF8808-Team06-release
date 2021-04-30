@@ -72,7 +72,7 @@ export function setCircleHoverHandler (tip) {
 export function moveCircles (xScale, yScale, transitionDuration) {
   
   d3.selectAll('.dot')
-    .transition() // On réalise la transition pour tous les cercles de classe dot
+    .transition() 
     .duration(transitionDuration)
     .attr('cx', function (d) { return xScale(d.PerCapita)})
     .attr('cy', function (d) { return yScale(d.percentTotalEmissions)})
@@ -93,11 +93,6 @@ export function setTitleText (year) {
 
 
 export function drawCirclesCountry (data, annee, xScale, yScale) {
-  // TODO : Draw the bubble chart's circles
-  // Each circle's size depends on its population
-  // and each circle's color depends on its continent.
-  // The fill opacity of each circle is 70%
-  // The outline of the circles is white
 
   const OpacityScale = d3.scaleLinear().domain([1960,2016]).range([0.15,1])
 
