@@ -34,6 +34,11 @@ export function GetScatterPlot() {
   setSizing()
   helper.translate(graphSize.width)
 
+  d3.csv('./DataFinal.csv').then((data) => {
+    const MaxYear = preprocess.MaxYear(data)
+    const MinYear = preprocess.MinYear(data)    
+  })
+
   // Generation of the margin on the svg
   const g = helper.generateG(margin)
 
@@ -300,7 +305,7 @@ export function GetScatterPlot() {
    * @param {*} yScale The y scale for the graph
    */
   function build (data, transitionDuration, year, xScale, yScale) {
-    viz.drawCircles(data[year-1960], xScale, yScale)
+    viz.drawCircles(data[year-MinYear], xScale, yScale)
     viz.moveCircles(xScale, yScale, transitionDuration)
     viz.setTitleText(year)
   }
