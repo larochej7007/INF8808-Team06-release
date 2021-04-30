@@ -1,4 +1,6 @@
 /**
+ * Group the data by year
+ * 
  * @param data
  */
  export function GroupByYear (data) {
@@ -10,6 +12,8 @@
   }
   
   /**
+   * Group the data by country
+   * 
    * @param data
    */
   export function GroupByCountry (data) {
