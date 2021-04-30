@@ -156,7 +156,7 @@ export function drawButton1 (g, year, width) {
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
-    .text('Previous year')
+    .text('-1 Year')
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
@@ -190,7 +190,7 @@ export function drawButton1 (g, year, width) {
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
-    .text('Next year')
+    .text('+1 Year')
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
@@ -258,7 +258,7 @@ export function drawButton1 (g, year, width) {
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
-    .text('Jump 10 years backward')
+    .text('-10 Years')
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
@@ -292,7 +292,7 @@ export function drawButton1 (g, year, width) {
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
-    .text('Jump 10 years forward')
+    .text('+10 Years')
     .attr('font-size', '10px')
     .attr('fill', '#362023')
 }
