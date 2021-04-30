@@ -101,7 +101,7 @@ export function placeTitle (g) {
 }
 
 /**
- * Draws the button to toggle the display year.
+ * Draws the button "See .. dataset"
  *
  * @param {*} g The d3 Selection of the graph's g SVG element
  * @param {number} year The year to display
@@ -137,6 +137,8 @@ export function drawButton1 (g, year) {
 }
 
 /**
+ * Draws the button "-1 Years"
+ * 
  * @param g
  */
  export function drawButton2 (g) {
@@ -170,6 +172,8 @@ export function drawButton1 (g, year) {
 }
 
 /**
+ * Draws the button "+1 Years"
+ * 
  * @param g
  */
  export function drawButton3 (g) {
@@ -203,6 +207,8 @@ export function drawButton1 (g, year) {
 }
 
 /**
+ * Draws the button "Reset"
+ * 
  * @param g
  */
  export function drawButton4 (g) {
@@ -236,6 +242,8 @@ export function drawButton1 (g, year) {
 }
 
 /**
+ * Draws the button "- 10 Years"
+ * 
  * @param g
  */
  export function drawButton5 (g) {
@@ -269,6 +277,8 @@ export function drawButton1 (g, year) {
 }
 
 /**
+ * Draws the button "+ 10 Years"
+ * 
  * @param g
  */
  export function drawButton6 (g) {
@@ -302,6 +312,8 @@ export function drawButton1 (g, year) {
 }
 
 /**
+ * Draws the button "Animation"
+ * 
  * @param g
  */
  export function drawButton7 (g) {
