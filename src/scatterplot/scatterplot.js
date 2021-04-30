@@ -121,11 +121,10 @@ export function GetScatterPlot() {
       d3.select('#button2')
         .on('click', () => {
           console.log(currentYear)
-          console.log(MinYear)
           if (currentYear !== 1960) {
             currentYear = currentYear - 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
-          if (currentYear === MinYear) { 
+          if (currentYear === 1960) { 
             d3.select('#button1').select('.button-text').text('See ' + MaxYear + '  dataset')
             previousYear = MaxYear }
         }
