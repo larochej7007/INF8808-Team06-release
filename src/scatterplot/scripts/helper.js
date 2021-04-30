@@ -47,7 +47,6 @@ export function appendGraphLabels (g) {
   g.append('text')
     .text('% Of Total C02 Emissions')
     .attr('class', 'y axis-text')
-    .attr('transform', 'rotate(-90)')
     .attr('font-size', 12)
 
   g.append('text')

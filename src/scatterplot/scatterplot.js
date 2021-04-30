@@ -118,7 +118,7 @@ export function GetScatterPlot() {
             currentYear = currentYear - 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
           if (currentYear === 1960) { 
-            d3.select('#button1').select('.button-text').text('See 2016 datasets') 
+            d3.select('#button1').select('.button-text').text('See 2016 dataset') 
             previousYear = 2016 }
         }
         )
