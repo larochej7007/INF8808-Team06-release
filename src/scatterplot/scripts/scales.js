@@ -1,15 +1,12 @@
 /**
  * Defines the color scale used to determine the color of the circle markers.
  *
- * The color of each circle is determined based on wether or the country has taken measures on 
- *
- * The possible colors are determined by the scheme d3.schemeCategory10.
+ * The color of each circle is determined based on wether or the country has taken measures against CO2 Emissions
  *
  * @param {object} data The data to be displayed
  * @returns {*} The ordinal scale used to determine the color
  */
  export function setColorScale () {
-  // TODO : Set scale
   const Scale = d3.scaleOrdinal()
     .domain([0, 1, 2])
     .range(['red', 'green', 'black'])
@@ -25,7 +22,6 @@
  * @returns {*} The linear scale in X
  */
 export function setXScale (width, data) {
-  // TODO : Set scale
   const max = d3.max(data , function (d) {
     return parseFloat(d.PerCapita)
   })
@@ -48,8 +44,6 @@ export function setXScale (width, data) {
  * @returns {*} The linear scale in Y
  */
 export function setYScale (height, data) {
-  // TODO : Set scale
-// On récupère le % des Emissions Totales de chacune des années et chacun des pays dans un seul tableau pour en trouver le minimum et le maximum
 const max = d3.max(data , function (d) {
   return parseFloat(d.percentTotalEmissions)
 })
