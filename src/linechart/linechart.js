@@ -33,6 +33,7 @@ export function GetLineChart (countryName) {
     .attr('style', 'font:12px sans-serif');
 
    var svg = d3.select(".linechart-svg");
+   var svgGraph = svg.append('g').attr("class", "linechart-g");
    var margin = 30;
    var marginVertical = 2 * margin;
 
@@ -56,7 +57,8 @@ export function GetLineChart (countryName) {
 
     
     
-    setSizing(); 
+    setSizing();
+    svgGraph.attr("transform", "translate(" + 0 + " ," + marginVertical + ")")
     viz.updateXScale(xScale, 1900, 2020, graphSize.width, margin)
     viz.updateYScale(yScale, data, graphSize.height, margin)
     
@@ -73,7 +75,7 @@ export function GetLineChart (countryName) {
                    .ticks(24)
                    .tickFormat((y) => `${y}`);
 
-    svg.append("g")
+    svgGraph.append("g")
       .attr("class", "x-axis-linechart")
       .attr("transform", "translate(" + margin + " ," + (graphSize.height) + ")")
       .call(x_axis)
@@ -84,12 +86,12 @@ export function GetLineChart (countryName) {
                   .tickSize(-graphSize.width)
                   .tickFormat((y) => `${y}°C`);
 
-    svg.append("g")
+    svgGraph.append("g")
        .attr("class", "y-axis-linechart")
        .attr("transform", "translate(" + margin + ", " + margin + ")")
        .call(y_axis);
 
-    svg.selectAll(".y-axis-linechart .tick line")
+    svgGraph.selectAll(".y-axis-linechart .tick line")
     .style("visibility", "visible")
       .style("stroke-dasharray", "1 1")
       .style("stroke",'#CCCCCC')
@@ -101,7 +103,7 @@ export function GetLineChart (countryName) {
         
     // Add the line
     data.forEach(function(d) {
-      svg.append('line')  
+      svgGraph.append('line')  
       .style("stroke", "#b863b2")
       .style("stroke-width", 2)
       .attr("stroke-dasharray", 2)
@@ -112,7 +114,7 @@ export function GetLineChart (countryName) {
       .attr("y2",  yScale(d.Max))
     });
 
-    svg.append("path")
+    svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
       .attr("transform", "translate(" + margin + ", "+ margin + ")")
@@ -124,7 +126,7 @@ export function GetLineChart (countryName) {
         .y(function(d) { return yScale(d.Max)})
       );
 
-    svg.append("path")
+    svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
       .attr("transform", "translate(" + margin + ", "+ margin + ")")
@@ -136,7 +138,7 @@ export function GetLineChart (countryName) {
         .y(function(d) { return  yScale(d.Min)})
       );
 
-    svg.append("path")
+    svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
       .attr("transform", "translate(" + margin + ", "+ margin + ")")
@@ -156,14 +158,14 @@ export function GetLineChart (countryName) {
       .range([ margin, graphSize.width + margin]);
 
     // Create the circle that travels along the curve of chart
-    var focus = svg
+    var focus = svgGraph
       .append('g')
       .append('line')
         .style("fill", "none")
         .attr("stroke", "black")
         .style("opacity", 0)
 
-    var focusText = svg
+    var focusText = svgGraph
       .append('g')
       .append('text')
       .style("opacity", 0)
@@ -171,7 +173,7 @@ export function GetLineChart (countryName) {
       .attr("alignment-baseline", "middle")
 
     // Create a rect on top of the svg area: this rectangle recovers mouse position
-    svg
+    svgGraph
       .append('rect')
       .style("fill", "none")
       .style("pointer-events", "all")
@@ -189,9 +191,9 @@ export function GetLineChart (countryName) {
       .range(['#d40b20', 'black', '#0c31d2'])
 
       var padding = graphSize.width / 2 - 65 // On rajoute 15 pour ne pas avoir d'overlapping avec les données de 2015 et la légende
-      svg.append('g')
+      svgGraph.append('g')
         .attr('id', 'legend-linechart')
-        .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 1.5 * margin) + ')') // Le -10 permet de relever un peu la légende
+        .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 1.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
     
       var legend = d3Legend.legendColor()
         .shape('line')
@@ -204,7 +206,7 @@ export function GetLineChart (countryName) {
         .shapePadding(20);
     
     
-      svg.select('#legend-linechart')
+      svgGraph.select('#legend-linechart')
         .call(legend)
 
 
@@ -228,9 +230,29 @@ export function GetLineChart (countryName) {
         .attr("y2", yScale.range()[1]  + margin)
         
       focusText
-        .html("Year:" + selectedData.Year + "- Max:" + selectedData.Max + "  -  " + "Min:" + selectedData.Min + "  -  " + "AVG:" + selectedData.AVG)
         .attr("x", xScale(selectedData.Year)+5)
-        .attr("y", 20)
+        .attr("y", marginVertical - 70)
+        .html("")
+        .append("tspan")
+        .html("Year: " + selectedData.Year)
+      
+      focusText
+        .append("tspan")
+        .attr("x", xScale(selectedData.Year)+5)
+        .attr("dy", 12)
+        .html("Max: " + selectedData.Max + "°C")
+
+      focusText
+        .append("tspan")
+        .attr("dy", 12)
+        .attr("x", xScale(selectedData.Year)+5)
+        .html("Avg: " + selectedData.AVG  + "°C")
+
+      focusText
+        .append("tspan")
+        .attr("dy", 12)
+        .attr("x", xScale(selectedData.Year)+5)
+        .html("Min: " + selectedData.Min  + "°C")
       }
     function mouseout() {
       focus.style("opacity", 0)
@@ -251,7 +273,7 @@ export function GetLineChart (countryName) {
 
       graphSize = {
         width: svgSize.width - 2*margin,
-        height: svgSize.height - 2 * marginVertical
+        height: svgSize.height - 2*marginVertical
       }
 
       helper.setCanvasSize(svgSize.width, svgSize.height)
