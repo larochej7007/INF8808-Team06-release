@@ -63,7 +63,7 @@ export function GetLineChart (countryName) {
     viz.updateYScale(yScale, data, graphSize.height, margin)
     
     svg.append('text')
-      .text("Data for: " + countryName)
+      .text("Details for selection: " + countryName)
       .attr("x", 0)
       .attr("y", 0)
       .attr("text-anchor", "start")

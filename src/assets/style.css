@@ -95,7 +95,7 @@ g:not(.y-axis-linechart) .tick line{
     stroke:'#CCCCCC';
 }
 
-.x-axis-heatmap .tick line{
+g.x-axis-heatmap .tick line{
     visibility: visible;
     stroke-dasharray: none;
     stroke:'#000000';
