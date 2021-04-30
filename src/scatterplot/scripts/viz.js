@@ -93,7 +93,7 @@ export function setTitleText (year) {
 
   d3.select('#title-scatterplot')
     .text("Data for year : " + year)
-    .attr('transform','translate(' + xtranslate + ', 260)' )
+    .attr('transform','translate(' + xtranslate - 80 + ', 260)' )
 }
 
 /**
