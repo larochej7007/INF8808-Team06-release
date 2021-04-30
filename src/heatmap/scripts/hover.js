@@ -42,7 +42,6 @@ export function setRectHandler(
 
   d3.selectAll(".year-count-rect")
     .on("click", d => {
-      console.log(d)
       linechart.clearLineChart()
       unselectTick()
       linechart.GetLineChart (d.country)

@@ -21,7 +21,6 @@ var selectedData = {}
 
 export function GetLineChart (countryName) {
  
-  console.log(countryName)
   let bounds
   let svgSize
   let graphSize
@@ -180,9 +179,7 @@ export function GetLineChart (countryName) {
 
     function mousemove() {
       // recover coordinate we need
-      console.log(d3.mouse(this)[0])
       var x0 = xScale.invert(d3.mouse(this)[0] - margin);
-      console.log(x0)
       var i = bisect(data, x0, 1) - 1;
       selectedData = data[i]
       focus
