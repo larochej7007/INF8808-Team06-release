@@ -122,7 +122,7 @@ export function GetScatterPlot() {
         .on('click', () => {
           console.log(currentYear)
           console.log(MinYear)
-          if (currentYear !== MinYear) {
+          if (currentYear !== 1960) {
             currentYear = currentYear - 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
           if (currentYear === MinYear) { 
