@@ -1,3 +1,13 @@
+/**
+ * Generate global variables usefull for the following functions
+ * 
+ * @param {*} width 
+ */
+
+ export function translate(width) {
+  window.translate1=width+20
+  window.translate2=width+100
+}
 
 /**
  * Generates the SVG element g which will contain the data visualisation.
