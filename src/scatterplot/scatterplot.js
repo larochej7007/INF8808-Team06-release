@@ -120,6 +120,8 @@ export function GetScatterPlot() {
     function setClickHandler2 () {
       d3.select('#button2')
         .on('click', () => {
+          console.log(currentYear)
+          console.log(MinYear)
           if (currentYear !== MinYear) {
             currentYear = currentYear - 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
