@@ -72,8 +72,9 @@ export function drawXAxis (xScale, height) {
  *
  * @param {*} yScale The scale to use to draw the axis
  */
-export function drawYAxis (yScale) {
+export function drawYAxis (yScale, width) {
   d3.select('.y-axis-scatterplot')
+    .attr('transform','translate(' + width/2 + ', 0)')
     .call(d3.axisLeft(yScale).tickSizeOuter(0).tickArguments([5, '.0r']))
 }
 
