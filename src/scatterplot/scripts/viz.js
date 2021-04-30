@@ -6,10 +6,9 @@
  * @param {number} height The height of the graph
  */
 export function positionLabels (g, width, height) {
-  // TODO : Position axis labels
   g.select(".y.axis-text")
-    .attr('y', height/2)
-    .attr('x', -50)
+    .attr('y', 0)
+    .attr('x', width/2)
 
   g.select(".x.axis-text")
     .attr('x', width/2)
