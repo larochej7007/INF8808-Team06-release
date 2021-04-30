@@ -91,7 +91,14 @@ export function setTitleText (year) {
     .text("Data for year : " + year)
 }
 
-
+/**
+ * Draws the circles for a single country
+ * 
+ * @param {*} data 
+ * @param {*} annee 
+ * @param {*} xScale 
+ * @param {*} yScale 
+ */
 export function drawCirclesCountry (data, annee, xScale, yScale) {
 
   const OpacityScale = d3.scaleLinear().domain([1960,2016]).range([0.15,1])
@@ -117,23 +124,31 @@ export function drawCirclesCountry (data, annee, xScale, yScale) {
   .attr('stroke', 'white')
 }
 
+/**
+ * Handles the tooltip
+ * 
+ * @param {*} tip 
+ */
 export function setCircleHoverHandlerCountry (tip) {
-  // TODO : Set hover handler. The tooltip shows on
-  // hover and the opacity goes up to 100% (from 70%)
   d3.selectAll('.dot')
 
-    .on('mouseover', function(d) { // Lorsque l'élément est survolé, on change l'opacité et on affiche le tooltip
+    .on('mouseover', function(d) { 
       tip.show(d, this)
       d3.select(this).attr('stroke', '#362023')})
 
-    .on('mouseout', function(d) { // Lorsque l'élément n'est plus survolé, l'opacité revient à la normale et le tooltip disparait
+    .on('mouseout', function(d) { 
       tip.hide(d, this)
       d3.select(this).attr('stroke', '#f4f6f4')})
 
 }
 
+/**
+ * Update the grid based on the height of the graph
+ * 
+ * @param {*} height 
+ * @param {*} xScale 
+ */
 export function UpdateXGrid (height, xScale) {
-  // TODO : Set domain of color scale
   d3.select('#gridx')
       .call(d3.axisTop(xScale).ticks(3)
       .tickSize(-height)
@@ -146,8 +161,13 @@ export function UpdateXGrid (height, xScale) {
 
 }
 
+/**
+ * Update the grid based on the width of the graph
+ * 
+ * @param {*} width 
+ * @param {*} yScale 
+ */
 export function UpdateYGrid (width, yScale) {
-  // TODO : Set domain of color scale
   d3.select('#gridy')
   		.call(d3.axisLeft(yScale).ticks(4)
             .tickSize(-width)
