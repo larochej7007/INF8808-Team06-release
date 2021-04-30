@@ -137,6 +137,7 @@ export function GetScatterPlot() {
     function setClickHandler3 () {
       d3.select('#button3')
         .on('click', () => {
+          console.log(MaxYear)
           if (currentYear !== MaxYear) {
             currentYear = currentYear + 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
