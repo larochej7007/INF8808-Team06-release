@@ -237,7 +237,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button5')
-    .attr('transform', 'translate(' + (20 + width) + ', 350)')
+    .attr('transform', 'translate(' + (20 + width) + ', 360)')
     .attr('width', 150)
     .attr('height', 30)
 
@@ -271,7 +271,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button6')
-    .attr('transform', 'translate(' + (20 + width) + ', 310)')
+    .attr('transform', 'translate(' + (20 + width) + ', 320)')
     .attr('width', 150)
     .attr('height', 30)
 
