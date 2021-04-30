@@ -9,8 +9,6 @@ import { color } from "d3-color";
 export function initGradient(positiveColorScale, negativeColorScale) {
   const svg = d3.select(".heatmap-svg");
 
-  svg.attr('transform', 'translate(0,100)')
-
   const defs = svg.append("defs");
 
   const positiveGradient = defs
@@ -99,18 +97,18 @@ export function draw(x, y, height, width, positiveFill, negativeFill, positiveCo
     .attr("x", x + width/2)
     .attr("y", y)
     .attr("height", height)
-    .attr("width", width/2);
+    .attr("width", width/4);
 
   d3.select(".negativeLegend")
     .attr("fill", negativeFill)
-    .attr("x", x)
+    .attr("x", x + width/4)
     .attr("y", y)
     .attr("height", height)
-    .attr("width", width/2);
+    .attr("width", width/4);
 
     var scale = (positiveColorScale.domain())
     var legendPositiveColorScale = d3.scaleLinear()
-    .range([0, width/2])
+    .range([0, width/4])
     .domain([scale[0], scale[1]]);
 
   d3.select(".positiveValuesLegend").remove()
@@ -123,22 +121,24 @@ export function draw(x, y, height, width, positiveFill, negativeFill, positiveCo
       d3
         .axisTop(legendPositiveColorScale)
         .ticks(6)
+        .tickFormat(x => `${x}°C`)
     );
 
   scale = (negativeColorScale.domain())
   var legendNegativeColorScale = d3
     .scaleLinear()
-    .range([width/2, 0])
+    .range([width/4, 0])
     .domain([scale[1], scale[0]]);
 
   d3.select(".negativeValuesLegend").remove()
   d3.select(".legend.axis")
     .append("g")
     .attr('class', 'negativeValuesLegend')
-    .attr("transform", "translate(" + x + ", " + y + ")")
+    .attr("transform", "translate(" + (x + width/4) + ", " + y + ")")
     .call(
       d3
         .axisTop(legendNegativeColorScale)
         .ticks(6)
+        .tickFormat(x => `${x}°C`)
     );
 }

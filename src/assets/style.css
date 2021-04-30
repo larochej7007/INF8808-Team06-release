@@ -81,18 +81,21 @@ button:hover, button:active {
     height: 950px; 
 }
 
+#linechart {
+    height: 535px; 
+}
+
 .VizTitle {
     display: flex;
 }
 
-.tick line{
+g:not(.y-axis-linechart) .tick line{
     visibility: visible;
     stroke-dasharray: 1 1;
     stroke:'#CCCCCC';
-    stroke-opacity: 0.3;
-  }
+}
 
-.x-axis-heatmap .tick line{
+g.x-axis-heatmap .tick line{
     visibility: visible;
     stroke-dasharray: none;
     stroke:'#000000';

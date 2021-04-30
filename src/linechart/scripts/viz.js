@@ -7,8 +7,8 @@ import { range, svg } from 'd3'
  * @param {object[]} data The data to be used
  * @param {number} width The width of the graph
  */
-export function updateXScale (scale, start, end, width, margin) {
-  scale.domain([start, end]).range([0, width - margin])
+export function updateXScale (scale, start, end, width) {
+  scale.domain([start, end]).range([0, width])
 }
 
 /**
@@ -19,7 +19,7 @@ export function updateXScale (scale, start, end, width, margin) {
  * @param {number} height The height of the graph
  * @param {number} margin The margin of the graph
  */
-export function updateYScale (scale, data, height, margin) {
+export function updateYScale (scale, data, height) {
   // TODO : Set the domain and range of the graph's y scale
   // TODO : Set the domain and range of the groups' x scale
   var min = d3.min(data, (d) => {
@@ -30,7 +30,7 @@ export function updateYScale (scale, data, height, margin) {
     return d.Max
   })
 
-  scale.domain([max, min]).range([0, height - margin])
+  scale.domain([max, min]).range([0, height])
   
 }
 

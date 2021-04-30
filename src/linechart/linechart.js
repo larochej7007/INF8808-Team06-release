@@ -5,6 +5,7 @@ import * as viz from './scripts/viz.js'
 import * as helper from './scripts/helper.js'
 
 import d3Tip from 'd3-tip'
+import d3Legend, { legendColor } from 'd3-svg-legend'
 import { style } from 'd3-selection'
 
 /**
@@ -31,7 +32,9 @@ export function GetLineChart (countryName) {
     .attr('style', 'font:12px sans-serif');
 
    var svg = d3.select(".linechart-svg");
-   var margin = 30;
+   var svgGraph = svg.append('g').attr("class", "linechart-g");
+   var margin = 40;
+   var marginVertical = 2 * margin;
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
@@ -53,12 +56,13 @@ export function GetLineChart (countryName) {
 
     
     
-    setSizing(); 
-    viz.updateXScale(xScale, 1900, 2020, graphSize.width, margin)
-    viz.updateYScale(yScale, data, graphSize.height, margin)
+    setSizing();
+    svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")
+    viz.updateXScale(xScale, 1900, 2020, graphSize.width)
+    viz.updateYScale(yScale, data, graphSize.height)
     
     svg.append('text')
-      .text("Data for: " + countryName)
+      .text("Details for selection: " + countryName)
       .attr("x", 0)
       .attr("y", 0)
       .attr("text-anchor", "start")
@@ -70,39 +74,46 @@ export function GetLineChart (countryName) {
                    .ticks(24)
                    .tickFormat((y) => `${y}`);
 
-    svg.append("g")
+    svgGraph.append("g")
       .attr("class", "x-axis-linechart")
-      .attr("transform", "translate(" + margin + " ," + (graphSize.height) + ")")
+      .attr("transform", "translate(" + 0 + " ," + (graphSize.height) + ")")
       .call(x_axis)
       
     var y_axis = d3.axisLeft()
                   .scale(yScale)
                   .tickSize(4)
-                  .ticks(24)
                   .tickSize(-graphSize.width)
-                  .tickFormat((y) => `${y}`);
+                  .tickFormat((y) => `${y}°C`);
 
-    svg.append("g")
-       .attr("transform", "translate(" + margin + ", " + margin + ")")
+    svgGraph.append("g")
+       .attr("class", "y-axis-linechart")
        .call(y_axis);
+
+    svgGraph.selectAll(".y-axis-linechart .tick line")
+    .style("visibility", "visible")
+      .style("stroke-dasharray", "1 1")
+      .style("stroke",'#CCCCCC')
+      .filter(d => {
+      return d == 0
+    }).style("visibility", "visible")
+      .style("stroke-dasharray", "none")
+      .style("stroke",'#000000');
         
     // Add the line
     data.forEach(function(d) {
-      svg.append('line')  
+      svgGraph.append('line')  
       .style("stroke", "#b863b2")
       .style("stroke-width", 2)
       .attr("stroke-dasharray", 2)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("x1",xScale(d.Year) )
       .attr("y1", yScale(d.Min))
       .attr("x2", xScale(d.Year))
       .attr("y2",  yScale(d.Max))
     });
 
-    svg.append("path")
+    svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .style("fill", "none")
       .attr("stroke", "#d40b20")
       .attr("stroke-width", 1.5)
@@ -111,10 +122,9 @@ export function GetLineChart (countryName) {
         .y(function(d) { return yScale(d.Max)})
       );
 
-    svg.append("path")
+    svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("fill", "none")
       .attr("stroke", "#0c31d2")
       .attr("stroke-width", 1.5)
@@ -123,13 +133,12 @@ export function GetLineChart (countryName) {
         .y(function(d) { return  yScale(d.Min)})
       );
 
-    svg.append("path")
+    svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("fill", "none")
       .attr("stroke", "#000000")
-      .attr("opacity", "0.5")
+      .attr("opacity", "1")
       .attr("stroke-width", 1)
       .attr("d", d3.line()
         .x(function(d) { return xScale(d.Year) })
@@ -143,14 +152,14 @@ export function GetLineChart (countryName) {
       .range([ margin, graphSize.width + margin]);
 
     // Create the circle that travels along the curve of chart
-    var focus = svg
+    var focus = svgGraph
       .append('g')
       .append('line')
         .style("fill", "none")
         .attr("stroke", "black")
         .style("opacity", 0)
 
-    var focusText = svg
+    var focusText = svgGraph
       .append('g')
       .append('text')
       .style("opacity", 0)
@@ -158,17 +167,39 @@ export function GetLineChart (countryName) {
       .attr("alignment-baseline", "middle")
 
     // Create a rect on top of the svg area: this rectangle recovers mouse position
-    svg
+    svgGraph
       .append('rect')
       .style("fill", "none")
       .style("pointer-events", "all")
-      .attr('width', graphSize.width)
+      .attr('width', graphSize.width + 10)
       .attr('height', graphSize.height)
-      .attr('x', margin)
-      .attr('y', margin)
       .on('mouseover', mouseover)
       .on('mousemove', mousemove)
       .on('mouseout', mouseout);
+
+      // Legend stuff
+      const scale = d3.scaleOrdinal()
+      .domain([0, 1, 2])
+      .range(['#d40b20', 'black', '#0c31d2'])
+
+      var padding = graphSize.width / 2 - 65 // On rajoute 15 pour ne pas avoir d'overlapping avec les données de 2015 et la légende
+      svgGraph.append('g')
+        .attr('id', 'legend-linechart')
+        .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 0.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
+    
+      var legend = d3Legend.legendColor()
+        .shape('line')
+        .cells(3)
+        .labels(['Maximum', 'Average', 'Minimum'])
+        .scale(scale)
+        .orient("horizontal")
+        .labelWrap(40)
+        .shapeWidth(40)
+        .shapePadding(20);
+    
+    
+      svgGraph.select('#legend-linechart')
+        .call(legend)
 
 
     // What happens when the mouse move -> show the annotations at the right positions.
@@ -179,19 +210,45 @@ export function GetLineChart (countryName) {
 
     function mousemove() {
       // recover coordinate we need
+<<<<<<< HEAD
       var x0 = xScale.invert(d3.mouse(this)[0] - margin);
+=======
+      console.log(d3.mouse(this)[0])
+      var x0 = xScale.invert(d3.mouse(this)[0]);
+      console.log(x0)
+>>>>>>> main
       var i = bisect(data, x0, 1) - 1;
       selectedData = data[i]
       focus
-        .attr("x1", xScale(selectedData.Year) + margin)
-        .attr("y1", yScale.range()[0] + margin)
-        .attr("x2", xScale(selectedData.Year) + margin)
-        .attr("y2", yScale.range()[1]  + margin)
+        .attr("x1", xScale(selectedData.Year))
+        .attr("y1", yScale.range()[0])
+        .attr("x2", xScale(selectedData.Year))
+        .attr("y2", yScale.range()[1])
         
       focusText
-        .html("Year:" + selectedData.Year + "- Max:" + selectedData.Max + "  -  " + "Min:" + selectedData.Min + "  -  " + "AVG:" + selectedData.AVG)
-        .attr("x", xScale(selectedData.Year)+5)
-        .attr("y", 20)
+        .attr("x", xScale(selectedData.Year) - 35)
+        .attr("y", -40)
+        .html("")
+        .append("tspan")
+        .html("Year: " + selectedData.Year)
+      
+      focusText
+        .append("tspan")
+        .attr("x", xScale(selectedData.Year) - 35)
+        .attr("dy", 12)
+        .html("Max: " + selectedData.Max + "°C")
+
+      focusText
+        .append("tspan")
+        .attr("dy", 12)
+        .attr("x", xScale(selectedData.Year) - 35)
+        .html("Avg: " + selectedData.AVG  + "°C")
+
+      focusText
+        .append("tspan")
+        .attr("dy", 12)
+        .attr("x", xScale(selectedData.Year) - 35)
+        .html("Min: " + selectedData.Min  + "°C")
       }
     function mouseout() {
       focus.style("opacity", 0)
@@ -203,16 +260,16 @@ export function GetLineChart (countryName) {
      *   This function handles the graph's sizing.
      */
     function setSizing () {
-      bounds = d3.select('svg').node().getBoundingClientRect()
+      bounds = d3.select('#linechart').node().getBoundingClientRect()
 
       svgSize = {
         width: bounds.width,
-        height: bounds.height / 2
+        height: bounds.height
       }
 
       graphSize = {
         width: svgSize.width - 2*margin,
-        height: svgSize.height - 2*margin
+        height: svgSize.height - 2*marginVertical
       }
 
       helper.setCanvasSize(svgSize.width, svgSize.height)

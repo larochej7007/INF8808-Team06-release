@@ -11,6 +11,6 @@ import * as uniplot from './unidirectionalplot/unidirectionalplot.js'
   heatmap.GetHeatmap()
   histogramme.GetHistogram()
   scatterplot.GetScatterPlot()
-  linechart.GetLineChart("Canada")
+  linechart.GetLineChart("Global-land")
   uniplot.getUniPlot()
 })(d3)
