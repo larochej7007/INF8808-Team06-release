@@ -346,32 +346,74 @@ export function drawButton1 (g, year) {
     .attr('fill', '#362023')
 }
 
+/**
+ * Remove the button "See .. dataset"
+ * 
+ * @param {*} g 
+ */
 export function HideButton1(g) {
   g.select('#button1').remove()
 }
 
+/**
+ * Remove the button "-1 Year"
+ * 
+ * @param {*} g 
+ */
 export function HideButton2(g) {
   g.select('#button2').remove()
 }
 
+/**
+ * Remove the button "+1 Year"
+ * 
+ * @param {*} g 
+ */
 export function HideButton3(g) {
   g.select('#button3').remove()
 }
 
+/**
+ * Remove the button "Reset"
+ * 
+ * @param {*} g 
+ */
 export function HideButton4(g) {
   g.select('#button4').remove()
 }
 
+/**
+ * Remove the button "-10 Years"
+ * 
+ * @param {*} g 
+ */
 export function HideButton5(g) {
   g.select('#button5').remove()
 }
+
+/**
+ * Remove the button "+10 Years"
+ * 
+ * @param {*} g 
+ */
 export function HideButton6(g) {
   g.select('#button6').remove()
 }
+
+/**
+ * Remove the button "Animation"
+ * 
+ * @param {*} g 
+ */
 export function HideButton7(g) {
   g.select('#button7').remove()
 }
 
+/**
+ * Draws the grid on the graph
+ * 
+ * @param {*} g 
+ */
 export function appendGrid (g) {
   g.append('g')
     .attr('class', 'grid')
