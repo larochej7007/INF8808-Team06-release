@@ -74,7 +74,7 @@ export function GetScatterPlot() {
     viz.UpdateYGrid(graphSize.width, yScale)
 
     helper.drawXAxis(xScale, graphSize.height)
-    helper.drawYAxis(yScale, graphSize.width)
+    helper.drawYAxis(yScale)
 
     // Drawing of the legend
     legend.drawLegend(colorScale, g, graphSize.width)
