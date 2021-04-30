@@ -34,7 +34,7 @@ export function GetLineChart (countryName) {
 
    var svg = d3.select(".linechart-svg");
    var margin = 30;
-   var marginVerticalBottom = 2 * margin;
+   var marginVertical = 2 * margin;
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
@@ -242,16 +242,16 @@ export function GetLineChart (countryName) {
      *   This function handles the graph's sizing.
      */
     function setSizing () {
-      bounds = d3.select('svg').node().getBoundingClientRect()
+      bounds = d3.select('#linechart').node().getBoundingClientRect()
 
       svgSize = {
         width: bounds.width,
-        height: bounds.height / 2
+        height: bounds.height
       }
 
       graphSize = {
         width: svgSize.width - 2*margin,
-        height: svgSize.height - 1 * margin - marginVerticalBottom
+        height: svgSize.height - 2 * marginVertical
       }
 
       helper.setCanvasSize(svgSize.width, svgSize.height)
