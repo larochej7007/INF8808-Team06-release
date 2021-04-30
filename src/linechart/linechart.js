@@ -5,6 +5,7 @@ import * as viz from './scripts/viz.js'
 import * as helper from './scripts/helper.js'
 
 import d3Tip from 'd3-tip'
+import d3Legend, { legendColor } from 'd3-svg-legend'
 import { style } from 'd3-selection'
 
 /**
@@ -33,6 +34,7 @@ export function GetLineChart (countryName) {
 
    var svg = d3.select(".linechart-svg");
    var margin = 30;
+   var marginVerticalBottom = 2 * margin;
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
@@ -131,7 +133,7 @@ export function GetLineChart (countryName) {
       .attr("fill", "none")
       .attr("stroke", "#000000")
       .attr("opacity", "0.5")
-      .attr("stroke-width", 1)
+      .attr("stroke-width", 1.5)
       .attr("d", d3.line()
         .x(function(d) { return xScale(d.Year) })
         .y(function(d) { return  yScale(d.AVG)})
@@ -170,6 +172,30 @@ export function GetLineChart (countryName) {
       .on('mouseover', mouseover)
       .on('mousemove', mousemove)
       .on('mouseout', mouseout);
+
+      // Legend stuff
+      const scale = d3.scaleOrdinal()
+      .domain([0, 1, 2])
+      .range(['#d40b20', 'black', '#0c31d2'])
+
+      var padding = graphSize.width / 2 - 65 // On rajoute 15 pour ne pas avoir d'overlapping avec les données de 2015 et la légende
+      svg.append('g')
+        .attr('id', 'legend-linechart')
+        .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 1.5 * margin) + ')') // Le -10 permet de relever un peu la légende
+    
+      var legend = d3Legend.legendColor()
+        .shape('line')
+        .cells(3)
+        .labels(['Maximum', 'Average', 'Minimum'])
+        .scale(scale)
+        .orient("horizontal")
+        .labelWrap(40)
+        .shapeWidth(40)
+        .shapePadding(20);
+    
+    
+      svg.select('#legend-linechart')
+        .call(legend)
 
 
     // What happens when the mouse move -> show the annotations at the right positions.
@@ -215,7 +241,7 @@ export function GetLineChart (countryName) {
 
       graphSize = {
         width: svgSize.width - 2*margin,
-        height: svgSize.height - 2*margin
+        height: svgSize.height - 1 * margin - marginVerticalBottom
       }
 
       helper.setCanvasSize(svgSize.width, svgSize.height)
