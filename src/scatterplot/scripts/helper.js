@@ -111,7 +111,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button1')
-    .attr('transform', 'translate(' + (width + 20) + ', 450)')
+    .attr('transform', 'translate(' + translate1 + ', 450)')
     .attr('width', 150)
     .attr('height', 30)
 
@@ -145,7 +145,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button2')
-    .attr('transform', 'translate(' + (width + 20) + ', 280)')
+    .attr('transform', 'translate(' + translate1 + ', 280)')
     .attr('width', 70)
     .attr('height', 30)
 
@@ -213,7 +213,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button4')
-    .attr('transform', 'translate(' + (20 + width) + ', 120)')
+    .attr('transform', 'translate(' + translate1 + ', 120)')
     .attr('width', 150)
     .attr('height', 30)
 
@@ -247,7 +247,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button5')
-    .attr('transform', 'translate(' + (20 + width) + ', 360)')
+    .attr('transform', 'translate(' + translate1 + ', 360)')
     .attr('width', 150)
     .attr('height', 30)
 
@@ -281,7 +281,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button6')
-    .attr('transform', 'translate(' + (20 + width) + ', 320)')
+    .attr('transform', 'translate(' + translate1 + ', 320)')
     .attr('width', 150)
     .attr('height', 30)
 
@@ -315,7 +315,7 @@ export function drawButton1 (g, year, width) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button7')
-    .attr('transform', 'translate(' + (20 + width) + ', 120)')
+    .attr('transform', 'translate(' + translate1 + ', 120)')
     .attr('width', 150)
     .attr('height', 30)
 
