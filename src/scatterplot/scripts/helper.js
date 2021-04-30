@@ -105,9 +105,8 @@ export function placeTitle (g) {
  *
  * @param {*} g The d3 Selection of the graph's g SVG element
  * @param {number} year The year to display
- * @param {number} width The width of the graph, used to place the button
  */
-export function drawButton1 (g, year, width) {
+export function drawButton1 (g, year) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button1')
@@ -139,9 +138,8 @@ export function drawButton1 (g, year, width) {
 
 /**
  * @param g
- * @param width
  */
- export function drawButton2 (g, width) {
+ export function drawButton2 (g) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button2')
@@ -173,9 +171,8 @@ export function drawButton1 (g, year, width) {
 
 /**
  * @param g
- * @param width
  */
- export function drawButton3 (g, width) {
+ export function drawButton3 (g) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button3')
@@ -207,9 +204,8 @@ export function drawButton1 (g, year, width) {
 
 /**
  * @param g
- * @param width
  */
- export function drawButton4 (g, width) {
+ export function drawButton4 (g) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button4')
@@ -241,9 +237,8 @@ export function drawButton1 (g, year, width) {
 
 /**
  * @param g
- * @param width
  */
- export function drawButton5 (g, width) {
+ export function drawButton5 (g) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button5')
@@ -275,9 +270,8 @@ export function drawButton1 (g, year, width) {
 
 /**
  * @param g
- * @param width
  */
- export function drawButton6 (g, width) {
+ export function drawButton6 (g) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button6')
@@ -309,9 +303,8 @@ export function drawButton1 (g, year, width) {
 
 /**
  * @param g
- * @param width
  */
- export function drawButton7 (g, width) {
+ export function drawButton7 (g) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button7')
