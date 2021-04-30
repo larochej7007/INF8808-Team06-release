@@ -106,7 +106,7 @@ export function GetScatterPlot() {
       d3.select('#button1')
         .on('click', () => {
           currentYear = previousYear
-          previousYear = (previousYear === MaxYear ? 1960 : MaxYear)
+          previousYear = (previousYear === MaxYear ? MinYear : MaxYear)
           build(DataByYear, 1000, currentYear, xScale, yScale)
           d3.select('#button1').select('.button-text').text('See ' + previousYear + ' dataset')
         }
@@ -119,10 +119,10 @@ export function GetScatterPlot() {
     function setClickHandler2 () {
       d3.select('#button2')
         .on('click', () => {
-          if (currentYear !== 1960) {
+          if (currentYear !== MinYear) {
             currentYear = currentYear - 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
-          if (currentYear === 1960) { 
+          if (currentYear === MinYear) { 
             d3.select('#button1').select('.button-text').text('See ' + MaxYear + '  dataset')
             previousYear = MaxYear }
         }
@@ -139,8 +139,8 @@ export function GetScatterPlot() {
             currentYear = currentYear + 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
           if (currentYear === MaxYear) { 
-            d3.select('#button1').select('.button-text').text('See 1960 dataset')
-            previousYear = 1960 }
+            d3.select('#button1').select('.button-text').text('See ' + MinYear + ' dataset')
+            previousYear = MinYear }
         }
         )
     }
@@ -192,7 +192,7 @@ export function GetScatterPlot() {
       d3.select('#button4')
         .on('click', () => {
 
-          helper.drawButton1(g, 1960, graphSize.width)
+          helper.drawButton1(g, MinYear, graphSize.width)
           helper.drawButton2(g, graphSize.width)
           helper.drawButton3(g, graphSize.width)
           helper.drawButton5(g, graphSize.width)
@@ -204,7 +204,7 @@ export function GetScatterPlot() {
           .selectAll('.dot')
           .remove()
 
-          currentYear = 1960
+          currentYear = MinYear
           build(DataByYear, 1000, currentYear, xScale, yScale)
           d3.select('#button1').select('.button-text').text('See ' + MaxYear + ' dataset')
           viz.setCircleHoverHandler(tip)
@@ -225,12 +225,12 @@ export function GetScatterPlot() {
     function setClickHandler6 () {
       d3.select('#button5')
         .on('click', () => {
-          if (currentYear >= 1970) {
+          if (currentYear >= MinYear + 10) {
             currentYear = currentYear - 10
             build(DataByYear, 500, currentYear, xScale, yScale)}
-          else { currentYear = 1960
+          else { currentYear = MinYear
             build(DataByYear, 500, currentYear, xScale, yScale)}
-          if (currentYear === 1960) { 
+          if (currentYear === MinYear) { 
             d3.select('#button1').select('.button-text').text('See ' + MaxYear + ' dataset')
             previousYear = MaxYear }
         }
@@ -243,14 +243,14 @@ export function GetScatterPlot() {
     function setClickHandler7 () {
       d3.select('#button6')
         .on('click', () => {
-          if (currentYear <= 2006) {
+          if (currentYear <= MaxYear - 10) {
             currentYear = currentYear + 10
             build(DataByYear, 500, currentYear, xScale, yScale)}
           else { currentYear = MaxYear
             build(DataByYear, 500, currentYear, xScale, yScale)}
           if (currentYear === MaxYear) { 
-            d3.select('#button1').select('.button-text').text('See 1960 dataset')
-            previousYear = 1960 }
+            d3.select('#button1').select('.button-text').text('See ' + MinYear + ' dataset')
+            previousYear = MinYear }
         }
         )
     }
@@ -265,8 +265,8 @@ export function GetScatterPlot() {
             currentYear += 1
             if (currentYear == MaxYear + 1) { currentYear = MaxYear
                                       clearInterval(interval)}} , 200)
-          d3.select('#button1').select('.button-text').text('See 1960 dataset')
-          previousYear = 1960
+          d3.select('#button1').select('.button-text').text('See ' + MinYear + ' dataset')
+          previousYear = MinYear
         }
         )
     }
@@ -300,7 +300,7 @@ export function GetScatterPlot() {
    * @param {*} yScale The y scale for the graph
    */
   function build (data, transitionDuration, year, xScale, yScale) {
-    viz.drawCircles(data[year-1960], xScale, yScale)
+    viz.drawCircles(data[year-MinYear], xScale, yScale)
     viz.moveCircles(xScale, yScale, transitionDuration)
     viz.setTitleText(year)
   }
