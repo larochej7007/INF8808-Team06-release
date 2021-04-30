@@ -34,7 +34,7 @@ export function GetLineChart (countryName) {
 
    var svg = d3.select(".linechart-svg");
    var svgGraph = svg.append('g').attr("class", "linechart-g");
-   var margin = 30;
+   var margin = 40;
    var marginVertical = 2 * margin;
 
   const xScale = d3.scaleLinear()
@@ -58,9 +58,9 @@ export function GetLineChart (countryName) {
     
     
     setSizing();
-    svgGraph.attr("transform", "translate(" + 0 + " ," + marginVertical + ")")
-    viz.updateXScale(xScale, 1900, 2020, graphSize.width, margin)
-    viz.updateYScale(yScale, data, graphSize.height, margin)
+    svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")
+    viz.updateXScale(xScale, 1900, 2020, graphSize.width)
+    viz.updateYScale(yScale, data, graphSize.height)
     
     svg.append('text')
       .text("Details for selection: " + countryName)
@@ -77,7 +77,7 @@ export function GetLineChart (countryName) {
 
     svgGraph.append("g")
       .attr("class", "x-axis-linechart")
-      .attr("transform", "translate(" + margin + " ," + (graphSize.height) + ")")
+      .attr("transform", "translate(" + 0 + " ," + (graphSize.height) + ")")
       .call(x_axis)
       
     var y_axis = d3.axisLeft()
@@ -88,7 +88,6 @@ export function GetLineChart (countryName) {
 
     svgGraph.append("g")
        .attr("class", "y-axis-linechart")
-       .attr("transform", "translate(" + margin + ", " + margin + ")")
        .call(y_axis);
 
     svgGraph.selectAll(".y-axis-linechart .tick line")
@@ -107,7 +106,6 @@ export function GetLineChart (countryName) {
       .style("stroke", "#b863b2")
       .style("stroke-width", 2)
       .attr("stroke-dasharray", 2)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("x1",xScale(d.Year) )
       .attr("y1", yScale(d.Min))
       .attr("x2", xScale(d.Year))
@@ -117,7 +115,6 @@ export function GetLineChart (countryName) {
     svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .style("fill", "none")
       .attr("stroke", "#d40b20")
       .attr("stroke-width", 1.5)
@@ -129,7 +126,6 @@ export function GetLineChart (countryName) {
     svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("fill", "none")
       .attr("stroke", "#0c31d2")
       .attr("stroke-width", 1.5)
@@ -141,7 +137,6 @@ export function GetLineChart (countryName) {
     svgGraph.append("path")
       .datum(data)
       .attr("class", ids)
-      .attr("transform", "translate(" + margin + ", "+ margin + ")")
       .attr("fill", "none")
       .attr("stroke", "#000000")
       .attr("opacity", "1")
@@ -177,10 +172,8 @@ export function GetLineChart (countryName) {
       .append('rect')
       .style("fill", "none")
       .style("pointer-events", "all")
-      .attr('width', graphSize.width)
+      .attr('width', graphSize.width + 10)
       .attr('height', graphSize.height)
-      .attr('x', margin)
-      .attr('y', margin)
       .on('mouseover', mouseover)
       .on('mousemove', mousemove)
       .on('mouseout', mouseout);
@@ -193,7 +186,7 @@ export function GetLineChart (countryName) {
       var padding = graphSize.width / 2 - 65 // On rajoute 15 pour ne pas avoir d'overlapping avec les données de 2015 et la légende
       svgGraph.append('g')
         .attr('id', 'legend-linechart')
-        .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 1.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
+        .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 0.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
     
       var legend = d3Legend.legendColor()
         .shape('line')
@@ -219,39 +212,39 @@ export function GetLineChart (countryName) {
     function mousemove() {
       // recover coordinate we need
       console.log(d3.mouse(this)[0])
-      var x0 = xScale.invert(d3.mouse(this)[0] - margin);
+      var x0 = xScale.invert(d3.mouse(this)[0]);
       console.log(x0)
       var i = bisect(data, x0, 1) - 1;
       selectedData = data[i]
       focus
-        .attr("x1", xScale(selectedData.Year) + margin)
-        .attr("y1", yScale.range()[0] + margin)
-        .attr("x2", xScale(selectedData.Year) + margin)
-        .attr("y2", yScale.range()[1]  + margin)
+        .attr("x1", xScale(selectedData.Year))
+        .attr("y1", yScale.range()[0])
+        .attr("x2", xScale(selectedData.Year))
+        .attr("y2", yScale.range()[1])
         
       focusText
-        .attr("x", xScale(selectedData.Year)+5)
-        .attr("y", marginVertical - 70)
+        .attr("x", xScale(selectedData.Year) - 35)
+        .attr("y", -40)
         .html("")
         .append("tspan")
         .html("Year: " + selectedData.Year)
       
       focusText
         .append("tspan")
-        .attr("x", xScale(selectedData.Year)+5)
+        .attr("x", xScale(selectedData.Year) - 35)
         .attr("dy", 12)
         .html("Max: " + selectedData.Max + "°C")
 
       focusText
         .append("tspan")
         .attr("dy", 12)
-        .attr("x", xScale(selectedData.Year)+5)
+        .attr("x", xScale(selectedData.Year) - 35)
         .html("Avg: " + selectedData.AVG  + "°C")
 
       focusText
         .append("tspan")
         .attr("dy", 12)
-        .attr("x", xScale(selectedData.Year)+5)
+        .attr("x", xScale(selectedData.Year) - 35)
         .html("Min: " + selectedData.Min  + "°C")
       }
     function mouseout() {
