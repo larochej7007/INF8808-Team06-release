@@ -19,7 +19,7 @@ export function drawLegend (colorScale, g, width) {
     .shape('circle')
     .title('Legend')
     .cells(3)
-    .labels(['No mesure taken', 'Mesure taken', 'World'])
+    .labels(['No measures taken', 'Measures taken', 'World'])
     .scale(colorScale)
 
 

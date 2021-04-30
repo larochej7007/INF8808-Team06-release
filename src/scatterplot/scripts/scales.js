@@ -1,7 +1,7 @@
 /**
  * Defines the color scale used to determine the color of the circle markers.
  *
- * The color of each circle is determined based on the continent of the country it represents.
+ * The color of each circle is determined based on wether or the country has taken measures on 
  *
  * The possible colors are determined by the scheme d3.schemeCategory10.
  *
