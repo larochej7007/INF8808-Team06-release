@@ -14,17 +14,14 @@ export function setColorScaleDomain(data, positiveColorScale, negativeColorScale
     return dataline.annual_anomaly;
   });
   
-
   // Adjust both scales according to the one with bigest absolute value
+  var val = 0
   if(Math.abs(min) >= Math.abs(max)) {
-    var val = (Math.round(min * 10) / 10).toFixed(1)
-    positiveColorScale.domain([0, Math.abs(val)]);
-    negativeColorScale.domain([-Math.abs(val), 0]);
-
-    return;
+    val = (Math.round(min * 10) / 10).toFixed(1)
+  } else {
+    val = (Math.round(max * 10) / 10).toFixed(1)
   }
 
-  var val = (Math.round(max * 10) / 10).toFixed(1)
   positiveColorScale.domain([0, Math.abs(val)]);
   negativeColorScale.domain([-Math.abs(val), 0]);
 }
