@@ -42,11 +42,17 @@ export function initGradient(positiveColorScale, negativeColorScale) {
 }
 
 /**
- * Initializes the SVG rectangle for the legend.
+ * Initializes the SVG rectangles for the legend.
  */
 export function initLegendBar() {
-  const svg = d3.select(".heatmap-svg");
-  svg.append("rect").attr("class", "legend bar");
+  const legendAxis = d3.select(".heatmap-svg")
+    .select(".legend.axis");
+
+  legendAxis.append("rect")
+    .attr('class', 'positiveLegend')
+
+  legendAxis.append("rect")
+    .attr('class', 'negativeLegend')
 }
 
 /**
@@ -55,6 +61,7 @@ export function initLegendBar() {
 export function initLegendAxis() {
   const svg = d3.select(".heatmap-svg");
   svg.append("g").attr("class", "legend axis");
+  initLegendBar()
 }
 
 /**
@@ -68,19 +75,6 @@ export function initLegendAxis() {
  * @param {*} colorScale The color scale represented by the legend
  */
 export function draw(x, y, height, width, positiveFill, negativeFill, positiveColorScale, negativeColorScale) {
-
-  if(d3.select(".positiveLegend").empty()) {
-    d3.select(".legend.axis")
-    .append("rect")
-    .attr('class', 'positiveLegend')
-  }
-
-  if(d3.select(".negativeLegend").empty()) {
-    d3.select(".legend.axis")
-    .append("rect")
-    .attr('class', 'negativeLegend')
-  }
-
   d3.select(".positiveLegend")
     .attr("fill", positiveFill)
     .attr("x", x + width/2)

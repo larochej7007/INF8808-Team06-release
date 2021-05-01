@@ -40,7 +40,6 @@ export function GetHeatmap() {
     viz.setColorScaleDomain(data, positiveColorScale, negativeColorScale)
 
     legend.initGradient(positiveColorScale, negativeColorScale)
-    legend.initLegendBar()
     legend.initLegendAxis()
 
     const g = helper.generateG(margin)
