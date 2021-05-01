@@ -7,8 +7,6 @@
  export function initGradient (colorScale) {
   const svg = d3.select('.barchart-svg')
 
-  svg.attr('transform', 'translate(0,250)')
-
   const defs = svg.append('defs')
 
   const linearGradient = defs
