@@ -1,19 +1,13 @@
-import { color } from "d3-color";
-
 /**
- * Initializes the definition for the gradient to use with the
- * given colorScale.
+ * Initializes the gradient for the scale passed by parameter
  *
- * @param {*} colorScale The color scale to use
+ * @param {string} gradientId The color scale used
+ * @param {*} scale The color scale used
  */
-export function initGradient(positiveColorScale, negativeColorScale) {
-  const svg = d3.select(".heatmap-svg");
-
-  const defs = svg.append("defs");
-
+function addGradientDef(gradientId, scale, defs) {
   const positiveGradient = defs
     .append("linearGradient")
-    .attr("id", "positiveGradient")
+    .attr("id", gradientId)
     .attr("x1", 0)
     .attr("y1", 0)
     .attr("x2", 1)
@@ -22,34 +16,29 @@ export function initGradient(positiveColorScale, negativeColorScale) {
     positiveGradient
     .selectAll("stop")
     .data(
-      positiveColorScale.ticks().map((tick, i, nodes) => ({
+      scale.ticks().map((tick, i, nodes) => ({
         offset: `${100 * (i / nodes.length)}%`,
-        color: positiveColorScale(tick),
+        color: scale(tick),
       }))
     )
     .join("stop")
     .attr("offset", (d) => d.offset)
     .attr("stop-color", (d) => d.color);
+}
 
-  const negativeGradient = defs
-    .append("linearGradient")
-    .attr("id", "negativeGradient")
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", 1)
-    .attr("y2", 0);
+/**
+ * Initializes the definition for the gradient to use with the
+ * given colorScale.
+ *
+ * @param {*} positiveColorScale The color scale used in the positive temperature varitation
+ * @param {*} negativeColorScale The color scale used in the negative temperature varitation
+ */
+export function initGradient(positiveColorScale, negativeColorScale) {
+  const svg = d3.select(".heatmap-svg");
 
-    negativeGradient
-    .selectAll("stop")
-    .data(
-      negativeColorScale.ticks().map((tick, i, nodes) => ({
-        offset: `${100 * (i / nodes.length)}%`,
-        color: negativeColorScale(tick),
-      }))
-    )
-    .join("stop")
-    .attr("offset", (d) => d.offset)
-    .attr("stop-color", (d) => d.color);
+  const defs = svg.append("defs");
+  addGradientDef("positiveGradient", positiveColorScale, defs)
+  addGradientDef("negativeGradient", negativeColorScale, defs)
 }
 
 /**
