@@ -72,6 +72,18 @@ export function GetHeatmap() {
       helper.setCanvasSize(svgSize.width, svgSize.height)
     }
 
+    function addGlobalLandSummary() {
+      d3.select('#heatmap')
+        .select('svg')
+        .select(".y-axis-heatmap")
+        .append('text')
+        .attr('x', 9 )
+        .attr('y', yScale.range()[0] + 2.5 * yScale.bandwidth() + 4 )
+        .attr('fill', 'currentColor')
+        .attr('font-size', 'larger')
+        .text("Global-land")
+    }
+
     /**
      *   This function builds the graph.
      */
@@ -85,15 +97,7 @@ export function GetHeatmap() {
       viz.positionXTicks(graphSize.height, yScale, xScale)
 
       viz.updateRects(xScale, yScale, positiveColorScale, negativeColorScale, graphSize.width)
-      d3.select('#heatmap')
-        .select('svg')
-        .select(".y-axis-heatmap")
-        .append('text')
-        .attr('x', 9 )
-        .attr('y', yScale.range()[0] + 2.5 * yScale.bandwidth() + 4 )
-        .attr('fill', 'currentColor')
-        .attr('font-size', 'larger')
-        .text("Global-land")
+      addGlobalLandSummary()
 
       hover.setRectHandler(xScale, yScale, hover.selectTicks, hover.unselectTicks,  hover.hoverTicks, hover.unhoverTicks, margin, graphSize.width + xScale(1901))
       legend.draw(margin.left, margin.top/2, 15, (graphSize.width + xScale(1901)), 'url(#positiveGradient)','url(#negativeGradient)', positiveColorScale, negativeColorScale)
