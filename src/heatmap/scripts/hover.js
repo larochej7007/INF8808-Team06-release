@@ -29,7 +29,7 @@ export function setRectHandler(
   d3.selectAll(".year-count-g")
     .on("mouseover", function (d) {
       hoverTicks(
-        d3.select(this).data()[0].country,
+        d3.select(this).data()[0].Country,
         yScale,
         margin,
         width
@@ -44,9 +44,9 @@ export function setRectHandler(
     .on("click", d => {
       linechart.clearLineChart()
       unselectTick()
-      linechart.GetLineChart (d.country)
+      linechart.GetLineChart (d.Country)
       selectTick(
-        d.country,
+        d.Country,
         yScale,
         margin,
         width)

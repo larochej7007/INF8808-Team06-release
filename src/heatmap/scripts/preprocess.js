@@ -1,3 +1,4 @@
+const JUNE = 6;
 /**
  * Gets the names of the countries.
  *
@@ -19,18 +20,17 @@ export function getCountryNames(data) {
  * Filters the data by the given years.
  *
  * @param {object[]} data The data to filter
- * @param {number} start The start year (inclusive)
- * @param {number} end The end year (inclusive)
+ * @param {number[2]} timeRangeLimits The time range limits to filter for (inclusive)
  * @returns {object[]} The filtered data
  */
-export function filterYears(data, start, end) {
+export function filterYears(data, timeRangeLimits) {
   var result = [];
+
   data.forEach(function (currentDataLine) {
     var currentYear = currentDataLine.Year;
     var currentMonth = currentDataLine.Month;
-    if ((start <= currentYear && end >= currentYear) && (currentMonth == 6) ) {
-    //if ((start <= currentYear && end >= currentYear) ) {
-      currentDataLine.country = currentDataLine["Country"].charAt(0).toUpperCase() + currentDataLine["Country"].slice(1)
+    if ((timeRangeLimits[0] <= currentYear && timeRangeLimits[1] >= currentYear) 
+        && (currentMonth == JUNE) ) {
       result.push(currentDataLine);
     }
   });
@@ -126,14 +126,13 @@ export function orderByAVG(data, countries) {
  *
  * @param {object[]} data The datas set to process
  * @param {string[]} neighborhoods The names of the neighborhoods
- * @param {number} start The start year (inclusive)
- * @param {number} end The end year (inclusive)
+ * @param {number[1]} timeRangeLimits The limits of the time range
  * @param {Function} range A utilitary function that could be useful to get the range of years
  * @returns {object[]} The data set with a new object for missing year and neighborhood combinations,
  * where the values for 'Counts' is 0
  */
- export function fillMissingData(data, neighborhoods, start, end, range) {
-  const yearRange = range(start, end);
+ export function fillMissingData(data, neighborhoods, timeRangeLimits, range) {
+  const yearRange = range(timeRangeLimits[0], timeRangeLimits[1]);
   var result = data.slice();
 
   neighborhoods.forEach(function (country) {

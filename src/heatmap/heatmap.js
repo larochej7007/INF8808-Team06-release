@@ -21,6 +21,7 @@ export function GetHeatmap() {
   let svgSize
   let graphSize
 
+  const TIME_RANGE_LIMITS = [1900, 2020]
   const margin = { top: 100, right: 200, bottom: 100, left: 100 }
 
   const xScale = d3.scaleLinear()
@@ -32,9 +33,9 @@ export function GetHeatmap() {
 
   d3.csv('./temperature_variation_data.csv', d3.autoType).then(function (data) {
     var countryNames = preproc.getCountryNames(data)
-    data = preproc.filterYears(data, 1900, 2020)
+    data = preproc.filterYears(data, TIME_RANGE_LIMITS)
     countryNames = preproc.orderByAVG(data, countryNames)
-    data = preproc.fillMissingData(data, countryNames, 1900, 2020, util.range)
+    data = preproc.fillMissingData(data, countryNames, TIME_RANGE_LIMITS, util.range)
 
     viz.setColorScaleDomain(positiveColorScale, negativeColorScale, data)
 
