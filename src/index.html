@@ -23,28 +23,20 @@
             Vous avez dit réchauffement climatique? <br> 
             Lol OMG t ki?!?
           </h1>
+          <p>
+            Ce n’est un secret pour personne : la Terre se réchauffe et cette situation met en péril les écosystèmes qui la composent. Bien que la source de ce réchauffement ne soit pas unique, la plupart des études scientifiques s’accordent sur le fait que l’Homme en est un des principaux acteurs. 
+            <br>
+
+            <br>
+            L’humanité a fait face à une croissance démographique sans précédent depuis la seconde moitié du XXème siècle. Cette augmentation ainsi que l’industrialisation massive de notre environnement, ont mené à une explosion des émissions de gaz à effet de serre. Parmi eux, nous retrouvons le CO2 provenant essentiellement de la combustion d’énergies fossiles.
+            <br>
+
+            <br>
+            Par le biais des graphiques suivants, nous vous proposons de visualiser ce réchauffement ainsi que les émissions de CO2 de plusieurs pays à travers le monde. Le choix de nations présentées, bien qu’en partie arbitraire, tend à refléter la situation des différentes régions du globe. Tous les continents sont ainsi représentés et nous retrouvons aussi bien des pays développés que des pays en développement.
+          </p>
         </header>
         <main>
           <div class="viz-container">
-
-            <div>
-              <div class="VizTitle">
-                <p>
-                  Ce n’est un secret pour personne : la Terre se réchauffe et cette situation met en péril les écosystèmes qui la composent. Bien que la source de ce réchauffement ne soit pas unique, la plupart des études scientifiques s’accordent sur le fait que l’Homme en est un des principaux acteurs. 
-                  <br>
-
-                  <br>
-                  L’humanité a fait face à une croissance démographique sans précédent depuis la seconde moitié du XXème siècle. Cette augmentation ainsi que l’industrialisation massive de notre environnement, ont mené à une explosion des émissions de gaz à effet de serre. Parmi eux, nous retrouvons le CO2 provenant essentiellement de la combustion d’énergies fossiles.
-                  <br>
-                  
-                  <br>
-                  Par le biais des graphiques suivants, nous vous proposons de visualiser ce réchauffement ainsi que les émissions de CO2 de plusieurs pays à travers le monde. Le choix de nations présentées, bien qu’en partie arbitraire, tend à refléter la situation des différentes régions du globe. Tous les continents sont ainsi représentés et nous retrouvons aussi bien des pays développés que des pays en développement.
-                </p>
-              </div>
-              <div class="graph" id="barchart">
-                <svg class="barchart-svg"></svg>
-              </div>
-            </div>
 
             <div>
               <div class="VizTitle">
@@ -52,6 +44,14 @@
                   Global temperature variations <br>
                   Compared to jan 1951-dec 1980 average
                 </h2>
+
+                <p>
+                  Regardez cette carte de chaleur! On peut y voir les variations de températures sur une période s’étendant de 1900 à 2020 avec 1960 comme année de référence. Chaque ligne représente un pays et ces-derniers sont classés par variation de température moyenne sur l’intervalle temporel observé. Vous retrouverez en haut du graphique les nations ayant subi les variations les plus extrêmes. Survolez un point pour plus de précision! 
+                  <br>
+
+                  <br>
+                  En cliquant sur un carré, vous aurez aussi accès à un line chart présentant les variations de température mensuelles minimales et maximales pour le pays sélectionné. Comment comprendre précisément le graphique? Pour chacun des mois de l’année, la variation moyenne est calculée. Avec cette visualisation, vous pourrez retrouver celui dont la variation est la plus élevée avec la courbe rouge et celui donc la variation est la plus basse avec la courbe bleue ! La courbe noire au centre permet de situer précisément la moyenne annuelle.
+                </p>
               </div>
 
               <div class="graph" id="heatmap">
@@ -70,11 +70,41 @@
             </div>
           </div>
 
+          
+          <div>
+            <div class="VizTitle">
+              <h2>
+                Relation between global CO2 emissions <br>
+                and temperature variations
+              </h2>
+              <p>
+                Vous vous souvenez des émissions de CO2 dont nous avons parlé plus tôt ? Ce bar chart montre leur évolution à l’échelle mondiale entre 1960 et 2016. À l’instar de la première visualisation, la couleur rend compte des variations de température avec 1960 comme année de référence. Un simple clic sur une des barres vous permettra de changer cette référence tandis que leur survol vous donnera les valeurs précises.
+              </p>
+            </div>
+            <div class="graph" id="barchart">
+              <svg class="barchart-svg"></svg>
+            </div>
+          </div>
+
             <div class="VizTitle">
               <h2>
                 Evolution of C02 emissions <br>
                 and measure taken
               </h2>
+              <p>
+                La dernière visualisation vous propose un point de comparaison entre les émissions de CO2 par habitant par pays et le pourcentage des émissions de ces pays à l’échelle mondiale.
+                <br>
+    
+                <br>
+                À l’aide des boutons sur la droite du graphique, vous pourrez explorer leurs progressions entre 1960 et 2016. N’hésitez pas à lancer l’animation pour observer les tendances nationales!
+                <br>
+    
+                <br>
+                Vous remarquerez que certains points passent du rouge au vert. Cela signifie qu’à un moment donné, des mesures ont été prises afin de lutter contre les émissions de gaz à effet de serre.
+                
+                <br>
+                Vous souhaitez vous concentrer sur le parcours d’un pays à travers la période étudiée? Il vous suffit simplement de cliquer sur celui qui vous intéresse et vous verrez apparaître son cheminement! Plus les points sont opaques, plus ils représentent des données récentes.
+              </p>
             </div>
 
             <div class="graph" id="scatterplot">

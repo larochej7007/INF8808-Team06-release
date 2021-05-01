@@ -86,7 +86,16 @@ button:hover, button:active {
 }
 
 .VizTitle {
+    flex-direction: column;
     display: flex;
+}
+
+.VizTitle h2 {
+    display: block;
+}
+
+.VizTitle p {
+    display: block;
 }
 
 g:not(.y-axis-linechart) .tick line{
