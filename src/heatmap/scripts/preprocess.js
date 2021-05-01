@@ -77,18 +77,14 @@ export function summarizeYearlyCounts(data) {
 }
 
 /**
- * For the heat map, fills empty values with zeros where a year is missing for a neighborhood because
- * no trees were planted or the data was not entered that year.
+ * Calculate the avg temp variation for each countries in the dataset
  *
- * @param {object[]} data The datas set to process
- * @param {string[]} neighborhoods The names of the neighborhoods
- * @param {number} start The start year (inclusive)
- * @param {number} end The end year (inclusive)
- * @param {Function} range A utilitary function that could be useful to get the range of years
- * @returns {object[]} The data set with a new object for missing year and neighborhood combinations,
- * where the values for 'Counts' is 0
+ * @param {object[]} data The datas containing the values for every countries
+ * @param {string[]} countries The names of the countries
+ * @returns {object[]} The array of country object containing the name of the 
+ * country and the AVG temp variation
  */
-export function orderByAVG(data, countries) {
+function calculateCountryAVG(data, countries) {
   var countriesWithAVG = []
 
   countries.forEach((country) => {
@@ -106,6 +102,19 @@ export function orderByAVG(data, countries) {
     countriesWithAVG.push({Country: country, AVG: AVG})
   })
 
+  return countriesWithAVG
+}
+
+/**
+ * Order the countries name list by AVG temperature variation
+ *
+ * @param {object[]} data The datas containing the values for every countries
+ * @param {string[]} countries The names of the countries
+ * @returns {string[]} The names of the countries ordered by Avg temp. variaton
+ */
+export function orderCountriesByAVG(data, countries) {
+  var countriesWithAVG = calculateCountryAVG(data, countries)
+
   countriesWithAVG.sort((country1, country2) => {
 
     if(country1.AVG > country2.AVG) {
@@ -117,27 +126,26 @@ export function orderByAVG(data, countries) {
 
     return -1;
   })
+
   return countriesWithAVG.map(x => x.Country)
 }
 
 /**
- * For the heat map, fills empty values with zeros where a year is missing for a neighborhood because
- * no trees were planted or the data was not entered that year.
+ * For the heat map, fills empty values with n/a
  *
  * @param {object[]} data The datas set to process
- * @param {string[]} neighborhoods The names of the neighborhoods
+ * @param {string[]} countries The names of the countries
  * @param {number[1]} timeRangeLimits The limits of the time range
  * @param {Function} range A utilitary function that could be useful to get the range of years
- * @returns {object[]} The data set with a new object for missing year and neighborhood combinations,
- * where the values for 'Counts' is 0
+ * @returns {object[]} The data set with a new n/a value for missing years
  */
- export function fillMissingData(data, neighborhoods, timeRangeLimits, range) {
+ export function fillMissingData(data, countries, timeRangeLimits, range) {
   const yearRange = range(timeRangeLimits[0], timeRangeLimits[1]);
   var result = data.slice();
 
-  neighborhoods.forEach(function (country) {
+  countries.forEach(function (country) {
     var countryLines = data.filter(function (dataline) {
-      return dataline["Country"].charAt(0).toUpperCase() + dataline["Country"].slice(1)=== country;
+      return dataline["Country"] == country;
     });
 
     var missingYears = new Set(yearRange.slice());

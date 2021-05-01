@@ -34,7 +34,7 @@ export function GetHeatmap() {
   d3.csv('./temperature_variation_data.csv', d3.autoType).then(function (data) {
     var countryNames = preproc.getCountryNames(data)
     data = preproc.filterYears(data, TIME_RANGE_LIMITS)
-    countryNames = preproc.orderByAVG(data, countryNames)
+    countryNames = preproc.orderCountriesByAVG(data, countryNames)
     data = preproc.fillMissingData(data, countryNames, TIME_RANGE_LIMITS, util.range)
 
     viz.setColorScaleDomain(positiveColorScale, negativeColorScale, data)
