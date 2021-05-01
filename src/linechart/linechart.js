@@ -43,7 +43,7 @@ export function GetLineChart (countryName) {
   const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return tooltip.getContents(d) })
 
   d3.select('.linechart-svg').call(tip)
-  d3.csv('./data.csv').then(function (data) {
+  d3.csv('./temperature_variation_data.csv').then(function (data) {
     
     data = data.filter((d) => {
       return d.Country == countryName

@@ -8,11 +8,10 @@ import * as tooltip from './scripts/tooltip.js'
 
 import * as d3Chromatic from 'd3-scale-chromatic'
 import d3Tip from 'd3-tip'
-import { color } from 'd3-color'
 
 /**
- * @file This file is the entry-point for the the code for TP3 for the course INF8808.
- * @author Olivia Gélinas
+ * @file This file handle the temperature variation heatmap visualisation
+ * @author Jonathan Laroche
  * @version v1.0.0
  */
 
@@ -27,12 +26,11 @@ export function GetHeatmap() {
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleBand()
 
-  //const colorScale = d3.scaleDiverging(t => d3.interpolateRdBu(1 - t))
   const positiveColorScale = d3.scaleSequential(d3Chromatic.interpolateReds)
   const negativeColorScale = d3.scaleSequential(t => d3Chromatic.interpolateBlues(1- t))
 
 
-  d3.csv('./data.csv', d3.autoType).then(function (data) {
+  d3.csv('./temperature_variation_data.csv', d3.autoType).then(function (data) {
     var neighborhoodNames = preproc.getNeighborhoodNames(data)
     data = preproc.filterYears(data, 1900, 2020)
     neighborhoodNames = preproc.orderByAVG(data, neighborhoodNames)
