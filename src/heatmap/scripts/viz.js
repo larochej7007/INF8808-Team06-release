@@ -1,10 +1,11 @@
 /**
  * Sets the domain of the color scale
  *
- * @param {*} colorScale The color scale used in the heatmap
  * @param {object[]} data The data to be displayed
+ * @param {*} positiveColorScale The color scale used in the positive temperature varitation
+ * @param {*} negativeColorScale The color scale used in the negative temperature varitation
  */
-export function setColorScaleDomain(positiveColorScale, negativeColorScale, data) {
+export function setColorScaleDomain(data, positiveColorScale, negativeColorScale) {
   const min = d3.min(data, function (dataline) {
     return dataline.annual_anomaly;
   });
@@ -14,6 +15,7 @@ export function setColorScaleDomain(positiveColorScale, negativeColorScale, data
   });
   
 
+  // Adjust both scales according to the one with bigest absolute value
   if(Math.abs(min) >= Math.abs(max)) {
     var val = (Math.round(min * 10) / 10).toFixed(1)
     positiveColorScale.domain([0, Math.abs(val)]);
@@ -25,7 +27,6 @@ export function setColorScaleDomain(positiveColorScale, negativeColorScale, data
   var val = (Math.round(max * 10) / 10).toFixed(1)
   positiveColorScale.domain([0, Math.abs(val)]);
   negativeColorScale.domain([-Math.abs(val), 0]);
-
 }
 
 /**

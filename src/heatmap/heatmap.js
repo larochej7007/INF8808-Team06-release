@@ -37,7 +37,7 @@ export function GetHeatmap() {
     countryNames = preproc.orderCountriesByAVG(data, countryNames)
     data = preproc.fillMissingData(data, countryNames, TIME_RANGE_LIMITS, util.range)
 
-    viz.setColorScaleDomain(positiveColorScale, negativeColorScale, data)
+    viz.setColorScaleDomain(data, positiveColorScale, negativeColorScale)
 
     legend.initGradient(positiveColorScale, negativeColorScale)
     legend.initLegendBar()
