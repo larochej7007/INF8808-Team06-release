@@ -1,10 +1,10 @@
 /**
- * Gets the names of the neighborhoods.
+ * Gets the names of the countries.
  *
  * @param {object[]} data The data to analyze
- * @returns {string[]} The names of the neighorhoods in the data set
+ * @returns {string[]} The names of the countries in the data set
  */
-export function getNeighborhoodNames(data) {
+export function getCountryNames(data) {
   var names = new Set();
   data.forEach(function (d) {
     if(d["Country"] != "Global-land")
