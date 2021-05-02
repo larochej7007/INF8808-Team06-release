@@ -45,7 +45,7 @@ export function GetLineChart (countryName) {
       return d.Country == countryName
     })
 
-    data = preproc.sumarizeData(data, TIME_RANGE_LIMITS)
+    data = preproc.summarizeData(data, TIME_RANGE_LIMITS)
     
     setSizing();
     svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")

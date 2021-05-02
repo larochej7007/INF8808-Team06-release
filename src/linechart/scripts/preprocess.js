@@ -54,26 +54,53 @@ function filterYears(data, timeRangeLimits) {
   return result
 }
 
+/**
+ * Find the max value for the specified year
+ * @param {object[]} data The dataset
+ * @param {object[]} year The year to find the max value
+ * @returns  {object[]} The summarized data
+ */
+function findAnnualMaxValue(data, year) {
+  return d3.max((data.filter((d) => {return year == parseInt(d.Year)})), (d) => parseFloat(d.monthly_anomaly))
+}
 
-export function sumarizeData(data, timeRangeLimits) {
-  var result = filterYears(data, timeRangeLimits);
+/**
+ * Find the min value for the specified year
+ * @param {object[]} data The dataset
+ * @param {object[]} year The year to find the min value
+ * @returns  {object[]} The summarized data
+ */
+function findAnnualMinValue(data, year) {
+  return d3.min(data.filter((d) => {return  year == parseInt(d.Year)}), (d) => parseFloat(d.monthly_anomaly))
+}
 
-  var sumarizedResult = {}
-  range(timeRangeLimits[0], timeRangeLimits[1]).forEach(yearLine => {
+/**
+ * Summarize the data between the specified time interval
+ * @param {object[]} data The dataset
+ * @param {object[]} timeRangeLimits The limits of the time interval to filter from the dataset
+ * @returns  {object[]} The summarized data
+ */
+export function summarizeData(data, timeRangeLimits) {
+  var filteredData = filterYears(data, timeRangeLimits);
+
+  var sumarizedData = {}
+  range(timeRangeLimits[0], timeRangeLimits[1]).forEach(currentYear => {
     var currentSummary = {}
-    
-    var avgValue = result.filter((d) => {return (yearLine == parseInt(d.Year) && d.Month == 6)})[0]
+    var avgValue = filteredData.find((d) => {return (currentYear == parseInt(d.Year) && d.Month == 6)})
+
     if(avgValue != undefined) {
+      currentSummary.Year = currentYear
+
       currentSummary.AVG = parseFloat(avgValue.annual_anomaly)
-      currentSummary.Year = yearLine
-      currentSummary.Max = d3.max((result.filter((d) => {return yearLine == parseInt(d.Year)})), (d) => parseFloat(d.monthly_anomaly))
-      currentSummary.Min = d3.min(result.filter((d) => {return  yearLine == parseInt(d.Year)}), (d) => parseFloat(d.monthly_anomaly))
-      sumarizedResult[yearLine] = currentSummary
+      currentSummary.Max = findAnnualMaxValue(filteredData, currentYear)
+      currentSummary.Min = findAnnualMinValue(filteredData, currentYear)
+
+      sumarizedData[currentYear] = currentSummary
     }
 
   })
 
-  return Object.values(sumarizedResult)
+  return Object.values(sumarizedData)
 }
 /**
  * construct MINMAX, the data easily representable in the graph 
