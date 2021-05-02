@@ -39,19 +39,16 @@ export function range (start, stop) {
   return res
 }
 
+/**
+ * Filters the data by the given years.
+ *
+ * @param {object[]} data The data to filter
+ * @param {number[2]} timeRangeLimits The time range limits to filter for (inclusive)
+ * @returns {object[]} The filtered data
+ */
 function filterYears(data, timeRangeLimits) {
-  var result = [];
-  data.forEach(function (currentDataLine) {
-    var currentYear = currentDataLine.Year;
-
-    if ((timeRangeLimits[0] <= currentYear 
-        && timeRangeLimits[1] >= currentYear)) {
-      currentDataLine.Country = currentDataLine["Country"]
-      result.push(currentDataLine);
-    }
-  });
-
-  return result
+  return data.filter(d => {return (timeRangeLimits[0] <= d.Year 
+                                   && timeRangeLimits[1] >= d.Year)})
 }
 
 /**

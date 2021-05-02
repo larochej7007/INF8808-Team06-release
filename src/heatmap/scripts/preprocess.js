@@ -24,18 +24,9 @@ export function getCountryNames(data) {
  * @returns {object[]} The filtered data
  */
 export function filterYears(data, timeRangeLimits) {
-  var result = [];
-
-  data.forEach(function (currentDataLine) {
-    var currentYear = currentDataLine.Year;
-    var currentMonth = currentDataLine.Month;
-    if ((timeRangeLimits[0] <= currentYear && timeRangeLimits[1] >= currentYear) 
-        && (currentMonth == JUNE) ) {
-      result.push(currentDataLine);
-    }
-  });
-
-  return result;
+  return data.filter(d => {return (timeRangeLimits[0] <= d.Year 
+                                   && timeRangeLimits[1] >= d.Year
+                                   && JUNE == d.Month)})
 }
 
 /**
