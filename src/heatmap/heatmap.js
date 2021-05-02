@@ -51,7 +51,7 @@ export function GetHeatmap() {
 
     const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return tooltip.getContents(d) })
     g.call(tip)
-    viz.setCircleHoverHandler(tip)
+    viz.setRectHoverTooltipHandler(tip)
 
     /**
      *   This function handles the graph's sizing.

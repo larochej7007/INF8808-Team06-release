@@ -164,7 +164,7 @@ export function updateRects(xScale, yScale, positiveColorScale, negativeColorSca
  *
  * @param {*} tip The tooltip
  */
- export function setCircleHoverHandler (tip) {
+ export function setRectHoverTooltipHandler (tip) {
   d3.selectAll('.year-count-rect')
   .on('mouseover.tip', tip.show)
   .on('mouseout.tip', tip.hide)
