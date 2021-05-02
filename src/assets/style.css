@@ -63,7 +63,6 @@ button {
 .button:active {
   background-color: #ffffff;
   box-shadow: 0 5px rgb(0, 0, 0);
-  transform: translateY(4px);
 }
 
 
