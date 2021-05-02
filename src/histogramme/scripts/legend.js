@@ -60,20 +60,21 @@ export function initLegendAxis () {
  * @param {*} colorScale The color scale represented by the legend
  */ 
 export function draw (x, y, height, width, fill, colorScale) {
-
+  
+  const offset = 30
   const Scale = d3.scaleLinear()
                   .domain([colorScale.domain()[0],colorScale.domain()[1]])
                   .range([0,height]) 
 
   d3.select('.legendaxis-barchart') // On ajoute les ticks de la légende
-  .attr('transform', 'translate(' + x + ',' + (y-width) + ')')
+  .attr('transform', 'translate(' + x + ',' + (y-width-offset) + ')')
   .call(d3.axisTop(Scale).ticks(5).tickFormat(x => `${x}°C`))
 
   d3.select('.legendbar-barchart') // On ajoute le gradient de la légende
     .attr('height', height)
     .attr('width', width)
     .attr('fill', fill)
-    .attr('transform', 'translate(' + x + ',' + y + ')rotate(-90)')
+    .attr('transform', 'translate(' + x + ',' + (y-offset) + ')rotate(-90)')
 
 }
 

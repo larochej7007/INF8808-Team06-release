@@ -20,7 +20,6 @@ export function GetEmissions (data) {
       Emissions.push({Year:Year, emission:temp[key_names[i].toString()]})
     }
   }
-  console.log(Emissions)
 
   return Emissions
 }

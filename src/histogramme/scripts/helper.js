@@ -30,7 +30,7 @@ export function appendAxes (g) {
 
 }
 /**
- * Appends the labels for the the x and y axis and the title and subtitle of the graph.
+ * Appends the labels for the the x and y axis and for the subtitle of the graph.
  *
  * @param {*} g The d3 Selection of the graph's g SVG element
  */
@@ -48,11 +48,6 @@ export function appendGraphLabels (g) {
     .attr('class', 'x axis-text')
     .attr('fill', 'gray')
     .attr('font-size', 12)
-
-  g.append('text')
-    .text('Global CO2 emissions and temperature variations in °C per year ')
-    .attr('class', 'title')
-    .attr('fill', 'black')
   
   g.append('text')
     .text("The year of reference is currently 1960")
@@ -73,7 +68,7 @@ export function setCanvasSize (width, height) {
 }
 
 /**
- * Positions the x axis label, y axis label, title label and subtitle label on the graph.
+ * Positions the x axis label, y axis label and subtitle label on the graph.
  *
  * @param {number} width The width of the graph
  * @param {number} height The height of the graph
@@ -85,17 +80,13 @@ export function positionLabels (width, height, margin) {
   .attr('y', height + 35)
 
   d3.select('.y.axis-text')
-    .attr('x', 0)
+    .attr('x', 30)
     .attr('y', -10)
-
-  d3.select('.title')
-    .attr('x', width / 2)
-    .attr('y', -margin.top/2)
 
   d3.select('.subtitle')
     .attr('text-anchor', 'middle')
     .attr('x', width / 2)
-    .attr('y', -margin.top/2+40)
+    .attr('y', -margin.top/2)
 }
 
 

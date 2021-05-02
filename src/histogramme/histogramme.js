@@ -9,7 +9,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
 
 
 export function GetHistogram() {
-  const margin = { top: 180, right: 190, bottom: 80, left: 190 }
+  const margin = { top: 180, right: 0, bottom: 80, left: 90 }
 
   let bounds
   let svgSize
@@ -89,7 +89,7 @@ export function GetHistogram() {
 
       viz.UpdateGrid(graphSize.width, yScale)
 
-      legend.draw(graphSize.width/2, margin.top+10, graphSize.height, 15, 'url(#gradient)', colorScale)
+      legend.draw((graphSize.width-graphSize.height)/2+margin.left, margin.top, graphSize.height, 15, 'url(#gradient)', colorScale)
     }
 
     window.addEventListener('resize', () => {
