@@ -6,6 +6,7 @@
  * @returns {*} The d3 Selection for the created g element
  */
 export function generateG (margin) {
+  
   return d3.select('#barchart')
     .select('svg')
     .append('g')
@@ -20,6 +21,7 @@ export function generateG (margin) {
  * @param {*} g The d3 Selection of the graph's g SVG element
  */
 export function appendAxes (g) {
+
   g.append('g')
     .attr('class', 'x-axis-barchart')
 
@@ -28,36 +30,28 @@ export function appendAxes (g) {
 
 }
 /**
- * Appends the labels for the the y axis and the title of the graph.
+ * Appends the labels for the the x and y axis and for the subtitle of the graph.
  *
  * @param {*} g The d3 Selection of the graph's g SVG element
  */
-export function appendGraphLabels (g, x, y) {
+export function appendGraphLabels (g) {
+
   g.append('text')
+  .attr('y',0)
     .text('Emissions of CO2 (millions of kilotonnes)')
     .attr('class', 'y axis-text')
-    .attr('transform', 'rotate(-90)')
     .attr('fill', 'gray')
     .attr('font-size', 12)
 
-  var temp = y + 50
   g.append('text')
     .text('Year')
     .attr('class', 'x axis-text')
-    .attr('transform', 'translate(' + x + ',' + temp +')')
     .attr('fill', 'gray')
     .attr('font-size', 12)
-
-  g.append('text')
-    .text('Global CO2 emissions and temperature variations in °C per year ')
-    .attr('class', 'title')
-    .attr('fill', 'black')
   
   g.append('text')
     .text("The year of reference is currently 1960")
     .attr('class', 'subtitle')
-
-
 }
 
 /**
@@ -67,30 +61,32 @@ export function appendGraphLabels (g, x, y) {
  * @param {number} height The desired height
  */
 export function setCanvasSize (width, height) {
+
   d3.select('#barchart').select('svg')
     .attr('width', width)
     .attr('height', height)
 }
 
 /**
- * Positions the x axis label, y axis label and title label on the graph.
+ * Positions the x axis label, y axis label and subtitle label on the graph.
  *
  * @param {number} width The width of the graph
  * @param {number} height The height of the graph
  */
-export function positionLabels (width, height) {
-  d3.select('.y.axis-text')
-    .attr('x', -50)
-    .attr('y', height/2)
+export function positionLabels (width, height, margin) {
+  
+  d3.select('.x.axis-text')
+  .attr('x', width/2)
+  .attr('y', height + 35)
 
-  d3.select('.title')
-    .attr('x', width / 2)
-    .attr('y', -35)
+  d3.select('.y.axis-text')
+    .attr('x', 30)
+    .attr('y', -10)
 
   d3.select('.subtitle')
     .attr('text-anchor', 'middle')
     .attr('x', width / 2)
-    .attr('y', 0)
+    .attr('y', -margin.top/2)
 }
 
 
@@ -101,16 +97,12 @@ export function positionLabels (width, height) {
  * @param {number} height The height of the graph
  */
 export function drawXAxis (xScale, height) {
-  d3.select('.x-axis-barchart')
-    .attr('transform', 'translate(0, ' + height + ')')
-    .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter(function(d,i) {
-      return !(i%2)
-    })))
 
   d3.select('.x-axis-barchart')
-  .selectAll('text')
-  .attr('transform', 'translate(-12,20)rotate(-90)')
-      
+    .attr('transform', 'translate(0, ' + height + ')')
+    .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter(function(d,i) { // On filtre pour n'afficher qu'une année sur 5
+      return !(i%5)
+    })))
 }
 
 /**
@@ -119,17 +111,32 @@ export function drawXAxis (xScale, height) {
  * @param {*} yScale The scale to use for the y axis
  */
 export function drawYAxis (yScale) {
+
+  const arrondi = 1000000
   d3.select('.y-axis-barchart')
-  .call(d3.axisLeft(yScale).ticks(5).tickFormat(x => x/1000000))
+  .call(d3.axisLeft(yScale).ticks(5).tickFormat(x => x/arrondi))
 }
 
+/**
+ * Appends the gridlines on the graph.
+ *
+ * @param {*} g The d3 Selection of the graph's g SVG element
+ */
 export function appendGrid (g) {
+
   g.append('g')
     .attr('class', 'grid')
     .style("stroke-dasharray",("1,1"))
 }
 
+/**
+ * Appends the bars on the graph.
+ *
+ * @param {*} g The d3 Selection of the graph's g SVG element
+ * @param {object[]} data The data to be used
+ */
 export function appendBars(g, data) {
+
   g.selectAll('bar')
   .data(data)
   .enter()
