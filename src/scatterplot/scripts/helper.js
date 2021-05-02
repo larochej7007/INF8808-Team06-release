@@ -250,12 +250,12 @@ export function drawButton1 (g, year) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button5')
-    .attr('transform', 'translate(' + translate1 + ', 360)')
-    .attr('width', 150)
+    .attr('transform', 'translate(' + translate1 + ', 320)')
+    .attr('width', 70)
     .attr('height', 30)
 
   button.append('rect')
-    .attr('width', 150)
+    .attr('width', 70)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
@@ -285,12 +285,12 @@ export function drawButton1 (g, year) {
   const button = g.append('g')
     .attr('class', 'button')
     .attr('id', 'button6')
-    .attr('transform', 'translate(' + translate1 + ', 320)')
-    .attr('width', 150)
+    .attr('transform', 'translate(' + translate2 + ', 320)')
+    .attr('width', 70)
     .attr('height', 30)
 
   button.append('rect')
-    .attr('width', 150)
+    .attr('width', 70)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
