@@ -16,7 +16,7 @@ import d3Tip from 'd3-tip'
  */
 
 
-export function GetHeatmap() {
+export function getHeatmap() {
   let bounds
   let svgSize
   let graphSize

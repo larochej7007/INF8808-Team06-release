@@ -8,7 +8,7 @@ import * as uniplot from './unidirectionalplot/unidirectionalplot.js'
 
 
 (function (d3) {
-  heatmap.GetHeatmap()
+  heatmap.getHeatmap()
   histogramme.GetHistogram()
   scatterplot.GetScatterPlot()
   linechart.GetLineChart("Global-land")

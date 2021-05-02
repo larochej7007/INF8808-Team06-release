@@ -39,44 +39,6 @@ export function filterYears(data, timeRangeLimits) {
 }
 
 /**
- * Summarizes how any trees were planted each year in each neighborhood.
- *
- * @param {object[]} data The data set to use
- * @returns {object[]} A table of objects with keys 'Arrond_Nom', 'Plantation_Year' and 'Counts', containing
- * the name of the neighborhood, the year and the number of trees that were planted
- */
-export function summarizeYearlyCounts(data) {
-  const nTreeForArrondYearMap = new Map();
-  data.forEach(function (dataline) {
-    const year = dataline.Year;
-    const key = dataline.Arrond_Nom + year;
-    if (nTreeForArrondYearMap.has(key)) {
-      var countObject = nTreeForArrondYearMap.get(key);
-      countObject.Counts += 1;
-      nTreeForArrondYearMap.set(key, countObject);
-
-      return;
-    }
-
-    var countObject = Object();
-    countObject.Arrond_Nom = dataline.Arrond_Nom;
-    countObject.Plantation_Year = year;
-    countObject.Counts = 1;
-    nTreeForArrondYearMap.set(key, countObject);
-
-    return;
-  });
-
-  const result = [];
-  var countsArray = Array.from(nTreeForArrondYearMap.entries());
-  countsArray.forEach(function (count) {
-    result.push(count[1]);
-  });
-
-  return result;
-}
-
-/**
  * Calculate the avg temp variation for each countries in the dataset
  *
  * @param {object[]} data The datas containing the values for every countries
