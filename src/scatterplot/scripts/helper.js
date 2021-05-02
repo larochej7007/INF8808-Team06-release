@@ -266,7 +266,7 @@ export function drawButton1 (g, year) {
     })
 
   button.append('text')
-    .attr('x', 75)
+    .attr('x', 35)
     .attr('y', 15)
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
@@ -301,7 +301,7 @@ export function drawButton1 (g, year) {
     })
 
   button.append('text')
-    .attr('x', 75)
+    .attr('x', 35)
     .attr('y', 15)
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
