@@ -9,7 +9,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
 
 
 export function GetHistogram() {
-  const margin = { top: 80, right: 0, bottom: 80, left: 90 }
+  const margin = { top: 180, right: 190, bottom: 80, left: 190 }
 
   let bounds
   let svgSize
@@ -26,7 +26,9 @@ export function GetHistogram() {
     d3.csv("./Var_temp.csv"),
   ]).then(function (files) {
     var Emissions = preproc.GetEmissions(files[0])
-    var Variations = preproc.GetVariations(files[1])
+    var years = preproc.GetYears(Emissions)
+    var Variations = preproc.GetVariations(files[1], years)
+
 
     var data = preproc.MergeData(Emissions, Variations)
 
@@ -37,13 +39,12 @@ export function GetHistogram() {
     legend.initLegendBar()
     legend.initLegendAxis()
     
-
     setSizing()
 
     helper.appendAxes(g)
     helper.appendBars(g, data)
     helper.appendGrid(g)
-    helper.appendGraphLabels(g, graphSize.width/2, graphSize.height)
+    helper.appendGraphLabels(g)
 
     build()
 
@@ -60,7 +61,7 @@ export function GetHistogram() {
 
       svgSize = {
         width: bounds.width,
-        height: 550
+        height: 650
       }
 
       graphSize = {
@@ -82,13 +83,13 @@ export function GetHistogram() {
       helper.drawXAxis(xScale, graphSize.height)
       helper.drawYAxis(yScale)
 
-      helper.positionLabels(graphSize.width, graphSize.height)
+      helper.positionLabels(graphSize.width, graphSize.height, margin)
 
       viz.UpdateBars(yScale, xScale, data, graphSize.height, colorScale)
 
       viz.UpdateGrid(graphSize.width, yScale)
 
-      legend.draw(graphSize.width, margin.top + 5, graphSize.height - 10, 15, 'url(#gradient)', colorScale)
+      legend.draw(graphSize.width/2, margin.top+10, graphSize.height, 15, 'url(#gradient)', colorScale)
     }
 
     window.addEventListener('resize', () => {

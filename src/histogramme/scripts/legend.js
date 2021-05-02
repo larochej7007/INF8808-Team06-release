@@ -5,9 +5,8 @@
  * @param {*} colorScale The color scale to use
  */
  export function initGradient (colorScale) {
-  const svg = d3.select('.barchart-svg')
 
-  svg.attr('transform', 'translate(0,250)')
+  const svg = d3.select('.barchart-svg')
 
   const defs = svg.append('defs')
 
@@ -32,6 +31,7 @@
  * Initializes the SVG rectangle for the legend.
  */
  export function initLegendBar () {
+
   const svg = d3.select('.barchart-svg')
   svg
     .append('rect')
@@ -42,6 +42,7 @@
  *  Initializes the group for the legend's axis.
  */
 export function initLegendAxis () {
+  
   const svg = d3.select('.barchart-svg')
   svg
     .append('g')
@@ -49,7 +50,7 @@ export function initLegendAxis () {
 }
 
 /**
- * Draws the legend to the left of the graphic.
+ * Draws the legend at the top of the graphic.
  *
  * @param {number} x The x position of the legend
  * @param {number} y The y position of the legend
@@ -59,23 +60,20 @@ export function initLegendAxis () {
  * @param {*} colorScale The color scale represented by the legend
  */ 
 export function draw (x, y, height, width, fill, colorScale) {
-  // TODO : Draw the legend
 
   const Scale = d3.scaleLinear()
-                  .domain([2,-2])
-                  .range([y,height + y]) 
+                  .domain([colorScale.domain()[0],colorScale.domain()[1]])
+                  .range([0,height]) 
 
   d3.select('.legendaxis-barchart') // On ajoute les ticks de la légende
-  .attr('y', -height-y)
-  .attr('transform', 'translate(' + x + ',0)')
-  .call(d3.axisRight(Scale).ticks(5).tickFormat(x => `${x}°C`))
+  .attr('transform', 'translate(' + x + ',' + (y-width) + ')')
+  .call(d3.axisTop(Scale).ticks(5).tickFormat(x => `${x}°C`))
 
   d3.select('.legendbar-barchart') // On ajoute le gradient de la légende
-    .attr('y', -height-y)
     .attr('height', height)
     .attr('width', width)
     .attr('fill', fill)
-    .attr('transform', 'translate(' + x + ',0)rotate(-180)')
+    .attr('transform', 'translate(' + x + ',' + y + ')rotate(-90)')
 
 }
 
