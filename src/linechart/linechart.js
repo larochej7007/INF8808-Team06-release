@@ -27,6 +27,7 @@ export function GetLineChart (countryName) {
 
   const margin = 40;
   const marginVertical = 2 * margin;
+  const TIME_RANGE_LIMITS = [1900, 2020]
 
   d3.select("#linechart")
     .append('svg').attr('class', 'linechart-svg')
@@ -37,19 +38,14 @@ export function GetLineChart (countryName) {
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
-  
+
   d3.csv('./temperature_variation_data.csv').then(function (data) {
     
     data = data.filter((d) => {
       return d.Country == countryName
     })
 
-    data = preproc.sumarizeYears(data, 1900, 2020)
-
-    //console.log(data.slice())
-    //data = preproc.minMaxMonthlyAnn(data)
-
-    
+    data = preproc.sumarizeData(data, TIME_RANGE_LIMITS)
     
     setSizing();
     svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")

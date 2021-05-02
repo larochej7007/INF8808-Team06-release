@@ -39,20 +39,27 @@ export function range (start, stop) {
   return res
 }
 
-
-export function sumarizeYears(data, start, end) {
+function filterYears(data, timeRangeLimits) {
   var result = [];
   data.forEach(function (currentDataLine) {
     var currentYear = currentDataLine.Year;
-    var currentMonth = currentDataLine.Month;
-    if ((start <= currentYear && end >= currentYear)) {
-      currentDataLine.country = currentDataLine["Country"].charAt(0).toUpperCase() + currentDataLine["Country"].slice(1)
+
+    if ((timeRangeLimits[0] <= currentYear 
+        && timeRangeLimits[1] >= currentYear)) {
+      currentDataLine.Country = currentDataLine["Country"]
       result.push(currentDataLine);
     }
   });
 
+  return result
+}
+
+
+export function sumarizeData(data, timeRangeLimits) {
+  var result = filterYears(data, timeRangeLimits);
+
   var sumarizedResult = {}
-  range(start, end).forEach(yearLine => {
+  range(timeRangeLimits[0], timeRangeLimits[1]).forEach(yearLine => {
     var currentSummary = {}
     
     var avgValue = result.filter((d) => {return (yearLine == parseInt(d.Year) && d.Month == 6)})[0]
