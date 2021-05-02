@@ -4,9 +4,9 @@
  * @param {*} MinYear 
  * @param {*} MaxYear 
  */
- export function Range(MinYear, MaxYear) {
-  window.MinYear=MinYear
-  window.MaxYear=MaxYear
+ export function range(MinYear, MaxYear) {
+  window.mnyear=MinYear
+  window.mxyear=MaxYear
 }
 
 /**
@@ -117,7 +117,7 @@ export function setTitleText (year) {
  */
 export function drawCirclesCountry (data, annee, xScale, yScale) {
 
-  const OpacityScale = d3.scaleLinear().domain([MinYear,MaxYear]).range([0.15,1])
+  const OpacityScale = d3.scaleLinear().domain([mnyear,mxyear]).range([0.15,1])
 
   d3.select('#graph-g-scatterplot')
   .selectAll('.dot')

@@ -68,6 +68,7 @@ export function GetScatterPlot() {
     //Initialization of SomeVariable
     const MaxYear = preprocess.MaxYear(data)
     const MinYear = preprocess.MinYear(data)
+    viz.range(MinYear, MaxYear)
 
     // Calling of the scales
     const colorScale = scales.setColorScale()
@@ -106,7 +107,7 @@ export function GetScatterPlot() {
       d3.select('#button1')
         .on('click', () => {
           currentYear = previousYear
-          previousYear = (previousYear === 1960 ? 2016 : 1960)
+          previousYear = (previousYear === 1960 ? 2016 : 1960) 
           console.log(previousYear)
           build(DataByYear, 1000, currentYear, xScale, yScale)
           d3.select('#button1').select('.button-text').text('See ' + previousYear + ' dataset')
@@ -120,7 +121,6 @@ export function GetScatterPlot() {
     function setClickHandler2 () {
       d3.select('#button2')
         .on('click', () => {
-          console.log(currentYear)
           if (currentYear !== 1960) {
             currentYear = currentYear - 1
             build(DataByYear, 500, currentYear, xScale, yScale)}
