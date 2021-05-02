@@ -122,9 +122,9 @@ function updateLegendScale(selector, x, y, width, colorScale) {
  * @param {*} positiveColorScale The color scale for the positive value represented by the legend
  * @param {*} negativeColorScale The color scale for the negative value represented by the legend
  */
-export function draw(x, y, height, width, positiveFill, negativeFill, positiveColorScale, negativeColorScale) {
-  updateLegendRect(".positiveLegend", positiveFill, x, y, height, width)
-  updateLegendRect(".negativeLegend", negativeFill, x - width/2, y, height, width)
+export function draw(x, y, width, positiveFill, negativeFill, positiveColorScale, negativeColorScale) {
+  updateLegendRect(".positiveLegend", positiveFill, x, y, 15, width)
+  updateLegendRect(".negativeLegend", negativeFill, x - width/2, y, 15, width)
 
   updateLegendScale(".positiveValuesLegend", x, y, width, positiveColorScale)
   updateLegendScale(".negativeValuesLegend", x - width/2, y, width, negativeColorScale)

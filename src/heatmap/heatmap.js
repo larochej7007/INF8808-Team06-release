@@ -99,10 +99,21 @@ export function GetHeatmap() {
       viz.updateRects(xScale, yScale, positiveColorScale, negativeColorScale, graphSize.width)
       addGlobalLandSummary()
 
-      hover.setRectHandler(xScale, yScale, hover.selectTicks, hover.unselectTicks,  hover.hoverTicks, hover.unhoverTicks, margin, graphSize.width + xScale(1901))
+      hover.setRectHandler(yScale, 
+        hover.selectTicks, 
+        hover.unselectTicks,  
+        hover.hoverTicks, 
+        hover.unhoverTicks, 
+        graphSize.width + xScale(1901))
       
       var legendWidth = graphSize.width / 2;
-      legend.draw(margin.left + graphSize.width/2, margin.top/2, 15, legendWidth, 'url(#positiveGradient)','url(#negativeGradient)', positiveColorScale, negativeColorScale)
+      legend.draw(margin.left + graphSize.width/2, 
+        margin.top/2,
+        legendWidth, 
+        'url(#positiveGradient)',
+        'url(#negativeGradient)', 
+        positiveColorScale, 
+        negativeColorScale)
     }
 
     window.addEventListener('resize', () => {
