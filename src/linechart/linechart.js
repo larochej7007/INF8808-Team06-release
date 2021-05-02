@@ -6,11 +6,10 @@ import * as helper from './scripts/helper.js'
 
 import d3Tip from 'd3-tip'
 import d3Legend, { legendColor } from 'd3-svg-legend'
-import { style } from 'd3-selection'
 
 /**
- * @file This file is the entry-point for the the code for TP2 for the course INF8808.
- 
+ * @file This file is the entry-point for the the code for linechart viz
+ * @author Jonathan Laroche
  * @version v1.0.0
  */
 
@@ -25,7 +24,9 @@ export function GetLineChart (countryName) {
   let bounds
   let svgSize
   let graphSize
-  
+
+  const margin = 40;
+  const marginVertical = 2 * margin;
 
   d3.select("#linechart")
     .append('svg').attr('class', 'linechart-svg')
@@ -33,16 +34,10 @@ export function GetLineChart (countryName) {
 
    var svg = d3.select(".linechart-svg");
    var svgGraph = svg.append('g').attr("class", "linechart-g");
-   var margin = 40;
-   var marginVertical = 2 * margin;
 
   const xScale = d3.scaleLinear()
   const yScale = d3.scaleLinear()
-
-  var minmax =  new Array, dataset, data2;
-  const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return tooltip.getContents(d) })
-
-  d3.select('.linechart-svg').call(tip)
+  
   d3.csv('./temperature_variation_data.csv').then(function (data) {
     
     data = data.filter((d) => {
