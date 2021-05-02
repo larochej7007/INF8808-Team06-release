@@ -100,7 +100,9 @@ export function GetHeatmap() {
       addGlobalLandSummary()
 
       hover.setRectHandler(xScale, yScale, hover.selectTicks, hover.unselectTicks,  hover.hoverTicks, hover.unhoverTicks, margin, graphSize.width + xScale(1901))
-      legend.draw(margin.left, margin.top/2, 15, (graphSize.width + xScale(1901)), 'url(#positiveGradient)','url(#negativeGradient)', positiveColorScale, negativeColorScale)
+      
+      var legendWidth = graphSize.width / 2;
+      legend.draw(margin.left + graphSize.width/2, margin.top/2, 15, legendWidth, 'url(#positiveGradient)','url(#negativeGradient)', positiveColorScale, negativeColorScale)
     }
 
     window.addEventListener('resize', () => {
