@@ -64,39 +64,28 @@ export function GetLineChart (countryName) {
     svgGraph.append("g")
       .attr("class", "y-axis-linechart")
 
-    build()
-
-    // Add X axis --> it is a date format
-    var bisect = d3.bisector(function(d) { return d.Year; }).left;
-    var x = d3.scaleLinear()
-      .domain([1900,2020])
-      .range([ margin, graphSize.width + margin]);
-
-    // Create the circle that travels along the curve of chart
-    var focus = svgGraph
-      .append('g')
+    // Create the line that travels along the mouse
+    svgGraph
       .append('line')
+        .attr("class", "focusLine")
         .style("fill", "none")
         .attr("stroke", "black")
         .style("opacity", 0)
 
-    var focusText = svgGraph
-      .append('g')
+    // Create the text that travels along the mouse    
+    svgGraph
       .append('text')
+      .attr("class", "focusText")
       .style("opacity", 0)
       .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
 
-    // Create a rect on top of the svg area: this rectangle recovers mouse position
     svgGraph
       .append('rect')
+      .attr("class", "focusRect")
       .style("fill", "none")
-      .style("pointer-events", "all")
-      .attr('width', graphSize.width + 10)
-      .attr('height', graphSize.height)
-      .on('mouseover', mouseover)
-      .on('mousemove', mousemove)
-      .on('mouseout', mouseout);
+
+    build()
 
       // Legend stuff
       const scale = d3.scaleOrdinal()
@@ -122,51 +111,6 @@ export function GetLineChart (countryName) {
       svgGraph.select('#legend-linechart')
         .call(legend)
 
-
-    // What happens when the mouse move -> show the annotations at the right positions.
-    function mouseover() {
-      focus.style("opacity", 1)
-      focusText.style("opacity",1)
-    }
-
-    function mousemove() {
-      // recover coordinate we need
-      console.log(d3.mouse(this)[0])
-      var x0 = xScale.invert(d3.mouse(this)[0]);
-      console.log(x0)
-      var i = bisect(data, x0, 1) - 1;
-      selectedData = data[i]
-      focus
-        .attr("x1", xScale(selectedData.Year))
-        .attr("y1", yScale.range()[0])
-        .attr("x2", xScale(selectedData.Year))
-        .attr("y2", yScale.range()[1])
-        
-      focusText
-        .attr("x", xScale(selectedData.Year) - 35)
-        .attr("y", -40)
-        .html("")
-        .append("tspan")
-        .html("Year: " + selectedData.Year)
-      
-      focusText
-        .append("tspan")
-        .attr("x", xScale(selectedData.Year) - 35)
-        .attr("dy", 12)
-        .html("Max: " + selectedData.Max + "°C")
-
-      focusText
-        .append("tspan")
-        .attr("dy", 12)
-        .attr("x", xScale(selectedData.Year) - 35)
-        .html("Avg: " + selectedData.AVG  + "°C")
-
-      focusText
-        .append("tspan")
-        .attr("dy", 12)
-        .attr("x", xScale(selectedData.Year) - 35)
-        .html("Min: " + selectedData.Min  + "°C")
-      }
 
     /**
      *   This function builds the graph.
@@ -253,12 +197,76 @@ export function GetLineChart (countryName) {
           .x(function(d) { return xScale(d.Year) })
           .y(function(d) { return  yScale(d.AVG)})
         );
-    }
 
-    function mouseout() {
-      focus.style("opacity", 0)
-      focusText.style("opacity", 0)
-    }
+      // Add X axis --> it is a date format
+      var bisect = d3.bisector(function(d) { return d.Year; }).left;
+
+      // Create the circle that travels along the curve of chart
+      var focus = svgGraph.select(".focusLine")
+      var focusText = svgGraph.select(".focusText")
+
+      // Create a rect on top of the svg area: this rectangle recovers mouse position
+      svgGraph
+        .select(".focusRect")
+        .style("pointer-events", "all")
+        .attr('width', graphSize.width + 10)
+        .attr('height', graphSize.height)
+        .on('mouseover', mouseover)
+        .on('mousemove', mousemove)
+        .on('mouseout', mouseout);
+
+      
+      function mouseout() {
+        focus.style("opacity", 0)
+        focusText.style("opacity", 0)
+      }
+
+      // What happens when the mouse move -> show the annotations at the right positions.
+      function mouseover() {
+        focus.style("opacity", 1)
+        focusText.style("opacity",1)
+      }
+
+      function mousemove() {
+        // recover coordinate we need
+        console.log(d3.mouse(this)[0])
+        var x0 = xScale.invert(d3.mouse(this)[0]);
+        console.log(x0)
+        var i = bisect(data, x0, 1) - 1;
+        selectedData = data[i]
+        focus
+          .attr("x1", xScale(selectedData.Year))
+          .attr("y1", yScale.range()[0])
+          .attr("x2", xScale(selectedData.Year))
+          .attr("y2", yScale.range()[1])
+
+        focusText
+          .attr("x", xScale(selectedData.Year) - 35)
+          .attr("y", -40)
+          .html("")
+          .append("tspan")
+          .html("Year: " + selectedData.Year)
+
+        focusText
+          .append("tspan")
+          .attr("x", xScale(selectedData.Year) - 35)
+          .attr("dy", 12)
+          .html("Max: " + selectedData.Max + "°C")
+
+        focusText
+          .append("tspan")
+          .attr("dy", 12)
+          .attr("x", xScale(selectedData.Year) - 35)
+          .html("Avg: " + selectedData.AVG  + "°C")
+
+        focusText
+          .append("tspan")
+          .attr("dy", 12)
+          .attr("x", xScale(selectedData.Year) - 35)
+          .html("Min: " + selectedData.Min  + "°C")
+        }
+      }
+
 
     /**
      *   This function handles the graph's sizing.
