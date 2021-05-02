@@ -88,7 +88,7 @@ export function getHeatmap() {
      *   This function builds the graph.
      */
     function build () {
-      viz.updateXScale(xScale, data, graphSize.width, util.range)
+      viz.updateXScale(xScale, data, graphSize.width)
       viz.updateYScale(yScale, countryNames, graphSize.height)
 
       viz.drawXAxis(xScale, graphSize.height, yScale)

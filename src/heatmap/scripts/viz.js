@@ -49,7 +49,7 @@ export function appendRects(data) {
  * @param {number} width The width of the diagram
  * @param {Function} range A utilitary funtion that could be useful to generate a list of numbers in a range
  */
-export function updateXScale(xScale, data, width, range) {
+export function updateXScale(xScale, data, width) {
   xScale.range([0, width]);
 
   const min = d3.min(data, function (dataline) {
@@ -73,10 +73,10 @@ export function updateXScale(xScale, data, width, range) {
  * @param {string[]} neighborhoodNames The names of the neighborhoods
  * @param {number} height The height of the diagram
  */
-export function updateYScale(yScale, neighborhoodNames, height) {
+export function updateYScale(yScale, country, height) {
   yScale.range([height, 0]);
 
-  yScale.domain(neighborhoodNames);
+  yScale.domain(country);
 }
 
 /**
