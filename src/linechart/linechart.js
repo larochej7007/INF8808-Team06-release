@@ -49,94 +49,24 @@ export function GetLineChart (countryName) {
     
     setSizing();
     svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")
-    viz.updateXScale(xScale, 1900, 2020, graphSize.width)
-    viz.updateYScale(yScale, data, graphSize.height)
-    
     svg.append('text')
-      .text("Details for selection: " + countryName)
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("text-anchor", "start")
-      .attr("dominant-baseline", "hanging")
-      .attr("style", "font-family: Times New Roman; font-size: 24; stroke: #000000; fill: #000000;")
-
-    // Add scales to axis
-    var x_axis = d3.axisBottom(xScale)
-                   .ticks(24)
-                   .tickFormat((y) => `${y}`);
-
+    .text("Details for selection: " + countryName)
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("text-anchor", "start")
+    .attr("dominant-baseline", "hanging")
+    .attr("style", "font-family: Times New Roman; font-size: 24; stroke: #000000; fill: #000000;")
+    
+    // Init axes
     svgGraph.append("g")
       .attr("class", "x-axis-linechart")
-      .attr("transform", "translate(" + 0 + " ," + (graphSize.height) + ")")
-      .call(x_axis)
-      
-    var y_axis = d3.axisLeft()
-                  .scale(yScale)
-                  .tickSize(4)
-                  .tickSize(-graphSize.width)
-                  .tickFormat((y) => `${y}°C`);
 
     svgGraph.append("g")
-       .attr("class", "y-axis-linechart")
-       .call(y_axis);
+      .attr("class", "y-axis-linechart")
 
-    svgGraph.selectAll(".y-axis-linechart .tick line")
-    .style("visibility", "visible")
-      .style("stroke-dasharray", "1 1")
-      .style("stroke",'#CCCCCC')
-      .filter(d => {
-      return d == 0
-    }).style("visibility", "visible")
-      .style("stroke-dasharray", "none")
-      .style("stroke",'#000000');
-        
-    // Add the line
-    data.forEach(function(d) {
-      svgGraph.append('line')  
-      .style("stroke", "#b863b2")
-      .style("stroke-width", 2)
-      .attr("stroke-dasharray", 2)
-      .attr("x1",xScale(d.Year) )
-      .attr("y1", yScale(d.Min))
-      .attr("x2", xScale(d.Year))
-      .attr("y2",  yScale(d.Max))
-    });
+    build()
 
-    svgGraph.append("path")
-      .datum(data)
-      .attr("class", ids)
-      .style("fill", "none")
-      .attr("stroke", "#d40b20")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return xScale(d.Year) })
-        .y(function(d) { return yScale(d.Max)})
-      );
-
-    svgGraph.append("path")
-      .datum(data)
-      .attr("class", ids)
-      .attr("fill", "none")
-      .attr("stroke", "#0c31d2")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return xScale(d.Year) })
-        .y(function(d) { return  yScale(d.Min)})
-      );
-
-    svgGraph.append("path")
-      .datum(data)
-      .attr("class", ids)
-      .attr("fill", "none")
-      .attr("stroke", "#000000")
-      .attr("opacity", "1")
-      .attr("stroke-width", 1)
-      .attr("d", d3.line()
-        .x(function(d) { return xScale(d.Year) })
-        .y(function(d) { return  yScale(d.AVG)})
-      );
-
-      // Add X axis --> it is a date format
+    // Add X axis --> it is a date format
     var bisect = d3.bisector(function(d) { return d.Year; }).left;
     var x = d3.scaleLinear()
       .domain([1900,2020])
@@ -237,11 +167,98 @@ export function GetLineChart (countryName) {
         .attr("x", xScale(selectedData.Year) - 35)
         .html("Min: " + selectedData.Min  + "°C")
       }
+
+    /**
+     *   This function builds the graph.
+     */
+    function build () {
+      viz.updateXScale(xScale, 1900, 2020, graphSize.width)
+      viz.updateYScale(yScale, data, graphSize.height)
+
+      // Add scales to axis
+      var x_axis = d3.axisBottom(xScale)
+        .ticks(24)
+        .tickFormat((y) => `${y}`);
+
+      svgGraph
+        .select(".x-axis-linechart")
+        .attr("transform", "translate(" + 0 + " ," + (graphSize.height) + ")")
+        .call(x_axis)
+
+      var y_axis = d3.axisLeft()
+        .scale(yScale)
+        .tickSize(4)
+        .tickSize(-graphSize.width)
+        .tickFormat((y) => `${y}°C`);
+
+      svgGraph
+        .select(".y-axis-linechart")
+        .call(y_axis);
+
+      svgGraph.selectAll(".y-axis-linechart .tick line")
+        .style("visibility", "visible")
+        .style("stroke-dasharray", "1 1")
+        .style("stroke",'#CCCCCC')
+        .filter(d => { return d == 0 })
+        .style("visibility", "visible")
+        .style("stroke-dasharray", "none")
+        .style("stroke",'#000000');
+
+          // Add the line
+      svgGraph.selectAll(".intervalLine")
+        .data(data)
+        .join('line')  
+        .attr("class", "intervalLine")
+        .style("stroke", "#b863b2")
+        .style("stroke-width", 2)
+        .attr("stroke-dasharray", 2)
+        .attr("x1", d => { return xScale(d.Year) } )
+        .attr("y1", d => { return yScale(d.Min) })
+        .attr("x2", d => { return xScale(d.Year) })
+        .attr("y2", d => { return yScale(d.Max) })
+
+      svgGraph.selectAll(".maxLine").remove()
+      svgGraph.append("path")
+        .datum(data)
+        .attr("class", "maxLine")
+        .style("fill", "none")
+        .attr("stroke", "#d40b20")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+          .x(function(d) { return xScale(d.Year) })
+          .y(function(d) { return yScale(d.Max)})
+        );
+
+      svgGraph.selectAll(".minLine").remove()
+      svgGraph.append("path")
+        .datum(data) 
+        .attr("class", "minLine")
+        .attr("fill", "none")
+        .attr("stroke", "#0c31d2")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+          .x(function(d) { return xScale(d.Year) })
+          .y(function(d) { return yScale(d.Min)})
+        );
+
+      svgGraph.selectAll(".avgLine").remove()
+      svgGraph.append("path")
+        .datum(data) 
+        .attr("class", "avgLine")
+        .attr("fill", "none")
+        .attr("stroke", "#000000")
+        .attr("opacity", "1")
+        .attr("stroke-width", 1)
+        .attr("d", d3.line()
+          .x(function(d) { return xScale(d.Year) })
+          .y(function(d) { return  yScale(d.AVG)})
+        );
+    }
+
     function mouseout() {
       focus.style("opacity", 0)
       focusText.style("opacity", 0)
     }
-
 
     /**
      *   This function handles the graph's sizing.
@@ -262,15 +279,9 @@ export function GetLineChart (countryName) {
       helper.setCanvasSize(svgSize.width, svgSize.height)
     }
 
-    const ids = function () {
-      return "line-"+id++;
-    }
-
-    
-
     window.addEventListener('resize', () => {
       setSizing()
-     
+      build()
     })
   })
 }
