@@ -124,7 +124,7 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#898d89')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
       d3.select(this).attr('stroke', '#f4f6f4')
