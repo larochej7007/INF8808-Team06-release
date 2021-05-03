@@ -52,10 +52,7 @@ export function GetLineChart (countryName) {
     viz.setGraphTitle(svg, countryName)
     viz.appendAxes(svgGraph)
     viz.initHoverItems(svgGraph)
-
-    // Init legend
-    svgGraph.append('g')
-      .attr('id', 'legend-linechart')
+    viz.initLegend(svgGraph)
 
     build()
 

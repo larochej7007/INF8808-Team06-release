@@ -77,5 +77,11 @@ export function initHoverItems(g) {
       .style("fill", "none")
 }
 
+export function initLegend(g) {
+    // Init legend
+    g.append('g')
+      .attr('id', 'legend-linechart')
+}
+
 
 
