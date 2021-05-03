@@ -207,6 +207,8 @@ export function GetScatterPlot() {
           .selectAll('.dot')
           .remove()
 
+          d3.select('#title-scatterplot').attr('font-size','20px')
+
           currentYear = MinYear
           build(DataByYear, 1000, currentYear, xScale, yScale)
           d3.select('#button1').select('.button-text').text('See ' + MaxYear + ' dataset')
