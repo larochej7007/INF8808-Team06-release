@@ -139,7 +139,7 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('See ' + year + ' dataset')
-    .attr('font-size', '15px')
+    .attr('font-size', '17px')
     .attr('fill', '#ffff')
 }
 
