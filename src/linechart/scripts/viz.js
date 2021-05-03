@@ -34,5 +34,18 @@ export function updateYScale (scale, data, height) {
   
 }
 
+/**
+ * Appends an SVG g element which will contain the axes.
+ *
+ * @param {*} g The d3 Selection of the graph's g SVG element
+ */
+ export function appendAxes (g) {
+    g.append("g")
+      .attr("class", "x-axis-linechart")
+
+    g.append("g")
+      .attr("class", "y-axis-linechart")
+}
+
 
 
