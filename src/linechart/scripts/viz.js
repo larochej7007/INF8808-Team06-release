@@ -117,3 +117,55 @@ export function drawYAxis(yScale, graphSize, svgGraph) {
     .style("stroke",'#000000');
 }
 
+export function drawLines(data, xScale, yScale, svgGraph) {
+  
+      svgGraph.selectAll(".intervalLine")
+        .data(data)
+        .join('line')  
+        .attr("class", "intervalLine")
+        .style("stroke", "#b863b2")
+        .style("stroke-width", 2)
+        .attr("stroke-dasharray", 2)
+        .attr("x1", d => { return xScale(d.Year) } )
+        .attr("y1", d => { return yScale(d.Min) })
+        .attr("x2", d => { return xScale(d.Year) })
+        .attr("y2", d => { return yScale(d.Max) })
+
+      svgGraph.selectAll(".maxLine").remove()
+      svgGraph.append("path")
+        .datum(data)
+        .attr("class", "maxLine")
+        .style("fill", "none")
+        .attr("stroke", "#d40b20")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+          .x(function(d) { return xScale(d.Year) })
+          .y(function(d) { return yScale(d.Max)})
+        );
+
+      svgGraph.selectAll(".minLine").remove()
+      svgGraph.append("path")
+        .datum(data) 
+        .attr("class", "minLine")
+        .attr("fill", "none")
+        .attr("stroke", "#0c31d2")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+          .x(function(d) { return xScale(d.Year) })
+          .y(function(d) { return yScale(d.Min)})
+        );
+
+      svgGraph.selectAll(".avgLine").remove()
+      svgGraph.append("path")
+        .datum(data) 
+        .attr("class", "avgLine")
+        .attr("fill", "none")
+        .attr("stroke", "#000000")
+        .attr("opacity", "1")
+        .attr("stroke-width", 1)
+        .attr("d", d3.line()
+          .x(function(d) { return xScale(d.Year) })
+          .y(function(d) { return  yScale(d.AVG)})
+        );
+}
+
