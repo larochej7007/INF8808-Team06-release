@@ -57,12 +57,12 @@ export function appendGraphLabels (g) {
   g.append('text')
     .text('% Of Total C02 Emissions')
     .attr('class', 'y axis-text')
-    .attr('font-size', 16)
+    .attr('font-size', 20)
 
   g.append('text')
     .text('CO2 emissions per capita (metric tons)')
     .attr('class', 'x axis-text')
-    .attr('font-size', 16)
+    .attr('font-size', 20)
 }
 
 /**
