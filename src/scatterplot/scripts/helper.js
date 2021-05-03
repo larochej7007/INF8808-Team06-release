@@ -139,8 +139,8 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('See ' + year + ' dataset')
-    .attr('font-size', '17px')
-    .attr('fill', '#ffff')
+    .attr('font-size', '16px')
+    .attr('fill', '#0c0a0a')
 }
 
 /**
@@ -155,6 +155,11 @@ export function drawButton1 (g, year) {
     .attr('transform', 'translate(' + translate1 + ', 280)')
     .attr('width', 70)
     .attr('height', 30)
+
+  button.append('rect')
+  .attr('width', 70)
+  .attr('height',32)
+  .attr('fill', '#4b4b4b')  
 
   button.append('rect')
     .attr('width', 70)
@@ -192,6 +197,11 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
 
   button.append('rect')
+  .attr('width', 70)
+  .attr('height',32)
+  .attr('fill', '#4b4b4b')
+
+  button.append('rect')
     .attr('width', 70)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
@@ -225,6 +235,11 @@ export function drawButton1 (g, year) {
     .attr('transform', 'translate(' + translate1 + ', 120)')
     .attr('width', 150)
     .attr('height', 30)
+
+  button.append('rect')
+  .attr('width', 150)
+  .attr('height',32)
+  .attr('fill', '#4b4b4b')
 
   button.append('rect')
     .attr('width', 150)
@@ -262,6 +277,11 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
 
   button.append('rect')
+  .attr('width', 70)
+  .attr('height',32)
+  .attr('fill', '#4b4b4b')
+
+  button.append('rect')
     .attr('width', 70)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
@@ -297,6 +317,11 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
 
   button.append('rect')
+  .attr('width', 70)
+  .attr('height',32)
+  .attr('fill', '#4b4b4b')
+
+  button.append('rect')
     .attr('width', 70)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
@@ -330,6 +355,11 @@ export function drawButton1 (g, year) {
     .attr('transform', 'translate(' + translate1 + ', 120)')
     .attr('width', 150)
     .attr('height', 30)
+
+  button.append('rect')
+  .attr('width', 150)
+  .attr('height',32)
+  .attr('fill', '#4b4b4b')    
 
   button.append('rect')
     .attr('width', 150)
