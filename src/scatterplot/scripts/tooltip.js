@@ -1,4 +1,6 @@
 /**
+ * Convert the values (0,1) from the data to (Yes, No) for the tooltip
+ * 
  * @param d
  */
  export function ouinon (d) {
