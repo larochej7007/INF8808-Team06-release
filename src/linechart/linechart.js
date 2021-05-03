@@ -49,6 +49,7 @@ export function GetLineChart (countryName) {
     
     // bisect used for the hover
     var bisect = d3.bisector(function(d) { return d.Year; }).left;
+    
     viz.initHoverItems(svgGraph)
     viz.initLegend(svgGraph)
 
