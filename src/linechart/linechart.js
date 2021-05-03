@@ -20,8 +20,8 @@ export function GetLineChart (countryName) {
   let svgSize
   let graphSize
 
-  const margin = 40;
-  const marginVertical = 2 * margin;
+  const margin = 80;
+  const marginVertical = margin;
   const TIME_RANGE_LIMITS = [1900, 2020]
 
   d3.select("#linechart")
@@ -49,9 +49,11 @@ export function GetLineChart (countryName) {
     
     // bisect used for the hover
     var bisect = d3.bisector(function(d) { return d.Year; }).left;
-    
+
     viz.initHoverItems(svgGraph)
     viz.initLegend(svgGraph)
+
+    helper.appendGraphLabels(svgGraph)
 
     build()
 
@@ -64,6 +66,7 @@ export function GetLineChart (countryName) {
 
       viz.drawXAxis(xScale, graphSize, svgGraph)
       viz.drawYAxis(yScale, graphSize, svgGraph)
+      helper.positionLabels(graphSize.width, graphSize.height)
 
       viz.drawLines(data, xScale, yScale, svgGraph)
       

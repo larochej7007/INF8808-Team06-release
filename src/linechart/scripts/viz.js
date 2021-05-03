@@ -213,10 +213,6 @@ export function drawLegend(graphSize, marginVertical, svgGraph) {
   const legendScale = d3.scaleOrdinal()
   .domain([0, 1, 2])
   .range(['#d40b20', 'black', '#0c31d2'])
-
-  var padding = graphSize.width / 2 - 65 // On rajoute 15 pour ne pas avoir d'overlapping avec les données de 2015 et la légende
-  svgGraph.select("#legend-linechart")
-    .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 0.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
     
   var legend = d3Legend.legendColor()
     .shape('line')
@@ -228,9 +224,9 @@ export function drawLegend(graphSize, marginVertical, svgGraph) {
     .shapeWidth(40)
     .shapePadding(20);
 
-
+  var padding = graphSize.width / 2 - 65
   svgGraph.select("#legend-linechart")
-    .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 0.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
+    .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 0.75 * marginVertical) + ')')
     .call(legend)
 }
     
