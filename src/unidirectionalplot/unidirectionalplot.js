@@ -39,14 +39,16 @@ export function getUniPlot() {
     .attr('y', 0)
     .attr('width', (graphSize.width/80)*20)
     .attr('height',graphSize.height)
-    .attr('fill', 'red');
+    .attr('fill', 'red')
+    attr('opacity', 0.7);
 
   g.append('rect')
   .attr('x', (graphSize.width/80)*22)
   .attr('y', 0)
   .attr('width', (graphSize.width/80)*19)
   .attr('height', graphSize.height)
-  .attr('fill', 'green');
+  .attr('fill', 'green')
+  attr('opacity', 0.7);
 
 
   g.call(tip)
@@ -68,6 +70,7 @@ export function getUniPlot() {
 
 
     var DataByYear = preprocess.GroupByYear(data)
+    var DataByCountry = preprocess.GroupByCountry(data)
     
     const xScale = scales.setXScale(graphSize.width, data)
     const yScale = scales.setYScale(graphSize.height, data)
