@@ -114,7 +114,7 @@ export function drawButton1 (g, year) {
     .attr('width', 150)
     .attr('height', 30)
 
-  button.append('rect')
+  /*button.append('rect')
     .attr('width', 150)
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
@@ -124,6 +124,7 @@ export function drawButton1 (g, year) {
     .on('mouseleave', function () {
       d3.select(this).attr('stroke', '#f4f6f4')
     })
+  */
 
   button.append('text')
     .attr('x', 75)
