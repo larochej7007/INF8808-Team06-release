@@ -60,7 +60,7 @@ export function GetLineChart (countryName) {
      *   This function builds the graph.
      */
     function build () {
-      viz.updateXScale(xScale, 1900, 2020, graphSize.width)
+      viz.updateXScale(xScale, TIME_RANGE_LIMITS, graphSize.width)
       viz.updateYScale(yScale, data, graphSize.height)
 
       // Add scales to axis

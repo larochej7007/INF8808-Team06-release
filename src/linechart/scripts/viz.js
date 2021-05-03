@@ -4,11 +4,11 @@ import { range, svg } from 'd3'
  * Sets the domain and range of the X scale.
  *
  * @param {*} scale The x scale
- * @param {object[]} data The data to be used
+* @param {number[2]} timeRangeLimits The time range limits to filter for (inclusive)
  * @param {number} width The width of the graph
  */
-export function updateXScale (scale, start, end, width) {
-  scale.domain([start, end]).range([0, width])
+export function updateXScale (scale, timeRangeLimits, width) {
+  scale.domain([timeRangeLimits[0], timeRangeLimits[1]]).range([0, width])
 }
 
 /**
