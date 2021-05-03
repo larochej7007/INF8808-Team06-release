@@ -183,7 +183,7 @@ export function GetScatterPlot() {
                     viz.drawCirclesCountry(DataCountry, currentYear, xScale, yScale)
                     viz.setCircleHoverHandlerCountry(tip)});
           
-          d3.select('#title-scatterplot').text("Every years for " + d.Pays).attr('font-size','12px')
+          d3.select('#title-scatterplot').text("Every years for " + d.Pays).attr('font-size','14px')
           setClickHandler5()
         })
   }
