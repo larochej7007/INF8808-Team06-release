@@ -81,6 +81,10 @@ button:hover, button:active {
     height: 950px; 
 }
 
+#scatterplot {
+    height: 700px; 
+}
+
 #linechart {
     height: 535px; 
 }
