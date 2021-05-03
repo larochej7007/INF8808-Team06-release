@@ -95,7 +95,7 @@ export function drawYAxis (yScale) {
 export function placeTitle (g) {
   g.append('text')
     .attr('id', 'title-scatterplot')
-    .attr('x', -10)
+    .attr('x', -20)
     .attr('y', -20)
     .attr('font-size', 20)
 }
@@ -166,10 +166,10 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke', '#f4f6f4')
+      d3.select(this).attr('stroke', '#f4f6f4').attr('transform','translate(0,-2)')
     })
 
   button.append('text')
@@ -206,10 +206,10 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke', '#f4f6f4')
+      d3.select(this).attr('stroke', '#f4f6f4').attr('transform','translate(0,-2)')
     })
 
   button.append('text')
@@ -246,10 +246,10 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke', '#f4f6f4')
+      d3.select(this).attr('stroke', '#f4f6f4').attr('transform','translate(0,-2)')
     })
 
   button.append('text')
@@ -286,10 +286,10 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke', '#f4f6f4')
+      d3.select(this).attr('stroke', '#f4f6f4').attr('transform','translate(0,-2)')
     })
 
   button.append('text')
@@ -326,10 +326,10 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke', '#f4f6f4')
+      d3.select(this).attr('stroke', '#f4f6f4').attr('transform','translate(0,-2)')
     })
 
   button.append('text')
@@ -366,10 +366,10 @@ export function drawButton1 (g, year) {
     .attr('height', 30)
     .attr('fill', '#f4f6f4')
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke', '#362023')
+      d3.select(this).attr('stroke', '#362023').attr('transform','translate(0,2)')
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke', '#f4f6f4')
+      d3.select(this).attr('stroke', '#f4f6f4').attr('transform','translate(0,-2)')
     })
 
   button.append('text')
