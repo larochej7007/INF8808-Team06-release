@@ -49,14 +49,7 @@ export function GetLineChart (countryName) {
     
     setSizing();
     svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")
-    svg.append('text')
-      .text("Details for selection: " + countryName)
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("text-anchor", "start")
-      .attr("dominant-baseline", "hanging")
-      .attr("style", "font-family: Times New Roman; font-size: 24; stroke: #000000; fill: #000000;")
-    
+    viz.setGraphTitle(svg, countryName)
     viz.appendAxes(svgGraph)
 
     // Create the line that travels along the mouse
