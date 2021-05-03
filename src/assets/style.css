@@ -48,11 +48,11 @@ button {
     text-align: center;
     text-decoration: none;
     outline: none;
-    color: #000;
+    color: #a2a8a2;
     background-color: #fff;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    box-shadow: 0 9px rgb(63, 62, 62);
 
     font-family: 'Helvetica', 'sans-serif';
     
