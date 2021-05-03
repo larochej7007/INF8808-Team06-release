@@ -1,3 +1,29 @@
+/**
+ * Appends the labels for the the x and y axis and for the subtitle of the graph.
+ *
+ * @param {*} g The d3 Selection of the graph's g SVG element
+ */
+ export function appendGraphLabels (g) {
+  g.append('text')
+    .text('Year')
+    .attr('class', 'x axis-text-heatmap')
+    .attr('fill', 'gray')
+    .attr('font-size', 12)
+}
+
+/**
+ * Positions the x axis label, y axis label and subtitle label on the graph.
+ *
+ * @param {number} x The x position
+ * @param {number} y The y position
+ * @param {number} y The y offset
+ */
+ export function positionLabels (x, y, offset) {
+  
+  d3.select('.x.axis-text-heatmap')
+  .attr('x', x/2)
+  .attr('y', y + offset)
+}
 
 /**
  * Generates the SVG element g which will contain the data visualisation.

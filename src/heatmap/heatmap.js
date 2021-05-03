@@ -45,6 +45,7 @@ export function getHeatmap() {
     const g = helper.generateG(margin)
     viz.appendRects(data)
     helper.appendAxes(g)
+    helper.appendGraphLabels(g)
 
     setSizing()
     build()
@@ -95,6 +96,7 @@ export function getHeatmap() {
       viz.drawYAxis(yScale, xScale, (graphSize.width + xScale(1901)), margin)
 
       viz.positionXTicks(graphSize.height, yScale, xScale)
+      helper.positionLabels(graphSize.width, graphSize.height, 6 * yScale.bandwidth())
 
       viz.updateRects(xScale, yScale, positiveColorScale, negativeColorScale, graphSize.width)
       addGlobalLandSummary()
