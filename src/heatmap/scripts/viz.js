@@ -125,7 +125,6 @@ export function updateRects(xScale, yScale, positiveColorScale, negativeColorSca
     .selectAll(".year-count-rect")
     .attr("x", function (d, i) {
       return xScale(d.Year);
-      //return xScale(d.Year + (d.Month - 1)/12.0);
     })
     .attr("y", function (d, i) {
       if(d["Country"] == "Global-land") {
