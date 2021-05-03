@@ -114,17 +114,23 @@ export function drawButton1 (g, year) {
     .attr('width', 150)
     .attr('height', 30)
 
-  /*button.append('rect')
+  button.append('rect')
+    .attr('width', 150)
+    .attr('height',32)
+    .attr('fill', '#4b4b4b')
+
+  button.append('rect')
     .attr('width', 150)
     .attr('height', 30)
-    .attr('fill', '#f4f6f4')
+    .attr('fill', '#898d89')
     .on('mouseenter', function () {
       d3.select(this).attr('stroke', '#362023')
     })
     .on('mouseleave', function () {
       d3.select(this).attr('stroke', '#f4f6f4')
     })
-  */
+
+  
 
   button.append('text')
     .attr('x', 75)
@@ -133,8 +139,8 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('See ' + year + ' dataset')
-    .attr('font-size', '10px')
-    .attr('fill', '#362023')
+    .attr('font-size', '15px')
+    .attr('fill', '#ffff')
 }
 
 /**
