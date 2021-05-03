@@ -51,27 +51,7 @@ export function GetLineChart (countryName) {
     svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")
     viz.setGraphTitle(svg, countryName)
     viz.appendAxes(svgGraph)
-
-    // Create the line that travels along the mouse
-    svgGraph
-      .append('line')
-        .attr("class", "focusLine")
-        .style("fill", "none")
-        .attr("stroke", "black")
-        .style("opacity", 0)
-
-    // Create the text that travels along the mouse    
-    svgGraph
-      .append('text')
-      .attr("class", "focusText")
-      .style("opacity", 0)
-      .attr("text-anchor", "left")
-      .attr("alignment-baseline", "middle")
-
-    svgGraph
-      .append('rect')
-      .attr("class", "focusRect")
-      .style("fill", "none")
+    viz.initHoverItems(svgGraph)
 
     // Init legend
     svgGraph.append('g')

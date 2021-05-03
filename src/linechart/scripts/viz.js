@@ -57,5 +57,25 @@ export function setGraphTitle(g, countryName) {
   .attr("style", "font-family: Times New Roman; font-size: 24; stroke: #000000; fill: #000000;")
 }
 
+export function initHoverItems(g) {
+    // Create the line that travels along the mouse
+    g.append('line')
+      .attr("class", "focusLine")
+      .style("fill", "none")
+      .attr("stroke", "black")
+      .style("opacity", 0)
+
+    // Create the text that travels along the mouse    
+    g.append('text')
+      .attr("class", "focusText")
+      .style("opacity", 0)
+      .attr("text-anchor", "left")
+      .attr("alignment-baseline", "middle")
+
+    g.append('rect')
+      .attr("class", "focusRect")
+      .style("fill", "none")
+}
+
 
 
