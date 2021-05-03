@@ -64,7 +64,7 @@ export function draw (x, y, height, width, fill, colorScale) {
   const offset = 30
   const Scale = d3.scaleLinear()
                   .domain([colorScale.domain()[0],colorScale.domain()[1]])
-                  .range([0,height]) 
+                  .range([height, 0]) 
 
   d3.select('.legendaxis-barchart') // On ajoute les ticks de la légende
   .attr('transform', 'translate(' + x + ',' + (y-width-offset) + ')')
