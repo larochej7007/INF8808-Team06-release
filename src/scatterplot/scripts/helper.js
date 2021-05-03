@@ -95,7 +95,7 @@ export function drawYAxis (yScale) {
 export function placeTitle (g) {
   g.append('text')
     .attr('id', 'title-scatterplot')
-    .attr('x', 50)
+    .attr('x', -10)
     .attr('y', -20)
     .attr('font-size', 20)
 }
