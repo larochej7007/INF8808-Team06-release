@@ -14,8 +14,6 @@ export function clearLineChart() {
   d3.select("#linechart").html("");
 }
 
-var selectedData = {}
-
 export function GetLineChart (countryName) {
  
   let bounds
@@ -48,6 +46,9 @@ export function GetLineChart (countryName) {
     svgGraph.attr("transform", "translate(" + margin + " ," + marginVertical + ")")
     viz.setGraphTitle(svg, countryName)
     viz.appendAxes(svgGraph)
+    
+    // bisect used for the hover
+    var bisect = d3.bisector(function(d) { return d.Year; }).left;
     viz.initHoverItems(svgGraph)
     viz.initLegend(svgGraph)
 
@@ -66,75 +67,8 @@ export function GetLineChart (countryName) {
       viz.drawLines(data, xScale, yScale, svgGraph)
       
       viz.drawLegend(graphSize, marginVertical, svgGraph)
-
-      // Add X axis --> it is a date format
-      var bisect = d3.bisector(function(d) { return d.Year; }).left;
-
-      // Create the circle that travels along the curve of chart
-      var focus = svgGraph.select(".focusLine")
-      var focusText = svgGraph.select(".focusText")
-
-      // Create a rect on top of the svg area: this rectangle recovers mouse position
-      svgGraph
-        .select(".focusRect")
-        .style("pointer-events", "all")
-        .attr('width', graphSize.width + 10)
-        .attr('height', graphSize.height)
-        .on('mouseover', mouseover)
-        .on('mousemove', mousemove)
-        .on('mouseout', mouseout);
-      
-      function mouseout() {
-        focus.style("opacity", 0)
-        focusText.style("opacity", 0)
-      }
-
-      // What happens when the mouse move -> show the annotations at the right positions.
-      function mouseover() {
-        focus.style("opacity", 1)
-        focusText.style("opacity",1)
-      }
-
-      function mousemove() {
-        // recover coordinate we need
-        console.log(d3.mouse(this)[0])
-        var x0 = xScale.invert(d3.mouse(this)[0]);
-        console.log(x0)
-        var i = bisect(data, x0, 1) - 1;
-        selectedData = data[i]
-        focus
-          .attr("x1", xScale(selectedData.Year))
-          .attr("y1", yScale.range()[0])
-          .attr("x2", xScale(selectedData.Year))
-          .attr("y2", yScale.range()[1])
-
-        focusText
-          .attr("x", xScale(selectedData.Year) - 35)
-          .attr("y", -40)
-          .html("")
-          .append("tspan")
-          .html("Year: " + selectedData.Year)
-
-        focusText
-          .append("tspan")
-          .attr("x", xScale(selectedData.Year) - 35)
-          .attr("dy", 12)
-          .html("Max: " + selectedData.Max + "°C")
-
-        focusText
-          .append("tspan")
-          .attr("dy", 12)
-          .attr("x", xScale(selectedData.Year) - 35)
-          .html("Avg: " + selectedData.AVG  + "°C")
-
-        focusText
-          .append("tspan")
-          .attr("dy", 12)
-          .attr("x", xScale(selectedData.Year) - 35)
-          .html("Min: " + selectedData.Min  + "°C")
-        }
-      }
-
+      viz.setHoverHandler(data, xScale, yScale, graphSize, bisect, svgGraph)
+    }
 
     /**
      *   This function handles the graph's sizing.

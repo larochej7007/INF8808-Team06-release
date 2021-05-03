@@ -195,3 +195,70 @@ export function drawLegend(graphSize, marginVertical, svgGraph) {
     .attr('transform', 'translate(' + padding + ',' + (graphSize.height + 0.5 * marginVertical) + ')') // Le -10 permet de relever un peu la légende
     .call(legend)
 }
+
+
+      
+function mouseout(focusText, focusLine) {
+  focusLine.style("opacity", 0)
+  focusText.style("opacity", 0)
+}
+
+// What happens when the mouse move -> show the annotations at the right positions.
+function mouseover(focusText, focusLine) {
+  focusLine.style("opacity", 1)
+  focusText.style("opacity",1)
+}
+
+function mousemove(data, xPosition, xScale, yScale, bisect, focusText, focusLine) {
+  // recover coordinate we need
+  var x0 = xScale.invert(xPosition);
+  var i = bisect(data, x0, 1) - 1;
+  var selectedData = data[i]
+  focusLine
+    .attr("x1", xScale(selectedData.Year))
+    .attr("y1", yScale.range()[0])
+    .attr("x2", xScale(selectedData.Year))
+    .attr("y2", yScale.range()[1])
+
+  focusText
+    .attr("x", xScale(selectedData.Year) - 35)
+    .attr("y", -40)
+    .html("")
+    .append("tspan")
+    .html("Year: " + selectedData.Year)
+
+  focusText
+    .append("tspan")
+    .attr("x", xScale(selectedData.Year) - 35)
+    .attr("dy", 12)
+    .html("Max: " + selectedData.Max + "°C")
+
+  focusText
+    .append("tspan")
+    .attr("dy", 12)
+    .attr("x", xScale(selectedData.Year) - 35)
+    .html("Avg: " + selectedData.AVG  + "°C")
+
+  focusText
+    .append("tspan")
+    .attr("dy", 12)
+    .attr("x", xScale(selectedData.Year) - 35)
+    .html("Min: " + selectedData.Min  + "°C")
+}
+
+export function setHoverHandler(data, xScale, yScale, graphSize, bisect, svgGraph) {
+  // Create the circle that travels along the curve of chart
+  var focusLine = svgGraph.select(".focusLine")
+  var focusText = svgGraph.select(".focusText")
+  
+  // Create a rect on top of the svg area: this rectangle recovers mouse position
+  svgGraph
+    .select(".focusRect")
+    .style("pointer-events", "all")
+    .attr('width', graphSize.width + 10)
+    .attr('height', graphSize.height)
+    .on('mouseover', () => { mouseover(focusText, focusLine) })
+    .on('mousemove', function(){
+      mousemove(data, d3.mouse(this)[0], xScale, yScale, bisect, focusText, focusLine) })
+    .on('mouseout', () => { mouseout(focusText, focusLine) });
+}
