@@ -179,7 +179,7 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('-1 Year')
-    .attr('font-size', '16px')
+    .attr('font-size', '15px')
     .attr('fill', '#362023')
 }
 
@@ -219,7 +219,7 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('+1 Year')
-    .attr('font-size', '16px')
+    .attr('font-size', '15px')
     .attr('fill', '#362023')
 }
 
@@ -299,7 +299,7 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('-10 Years')
-    .attr('font-size', '16px')
+    .attr('font-size', '15px')
     .attr('fill', '#362023')
 }
 
@@ -339,7 +339,7 @@ export function drawButton1 (g, year) {
     .attr('dominant-baseline', 'middle')
     .attr('class', 'button-text')
     .text('+10 Years')
-    .attr('font-size', '16px')
+    .attr('font-size', '15px')
     .attr('fill', '#362023')
 }
 
