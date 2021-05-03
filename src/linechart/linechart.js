@@ -63,16 +63,7 @@ export function GetLineChart (countryName) {
       viz.updateXScale(xScale, TIME_RANGE_LIMITS, graphSize.width)
       viz.updateYScale(yScale, data, graphSize.height)
 
-      // Add scales to axis
-      var x_axis = d3.axisBottom(xScale)
-        .ticks(24)
-        .tickFormat((y) => `${y}`);
-
-      svgGraph
-        .select(".x-axis-linechart")
-        .attr("transform", "translate(" + 0 + " ," + (graphSize.height) + ")")
-        .call(x_axis)
-
+      viz.drawXAxis(xScale, graphSize, svgGraph)
       var y_axis = d3.axisLeft()
         .scale(yScale)
         .tickSize(4)

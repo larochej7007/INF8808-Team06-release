@@ -78,10 +78,20 @@ export function initHoverItems(g) {
 }
 
 export function initLegend(g) {
-    // Init legend
-    g.append('g')
-      .attr('id', 'legend-linechart')
+  // Init legend
+  g.append('g')
+    .attr('id', 'legend-linechart')
 }
 
+export function drawXAxis(xScale, graphSize, svgGraph) {
+    // Add scales to axis
+    var x_axis = d3.axisBottom(xScale)
+      .ticks(24)
+      .tickFormat((y) => `${y}`);
 
+    svgGraph
+      .select(".x-axis-linechart")
+      .attr("transform", "translate(" + 0 + " ," + (graphSize.height) + ")")
+      .call(x_axis)
+}
 
