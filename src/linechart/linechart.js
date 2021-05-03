@@ -64,26 +64,9 @@ export function GetLineChart (countryName) {
       viz.updateYScale(yScale, data, graphSize.height)
 
       viz.drawXAxis(xScale, graphSize, svgGraph)
-      var y_axis = d3.axisLeft()
-        .scale(yScale)
-        .tickSize(4)
-        .tickSize(-graphSize.width)
-        .tickFormat((y) => `${y}°C`);
+      viz.drawYAxis(yScale, graphSize, svgGraph)
 
-      svgGraph
-        .select(".y-axis-linechart")
-        .call(y_axis);
-
-      svgGraph.selectAll(".y-axis-linechart .tick line")
-        .style("visibility", "visible")
-        .style("stroke-dasharray", "1 1")
-        .style("stroke",'#CCCCCC')
-        .filter(d => { return d == 0 })
-        .style("visibility", "visible")
-        .style("stroke-dasharray", "none")
-        .style("stroke",'#000000');
-
-          // Add the line
+      // Add the line
       svgGraph.selectAll(".intervalLine")
         .data(data)
         .join('line')  
