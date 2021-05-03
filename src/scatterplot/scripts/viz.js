@@ -19,7 +19,7 @@
 export function positionLabels (g, width, height) {
   g.select(".y.axis-text")
     .attr('y', -20)
-    .attr('x', 5)
+    .attr('x', 10)
 
   g.select(".x.axis-text")
     .attr('x', width/2)
