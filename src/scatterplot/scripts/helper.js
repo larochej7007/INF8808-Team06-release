@@ -133,7 +133,7 @@ export function drawButton1 (g, year) {
     .attr('class', 'button-text')
     .text('See ' + year + ' dataset')
     .attr('font-size', '10px')
-    .attr('fill', '#362023')
+    //.attr('fill', '#362023')
 }
 
 /**
