@@ -96,7 +96,7 @@ export function placeTitle (g) {
   g.append('text')
     .attr('id', 'title-scatterplot')
     .attr('x', 0)
-    .attr('y', -20)
+    .attr('y', -25)
     .attr('font-size', 20)
 }
 
